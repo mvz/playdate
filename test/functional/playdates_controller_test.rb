@@ -6,17 +6,28 @@ class PlaydatesController; def rescue_action(e) raise e end; end
 
 class PlaydatesControllerTest < Test::Unit::TestCase
   fixtures :playdates
+  fixtures :players
 
   def setup
     @controller = PlaydatesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @playersession = {:user_id => players(:matijs).id }
+  end
+
+  def test_authorization
+    [:destroy, :edit, :list, :new, :show].each do |a|
+      [:get, :post].each do |m|
+        method(m).call(a, {}, {})
+        assert_redirected_to :controller => "login", :action => "login"
+      end
+    end
   end
 
   def test_destroy_using_get
     assert_not_nil Playdate.find(1)
 
-    get 'destroy', :id => 1
+    get 'destroy', {:id => 1}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'edit'
 
@@ -26,7 +37,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_destroy_using_post
     assert_not_nil Playdate.find(1)
 
-    post 'destroy', :id => 1
+    post 'destroy', {:id => 1}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
@@ -36,7 +47,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_destroy_without_id
     assert_not_nil Playdate.find(1)
 
-    post 'destroy'
+    post 'destroy', {}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'list'
     assert flash.has_key?(:notice)
@@ -45,7 +56,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_using_get
-    get 'edit', :id => 1
+    get 'edit', {:id => 1}, @playersession
 
     assert_response :success
     assert_template 'edit'
@@ -55,20 +66,20 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_using_post
-    post 'edit', :id => 1
+    post 'edit', {:id => 1}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 1
   end
 
   def test_edit_without_id
-    post 'edit'
+    post 'edit', {}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'list'
     assert flash.has_key?(:notice)
   end
 
   def test_list
-    get 'list'
+    get 'list', {}, @playersession
 
     assert_response :success
     assert_template 'list'
@@ -77,7 +88,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_new_using_get
-    get 'new'
+    get 'new', {}, @playersession
 
     assert_response :success
     assert_template 'new'
@@ -88,7 +99,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_new_using_post
     num_playdates = Playdate.count
 
-    post 'new', :playdate => {}
+    post 'new', {:playdate => {}}, @playersession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -97,7 +108,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get 'show', :id => 1
+    get 'show', {:id => 1}, @playersession
 
     assert_response :success
     assert_template 'show'
@@ -107,7 +118,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_show_without_id
-    get 'show'
+    get 'show', {}, @playersession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
