@@ -23,4 +23,12 @@ class Player < ActiveRecord::Base
     self.password_hash = Digest::SHA256.hexdigest(pass + SALT)
     self.password_salt = SALT
   end
+
+  def self.authenticate(nm, pass)
+    u = self.find_by_name(nm)
+    u.nil? and return nil
+    hash = Digest::SHA256.hexdigest(pass + u.password_salt)
+    u.password_hash == hash or return nil
+    return u
+  end
 end
