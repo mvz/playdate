@@ -1,0 +1,8 @@
+<h1>New playdate</h1>
+
+<%= start_form_tag :action => 'new' %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Save' %>
+<%= end_form_tag %>
+
+<%= link_to 'Back to list', :action => 'list' %>
