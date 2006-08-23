@@ -2,6 +2,7 @@ class PlayersController < ApplicationController
   include AjaxScaffold::Controller
   
   after_filter :clear_flashes
+  before_filter :authorize_admin
   before_filter :update_params_filter
   
   def update_params_filter

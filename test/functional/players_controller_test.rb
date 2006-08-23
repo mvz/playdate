@@ -17,10 +17,28 @@ class PlayersControllerTest < Test::Unit::TestCase
     # Retrieve fixtures via their name
     # @first = players(:first)
     @first = Player.find_first
+    @adminsession = {:user_id => players(:admin).id }
+    @playersession = {:user_id => players(:matijs).id }
+  end
+
+  def test_authorization
+    [:component, :create, :component_update, :destroy].each do |a|
+      [:get, :post].each do |m|
+        {"login" => {}, "index" => @playersession}.each do |redirect,session|
+          [
+            lambda { method(m).call(a, {}, session) },
+            lambda { xhr m, a, {}, session }
+          ].each do |e|
+            e.call
+            assert_redirected_to :controller => "login", :action => redirect
+          end
+        end
+      end
+    end
   end
 
   def test_component
-    get :component
+    get :component, {}, @adminsession
     assert_response :success
     assert_template 'players/component'
     players = check_attrs(%w(players))
@@ -28,13 +46,13 @@ class PlayersControllerTest < Test::Unit::TestCase
   end
 
   def test_component_update
-    get :component_update
+    get :component_update, {}, @adminsession
     assert_response :redirect
     assert_redirected_to REDIRECT_TO_MAIN
   end
 
   def test_component_update_xhr
-    xhr :get, :component_update
+    xhr :get, :component_update, {}, @adminsession
     assert_response :success
     assert_template 'players/component'
     players = check_attrs(%w(players))
@@ -43,7 +61,7 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_create
     player_count = Player.find(:all).length
-    post :create, {:player => NEW_PLAYER}
+    post :create, {:player => NEW_PLAYER}, @adminsession
     player, successful = check_attrs(%w(player successful))
     assert successful, "Should be successful"
     assert_response :redirect
@@ -53,7 +71,7 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_create_xhr
     player_count = Player.find(:all).length
-    xhr :post, :create, {:player => NEW_PLAYER}
+    xhr :post, :create, {:player => NEW_PLAYER}, @adminsession
     player, successful = check_attrs(%w(player successful))
     assert successful, "Should be successful"
     assert_response :success
@@ -63,7 +81,9 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_update
     player_count = Player.find(:all).length
-    post :update, {:id => @first.id, :player => @first.attributes.merge(NEW_PLAYER)}
+    post :update,
+      {:id => @first.id, :player => @first.attributes.merge(NEW_PLAYER)},
+      @adminsession
     player, successful = check_attrs(%w(player successful))
     assert successful, "Should be successful"
     player.reload
@@ -77,7 +97,9 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_update_xhr
     player_count = Player.find(:all).length
-    xhr :post, :update, {:id => @first.id, :player => @first.attributes.merge(NEW_PLAYER)}
+    xhr :post, :update,
+      {:id => @first.id, :player => @first.attributes.merge(NEW_PLAYER)},
+      @adminsession
     player, successful = check_attrs(%w(player successful))
     assert successful, "Should be successful"
     player.reload
@@ -91,7 +113,7 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_destroy
     player_count = Player.find(:all).length
-    post :destroy, {:id => @first.id}
+    post :destroy, {:id => @first.id}, @adminsession
     assert_response :redirect
     assert_equal player_count - 1, Player.find(:all).length, "Number of Players should be one less"
     assert_redirected_to REDIRECT_TO_MAIN
@@ -99,7 +121,7 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_destroy_xhr
     player_count = Player.find(:all).length
-    xhr :post, :destroy, {:id => @first.id}
+    xhr :post, :destroy, {:id => @first.id}, @adminsession
     assert_response :success
     assert_equal player_count - 1, Player.find(:all).length, "Number of Players should be one less"
     assert_template 'destroy.rjs'

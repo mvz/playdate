@@ -1,0 +1,13 @@
+<h1>Log in to Playdate</h1>
+<div class="playdate-form">
+  <fieldset>
+    <legend>Please type your user name and password below.</legend>
+    <%= start_form_tag %>
+    <p><label for="name">Name:</label>
+    <%= text_field_tag :name, params[:name] %></p>
+    <p><label for="password">Password:</label>
+    <%= password_field_tag :password, params[:password] %></p>
+    <p><%= submit_tag "Login" %></p>
+    <%= end_form_tag %>
+  </fieldset>
+</div>
