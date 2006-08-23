@@ -97,6 +97,9 @@ class PlayersController < ApplicationController
   def update
     begin
       @player = Player.find(params[:id])
+      #unless params[:password] == params[:password_confirmation]
+      #  raise "Password and confirmation do not match"
+      #end
       @successful = @player.update_attributes(params[:player])
     rescue
       flash[:error], @successful  = $!.to_s, false
