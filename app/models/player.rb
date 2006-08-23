@@ -2,7 +2,7 @@ require 'ajax_scaffold'
 require 'digest/sha2'
 
 class Player < ActiveRecord::Base
-  validates_presence_of :name, :password, :password_confirmation
+  validates_presence_of :name, :password, :password_confirmation, :on => :create
   validates_uniqueness_of :name
   validates_length_of :password,
     :minimum => 5,
