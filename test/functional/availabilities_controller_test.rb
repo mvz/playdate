@@ -5,8 +5,9 @@ require 'availabilities_controller'
 class AvailabilitiesController; def rescue_action(e) raise e end; end
 
 class AvailabilitiesControllerTest < Test::Unit::TestCase
-  fixtures :availabilities
   fixtures :players
+  fixtures :playdates
+  fixtures :availabilities
 
   def setup
     @controller = AvailabilitiesController.new
@@ -66,7 +67,8 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_using_post
-    post 'edit', {:id => 1}, @playersession
+    post 'edit', {:id => 1, :player_id => 2, :playdate_id => 1},
+      @playersession
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 1
   end
@@ -99,7 +101,10 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   def test_new_using_post
     num_availabilities = Availability.count
 
-    post 'new', {:availability => {}}, @playersession
+    post 'new', {:availability => {
+      :player_id => players(:robert).id,
+      :playdate_id => playdates(:friday).id, :status => 1 }},
+      @playersession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

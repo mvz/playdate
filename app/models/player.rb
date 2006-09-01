@@ -2,12 +2,14 @@ require 'ajax_scaffold'
 require 'digest/sha2'
 
 class Player < ActiveRecord::Base
-  validates_presence_of :name, :password, :password_confirmation
+  validates_presence_of :name
   validates_confirmation_of :password
   validates_uniqueness_of :name
-  validates_length_of :password, :minimum => 5, :message => "Password must be at least 5 characters"
-  attr_reader :password
-  #attr_accessor :password_confirmation
+  validates_length_of :password, :minimum => 5,
+    :message => "Password must be at least 5 characters",
+    :if => Proc.new { |user|
+         user.password_hash.nil? or user.password.to_s.length > 0
+       }
 
   SALT = 'change this to your own salt'
 
@@ -15,20 +17,32 @@ class Player < ActiveRecord::Base
     AjaxScaffold::ScaffoldColumn.new(self, {:name => c})
   }
 
+  def password
+    @password
+  end
+
   def password=(pass)
-    if pass == "" then
+    @password = pass
+    if pass.nil? or pass == "" then
       return
     end
-    @password = pass
-    self.password_hash = Digest::SHA256.hexdigest(pass + SALT)
+    self.password_hash = hash_password(pass, SALT)
     self.password_salt = SALT
   end
 
   def self.authenticate(nm, pass)
     u = self.find_by_name(nm)
     u.nil? and return nil
-    hash = Digest::SHA256.hexdigest(pass + u.password_salt)
-    u.password_hash == hash or return nil
+    u.check_password(pass) or return nil
     return u
+  end
+
+  def check_password(pass)
+    self.password_hash == hash_password(pass, self.password_salt) or return nil
+  end
+
+  private
+  def hash_password(pass, salt)
+    return Digest::SHA256.hexdigest(pass + salt)
   end
 end

@@ -5,6 +5,8 @@
   <% for column in Availability.content_columns %>
     <th><%= column.human_name %></th>
   <% end %>
+    <th>Player</th>
+    <th>Playdate</th>
   </tr>
   
 <% for availability in @availabilities %>
@@ -12,6 +14,8 @@
   <% for column in Availability.content_columns %>
     <td><%=h availability.send(column.name) %></td>
   <% end %>
+    <td><%=h availability.player.abbreviation %></td>
+    <td><%=h availability.playdate.day %></td>
     <td><%= link_to 'Show', :action => 'show', :id => availability %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => availability %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => availability }, :post => true, :confirm => 'Are you sure you want to destroy this availability?' %>
@@ -25,3 +29,5 @@
 <br />
 
 <%= link_to 'New availability', :action => 'new' %>
+<%= link_to 'Playdates', :controller => 'playdates', :action => 'list' %>
+<%= link_to 'Players', :controller => 'players', :action => 'list' %>

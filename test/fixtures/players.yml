@@ -4,4 +4,9 @@ admin:
   is_admin: true
 matijs:
   id: 2
+  abbreviation: "MvZ"
+  is_admin: false
+robert:
+  id: 3
+  abbreviation: "RJ"
   is_admin: false

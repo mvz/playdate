@@ -1,12 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
   
   # Sample of regular route:
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
+  # map.purchase 'products/:id/purchase', :controller => 'catalog',
+  #	:action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
 
   # You can have the root of your site routed by hooking up '' 
@@ -20,9 +22,10 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default route as the lowest priority.
   id_requirement     = /\d+/
   action_requirement = /[A-Za-z]\S*/
+
   map.connect ':controller/:action', :action => 'list',
-                                     :requirements => { :action => action_requirement }
+  :requirements => { :action => action_requirement }
+
   map.connect ':controller/:id/:action', :action => 'show',
-                                         :requirements => { :id     => id_requirement,
-                                                            :action => action_requirement }
+    :requirements => { :id => id_requirement, :action => action_requirement }
 end
