@@ -2,12 +2,19 @@
 
 <table>
   <tr>
+    <th></th>
     <th>Playdate</th>
   </tr>
   
-<% for playdate in @playdates %>
   <tr>
+    <th>Player</th>
+    <% for playdate in @playdates %>
     <td><%=h playdate.day %></td>
+    <% end %>
   </tr>
-<% end %>
+  <% for player in regular_players %>
+  <tr>
+    <td><%=h player.abbreviation %></td>
+  </tr>
+  <% end %>
 </table>

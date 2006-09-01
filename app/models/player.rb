@@ -2,6 +2,9 @@ require 'ajax_scaffold'
 require 'digest/sha2'
 
 class Player < ActiveRecord::Base
+  has_many :availabilities
+  has_many :playdates, :through => :availabilities
+
   validates_presence_of :name
   validates_confirmation_of :password
   validates_uniqueness_of :name
