@@ -1,0 +1,13 @@
+<h1>Playdate! The Application</h1>
+
+<table>
+  <tr>
+    <th>Playdate</th>
+  </tr>
+  
+<% for playdate in @playdates %>
+  <tr>
+    <td><%=h playdate.day %></td>
+  </tr>
+<% end %>
+</table>

@@ -5,7 +5,7 @@
 <%= text_field 'availability', 'status'  %></p>
 <p><label for="availability_player">Player</label><br/>
 <%= select 'availability', 'player_id',
-Player.find_all.select{ |p| not p.is_admin }.map { |p| [p.name, p.id] } %></p>
+regular_players.map { |p| [p.name, p.id] } %></p>
 <p><label for="availability_playdate">Playdate</label><br/>
 <%= select 'availability', 'playdate_id',
 Playdate.find_all.map { |d| [d.day, d.id] } %></p>

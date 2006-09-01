@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title><%= controller.controller_name %>: <%= controller.action_name %></title>
+    <%= stylesheet_link_tag 'trestle' %>
+  </head>
+  <body>
+
+    <p style="color: green"><%= flash[:notice] %></p>
+
+    <%= @content_for_layout %>
+
+    <p>
+    <%= link_to 'Playdates', :controller => 'playdates', :action => 'list' %>
+    <%= link_to 'Availabilities', :controller => 'availabilities', :action => 'list' %>
+    <%= link_to 'Players', :controller => 'players', :action => 'list' %>
+    </p>
+
+  </body>
+</html>

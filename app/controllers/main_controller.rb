@@ -1,4 +1,5 @@
 class MainController < ApplicationController
-  def list
+  def index
+    @playdates = Playdate.find_all()
   end
 end
