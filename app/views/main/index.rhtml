@@ -3,38 +3,42 @@
 
 <h1>Playdate! The Application</h1>
 
-<table>
-  <tr>
-    <th></th>
-    <th>Datum</th>
-  </tr>
-  
-  <tr>
-    <th>Speler</th>
-    <% for playdate in @playdates %>
-    <td><%=h playdate.day %></td>
+<div class="content">
+  <%= render :partial => 'flash' %>
+
+  <table>
+    <tr>
+      <th></th>
+      <th>Datum</th>
+    </tr>
+
+    <tr>
+      <th>Speler</th>
+      <% for playdate in @playdates %>
+      <td><%=h playdate.day %></td>
+      <% end %>
+    </tr>
+    <% for player in regular_players %>
+    <tr>
+      <td>
+        <% if player == @current_user %>
+        <strong><%=h player.abbreviation %></strong>
+        <% else %>
+        <%=h player.abbreviation %>
+        <%end%>
+      </td>
+      <% avs = player.availabilities_by_day %>
+      <% for playdate in @playdates %>
+      <td>
+        <%=h avs[playdate.day].nil? ? "" : avs[playdate.day].status_character %>
+      </td>
+      <% end %>
+      <td>
+        <% if player == @current_user %>
+        <%= link_to 'Wijzigen', :action => 'edit' %>
+        <%end%>
+      </td>
+    </tr>
     <% end %>
-  </tr>
-  <% for player in regular_players %>
-  <tr>
-    <td>
-      <% if player == @current_user %>
-      <strong><%=h player.abbreviation %></strong>
-      <% else %>
-      <%=h player.abbreviation %>
-      <%end%>
-    </td>
-    <% avs = player.availabilities_by_day %>
-    <% for playdate in @playdates %>
-    <td>
-      <%=h avs[playdate.day].nil? ? "" : avs[playdate.day].status_character %>
-    </td>
-    <% end %>
-    <td>
-      <% if player == @current_user %>
-      <%= link_to 'Wijzigen', :action => 'edit' %>
-      <%end%>
-    </td>
-  </tr>
-  <% end %>
-</table>
+  </table>
+</div>

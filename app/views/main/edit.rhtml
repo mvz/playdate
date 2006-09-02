@@ -1,31 +1,34 @@
 <h1>Beschikbaarheid bewerken</h1>
 
-<p class="instruction">Vul hieronder in wanneer je beschikbaar bent.</p>
-<%= start_form_tag :action => 'edit' %>
-<table>
-  <tr>
-    <th>Datum</th>
-    <% for playdate in @playdates %>
-    <td><%=h playdate.day %></td>
-    <% end %>
-  </tr>
-  <tr>
-    <th>Beschikbaarheid</th>
-    <% avs = @current_user.availabilities_by_day %>
-    <%
-    opts = Availability::VALUES.map do |v|
-      [Availability::LONG_DISPLAY[v], v]
-    end
-    %>
-    <% for playdate in @playdates %>
-    <td>
-      <% fields_for :availability, avs[playdate.day] do |av_fields| %>
-      <%= av_fields.select 'status', opts, {}, { "index" => playdate.id } %>
+<div class="content">
+  <%= render :partial => 'flash' %>
+  <p class="instruction">Vul hieronder in wanneer je beschikbaar bent.</p>
+  <%= start_form_tag :action => 'edit' %>
+  <table>
+    <tr>
+      <th>Datum</th>
+      <% for playdate in @playdates %>
+      <td><%=h playdate.day %></td>
       <% end %>
-    </td>
-    <% end %>
-  </tr>
-</table>
-<%= submit_tag 'Opslaan' %>
-<%= end_form_tag %>
-<p><%= link_to 'Terug naar overzicht', :action => 'index' %></p>
+    </tr>
+    <tr>
+      <th>Beschikbaarheid</th>
+      <% avs = @current_user.availabilities_by_day %>
+      <%
+      opts = Availability::VALUES.map do |v|
+      [Availability::LONG_DISPLAY[v], v]
+      end
+      %>
+      <% for playdate in @playdates %>
+      <td>
+        <% fields_for :availability, avs[playdate.day] do |av_fields| %>
+        <%= av_fields.select 'status', opts, {}, { "index" => playdate.id } %>
+        <% end %>
+      </td>
+      <% end %>
+    </tr>
+  </table>
+  <%= submit_tag 'Opslaan' %>
+  <%= end_form_tag %>
+  <p><%= link_to 'Terug naar overzicht', :action => 'index' %></p>
+</div>
