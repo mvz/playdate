@@ -6,7 +6,8 @@
     <th>Playdate</th>
   </tr>
   
-  <p>Welkom, <%=h @current_user.full_name %>.</p>
+    <p>Welkom, <%=h @current_user.full_name %>.
+    <%= link_to 'Uitloggen', :controller => 'login', :action => 'logout' %></p>
   <tr>
     <th>Player</th>
     <% for playdate in @playdates %>

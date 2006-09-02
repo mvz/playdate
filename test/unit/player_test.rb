@@ -60,7 +60,8 @@ class PlayerTest < Test::Unit::TestCase
   def test_availabilities_by_day
     avs = @matijs.availabilities_by_day
     assert avs.length == 2, "Expected 2 availabilities"
-    assert_equal( { @friday.day => 1, @saturday.day => 1 }, avs, "Wrong contents for avs" )
+    assert_equal({ @friday.day => @onfriday, @saturday.day => @onsaturday },
+                 avs, "Wrong contents for avs" )
   end
 
   def test_associations
