@@ -1,12 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 admin:
   id: 1
+  name: "admin"
   is_admin: true
 matijs:
   id: 2
   abbreviation: "MvZ"
   is_admin: false
+  name: "matijs"
+  #password: "matpas"
+  #password_confirmation: "matpas"
 robert:
   id: 3
   abbreviation: "RJ"
   is_admin: false
+  name: "robert"

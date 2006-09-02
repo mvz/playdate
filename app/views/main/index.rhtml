@@ -15,6 +15,12 @@
   <% for player in regular_players %>
   <tr>
     <td><%=h player.abbreviation %></td>
+    <% avs = player.availabilities_by_day %>
+    <% for playdate in @playdates %>
+    <td>
+      <%=h avs[playdate.day] %>
+    </td>
+    <% end %>
   </tr>
   <% end %>
 </table>

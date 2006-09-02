@@ -6,7 +6,7 @@ class LoginController < ApplicationController
       player = Player.authenticate(params[:name], params[:password])
       if player
         session[:user_id] = player.id
-        redirect_to(:action => "index")
+        redirect_to(:controller => "main", :action => "index")
       else
         flash[:notice] = "Login failed"
       end
@@ -18,8 +18,5 @@ class LoginController < ApplicationController
       session[:user_id] = nil
       redirect_to(:action => "login")
     end
-  end
-
-  def index
   end
 end

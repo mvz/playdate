@@ -24,11 +24,7 @@ class AvailabilityTest < Test::Unit::TestCase
     assert availability.valid?, "Availability should be valid"
     assert availability.status == 1
     @new_params.each_pair do |attr_name,attr_value|
-      assert_equal attr_value, availability[attr_name], "Player.@#{attr_name.to_s} incorrect"
+      assert_equal attr_value, availability[attr_name], "Availability.@#{attr_name.to_s} incorrect"
     end
-  end
-  # Replace this with your real tests.
-  def test_truth
-    assert true
   end
 end

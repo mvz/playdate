@@ -1,11 +1,11 @@
 # Matijs has an availability on both dates, so we can use robert to add
 # availabilities.
-first:
+onfriday:
   id: 1
   player_id: 2
   playdate_id: 1
   status: 1
-another:
+onsaturday:
   id: 2
   player_id: 2
   playdate_id: 2

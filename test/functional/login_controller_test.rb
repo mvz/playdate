@@ -23,8 +23,21 @@ class LoginControllerTest < Test::Unit::TestCase
     assert_response :success
   end
 
-  def test_login
+  def test_login_using_get
     get :login
     assert_response :success
+    assert_template 'login'
+  end
+
+  def test_login_using_post
+    matijs = players(:matijs)
+    matijs.password = "gnoef!"
+    matijs.password_confirmation = "gnoef!"
+    matijs.save!
+    post :login, {:name => "matijs", :password => "gnoef!"}
+    assert_redirected_to :controller => "main", :action => "index"
+    post :login, {:name => "matijs", :password => "zonk"}
+    assert_response :success
+    assert_template 'login'
   end
 end

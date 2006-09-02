@@ -99,7 +99,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_new_using_post
     num_playdates = Playdate.count
 
-    post 'new', {:playdate => {}}, @playersession
+    post 'new', {:playdate => {:day => "2006-03-11"}}, @playersession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

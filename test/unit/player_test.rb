@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class PlayerTest < Test::Unit::TestCase
   fixtures :players
+  fixtures :playdates
+  fixtures :availabilities
 
   # TODO: More tests!!
 
@@ -11,7 +13,11 @@ class PlayerTest < Test::Unit::TestCase
 
   def setup
     # Retrieve fixtures via their name
-    # @first = players(:first)
+    @matijs = players(:matijs)
+    @friday = playdates(:friday)
+    @saturday = playdates(:saturday)
+    @onfriday = availabilities(:onfriday)
+    @onsaturday = availabilities(:onsaturday)
   end
 
   def test_raw_validation
@@ -37,6 +43,11 @@ class PlayerTest < Test::Unit::TestCase
     end
   end
 
+  def test_password
+    @matijs.password = "zoppa"
+    assert @matijs.check_password("zoppa")
+  end
+
   def test_duplicate
     current_player = Player.find_first
     DUPLICATE_ATTR_NAMES.each do |attr_name|
@@ -44,6 +55,21 @@ class PlayerTest < Test::Unit::TestCase
       assert !player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
       assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
     end
+  end
+
+  def test_availabilities_by_day
+    avs = @matijs.availabilities_by_day
+    assert avs.length == 2, "Expected 2 availabilities"
+    assert_equal( { @friday.day => 1, @saturday.day => 1 }, avs, "Wrong contents for avs" )
+  end
+
+  def test_associations
+    avs = @matijs.availabilities.sort {|a,b| a.id <=> b.id }
+    assert avs.length == 2, "Expected 2 availabilities"
+    assert_equal( [ @onfriday, @onsaturday ], avs, "Did not get right availabilities for matijs" )
+    pds = @matijs.playdates.sort {|a,b| a.id <=> b.id }
+    assert pds.length == 2, "Expected 2 playdates"
+    assert_equal( [ @friday, @saturday ], pds, "Did not get right playdates for matijs" )
   end
 end
 

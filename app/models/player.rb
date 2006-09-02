@@ -44,6 +44,12 @@ class Player < ActiveRecord::Base
     self.password_hash == hash_password(pass, self.password_salt) or return nil
   end
 
+  def availabilities_by_day
+    self.availabilities.inject({}) { |h,av|
+      h[av.playdate.day] = av.status; h
+    }
+  end
+
   private
   def hash_password(pass, salt)
     return Digest::SHA256.hexdigest(pass + salt)
