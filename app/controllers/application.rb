@@ -3,17 +3,18 @@
 class ApplicationController < ActionController::Base
   private
   def authorize
-    get_current_user or access_denied_not_logged_in
+    @current_user = current_user
+    @current_user or access_denied_not_logged_in
   end
   def authorize_admin 
-    ad = get_current_user
-    unless ad
+    @current_user = current_user
+    unless @current_user
       access_denied_not_logged_in
     else
-      ad.is_admin or access_denied_no_admin
+      @current_user.is_admin or access_denied_no_admin
     end
   end
-  def get_current_user
+  def current_user
     Player.find_by_id(session[:user_id])
   end
   def access_denied_not_logged_in

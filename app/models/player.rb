@@ -46,7 +46,7 @@ class Player < ActiveRecord::Base
 
   def availabilities_by_day
     self.availabilities.inject({}) { |h,av|
-      h[av.playdate.day] = av.status; h
+      h[av.playdate.day] = av; h
     }
   end
 

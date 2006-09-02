@@ -1,6 +1,26 @@
 class MainController < ApplicationController
   before_filter :authorize
+  #verify :only => [ 'edit' ],
+  #       :params => :id,
+  #       :add_flash => { :notice => 'Missing player ID.' },
+  #       :redirect_to => { :action => 'index' }
   def index
     @playdates = Playdate.find(:all, :order => "day")
+  end
+
+  def edit
+    @playdates = Playdate.find(:all)
+    if request.post?
+      avs = @current_user.availabilities_by_day
+      params[:availability].each do |p_id, av_param|
+        p = Playdate.find(p_id) or next
+        av = avs[p.day] ||
+          @current_user.availabilities.build({:playdate => p})
+        av.status = av_param[:status]
+        av.save!
+      end
+      flash[:notice] = 'The availabilities were successfully updated.'
+      redirect_to :action => 'index'
+    end
   end
 end

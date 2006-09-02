@@ -6,6 +6,7 @@
     <th>Playdate</th>
   </tr>
   
+  <p>Welkom, <%=h @current_user.full_name %>.</p>
   <tr>
     <th>Player</th>
     <% for playdate in @playdates %>
@@ -14,13 +15,24 @@
   </tr>
   <% for player in regular_players %>
   <tr>
-    <td><%=h player.abbreviation %></td>
+    <td>
+      <% if player == @current_user %>
+      <strong><%=h player.abbreviation %></strong>
+      <% else %>
+      <%=h player.abbreviation %>
+      <%end%>
+    </td>
     <% avs = player.availabilities_by_day %>
     <% for playdate in @playdates %>
     <td>
-      <%=h avs[playdate.day] %>
+      <%=h avs[playdate.day].nil? ? "" : avs[playdate.day].status %>
     </td>
     <% end %>
+    <td>
+      <% if player == @current_user %>
+      <%= link_to 'Edit', :action => 'edit' %>
+      <%end%>
+    </td>
   </tr>
   <% end %>
 </table>

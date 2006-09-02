@@ -1,0 +1,25 @@
+<h1>Beschikbaarheid bewerken</h1>
+
+<%= start_form_tag :action => 'edit' %>
+<table>
+  <tr>
+    <th>Datum</th>
+    <% for playdate in @playdates %>
+    <td><%=h playdate.day %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th>Av</th>
+    <% avs = @current_user.availabilities_by_day %>
+    <% for playdate in @playdates %>
+    <td>
+      <% fields_for :availability, avs[playdate.day] do |av_fields| %>
+      <%= av_fields.select 'status', { 1 => 1, 0 => 0 }, {}, { "index" => playdate.id } %>
+      <% end %>
+    </td>
+    <% end %>
+  </tr>
+</table>
+<%= submit_tag 'Save' %>
+<%= end_form_tag %>
+<p><%= link_to 'Terug', :action => 'index' %></p>
