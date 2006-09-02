@@ -1,15 +1,16 @@
+<p class="logout">Ingelogd als <%=h @current_user.full_name %>.
+<%= link_to 'Uitloggen', :controller => 'login', :action => 'logout' %></p>
+
 <h1>Playdate! The Application</h1>
 
 <table>
   <tr>
     <th></th>
-    <th>Playdate</th>
+    <th>Datum</th>
   </tr>
   
-    <p>Welkom, <%=h @current_user.full_name %>.
-    <%= link_to 'Uitloggen', :controller => 'login', :action => 'logout' %></p>
   <tr>
-    <th>Player</th>
+    <th>Speler</th>
     <% for playdate in @playdates %>
     <td><%=h playdate.day %></td>
     <% end %>
@@ -26,12 +27,12 @@
     <% avs = player.availabilities_by_day %>
     <% for playdate in @playdates %>
     <td>
-      <%=h avs[playdate.day].nil? ? "" : avs[playdate.day].status %>
+      <%=h avs[playdate.day].nil? ? "" : avs[playdate.day].status_character %>
     </td>
     <% end %>
     <td>
       <% if player == @current_user %>
-      <%= link_to 'Edit', :action => 'edit' %>
+      <%= link_to 'Wijzigen', :action => 'edit' %>
       <%end%>
     </td>
   </tr>

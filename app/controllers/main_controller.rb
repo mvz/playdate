@@ -9,7 +9,7 @@ class MainController < ApplicationController
   end
 
   def edit
-    @playdates = Playdate.find(:all)
+    @playdates = Playdate.find(:all, :order => "day")
     if request.post?
       avs = @current_user.availabilities_by_day
       params[:availability].each do |p_id, av_param|
@@ -19,7 +19,7 @@ class MainController < ApplicationController
         av.status = av_param[:status]
         av.save!
       end
-      flash[:notice] = 'The availabilities were successfully updated.'
+      flash[:notice] = 'Wijzigingen succesvol.'
       redirect_to :action => 'index'
     end
   end

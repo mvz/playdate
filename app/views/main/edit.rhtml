@@ -1,5 +1,6 @@
 <h1>Beschikbaarheid bewerken</h1>
 
+<p class="instruction">Vul hieronder in wanneer je beschikbaar bent.</p>
 <%= start_form_tag :action => 'edit' %>
 <table>
   <tr>
@@ -9,17 +10,22 @@
     <% end %>
   </tr>
   <tr>
-    <th>Av</th>
+    <th>Beschikbaarheid</th>
     <% avs = @current_user.availabilities_by_day %>
+    <%
+    opts = Availability::VALUES.map do |v|
+      [Availability::LONG_DISPLAY[v], v]
+    end
+    %>
     <% for playdate in @playdates %>
     <td>
       <% fields_for :availability, avs[playdate.day] do |av_fields| %>
-      <%= av_fields.select 'status', { 1 => 1, 0 => 0 }, {}, { "index" => playdate.id } %>
+      <%= av_fields.select 'status', opts, {}, { "index" => playdate.id } %>
       <% end %>
     </td>
     <% end %>
   </tr>
 </table>
-<%= submit_tag 'Save' %>
+<%= submit_tag 'Opslaan' %>
 <%= end_form_tag %>
-<p><%= link_to 'Terug', :action => 'index' %></p>
+<p><%= link_to 'Terug naar overzicht', :action => 'index' %></p>
