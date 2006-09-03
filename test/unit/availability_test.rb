@@ -27,4 +27,13 @@ class AvailabilityTest < Test::Unit::TestCase
       assert_equal attr_value, availability[attr_name], "Availability.@#{attr_name.to_s} incorrect"
     end
   end
+
+  def test_constants
+    assert Availability::VALUES.length == 4
+  end
+
+  def test_status_character
+    assert_equal "+", availability(:onfriday)
+    assert_equal "h", availability(:onsaturday)
+  end
 end

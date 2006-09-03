@@ -14,11 +14,14 @@
 
     <tr>
       <th>Speler</th>
-      <% for playdate in @playdates %>
-      <td><%=h playdate.day %></td>
+      <% @playdates.each_with_index do |playdate,i| %>
+      <td class="<%= status_to_class(playdate.status, @max, @players.length) %>">
+        <%=h playdate.day %>
+      </td>
       <% end %>
     </tr>
-    <% for player in regular_players %>
+
+    <% for player in @players %>
     <tr>
       <td>
         <% if player == @current_user %>
@@ -27,12 +30,14 @@
         <%=h player.abbreviation %>
         <%end%>
       </td>
+
       <% avs = player.availabilities_by_day %>
       <% for playdate in @playdates %>
-      <td>
+      <td class="<%= status_to_class(playdate.status, @max, @players.length) %>">
         <%=h avs[playdate.day].nil? ? "" : avs[playdate.day].status_character %>
       </td>
       <% end %>
+
       <td>
         <% if player == @current_user %>
         <%= link_to 'Wijzigen', :action => 'edit' %>
@@ -40,5 +45,12 @@
       </td>
     </tr>
     <% end %>
+
+    <tr>
+      <th>Optie?</th>
+      <% for playdate in @playdates %>
+      <td><%= status_to_text(playdate.status, @max, @players.length) %></td>
+      <% end %>
+    </tr>
   </table>
 </div>

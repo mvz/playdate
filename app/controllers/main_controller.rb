@@ -1,11 +1,18 @@
 class MainController < ApplicationController
   before_filter :authorize
+
+  MIN_PLAYERS = 2
+
   #verify :only => [ 'edit' ],
   #       :params => :id,
   #       :add_flash => { :notice => 'Missing player ID.' },
   #       :redirect_to => { :action => 'index' }
+
   def index
+    @players = Player.find(:all, :order => "abbreviation")
     @playdates = Playdate.find(:all, :order => "day")
+    @stats = @playdates.map {|p| p.status }
+    @max = @stats.map {|s| s[:yes] }.max
   end
 
   def edit

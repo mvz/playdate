@@ -1,9 +1,12 @@
 <h1>Log out</h1>
+<div class="content">
 <div class="playdate-form">
   <fieldset>
     <legend>Are you sure you want to log out?</legend>
     <%= start_form_tag %>
-    <p><%= submit_tag "Log out" %></p>
+    <p><%= submit_tag "Yes, log out" %></p>
+    <p><%= link_to 'No, go back to list', :controller => 'main', :action => 'index' %></p>
     <%= end_form_tag %>
   </fieldset>
+</div>
 </div>

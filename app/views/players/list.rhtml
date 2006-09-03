@@ -1,1 +1,6 @@
 <%= render_component :controller => '/players', :action => 'component', :params => params %>
+<p>
+<%= link_to 'Availabilities', :controller => 'availabilities', :action => 'list' %>
+<%= link_to 'Playdates', :controller => 'players', :action => 'list' %>
+<%= link_to 'Home', :controller => 'main', :action => 'index' %>
+</p>

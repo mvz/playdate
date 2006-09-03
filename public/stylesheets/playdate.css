@@ -34,10 +34,11 @@ h1 {
   margin-right: 0.5em;
 }
 
-body, p, ol, ul, td {
-  /*font-size:   13px;
-  line-height: 18px;*/
+td.best {
+  background-color: #0e5;
 }
+
+/* Below is from trestle */
 
 pre {
   background-color: #eee;
