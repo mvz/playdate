@@ -1,7 +1,7 @@
 class MainController < ApplicationController
   before_filter :authorize
 
-  MIN_PLAYERS = 2
+  MIN_PLAYERS = 4
 
   #verify :only => [ 'edit' ],
   #       :params => :id,

@@ -9,6 +9,6 @@ module MainHelper
     return "Beste" if max >= MainController::MIN_PLAYERS && status[:yes] == max
     return "Ja" if status[:yes] >= MainController::MIN_PLAYERS
     return "Nee" if status[:no] > (numplayers - MainController::MIN_PLAYERS)
-    return "Kweenie"
+    return "" # "Misschien"
   end
 end

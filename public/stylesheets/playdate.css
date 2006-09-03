@@ -34,8 +34,67 @@ h1 {
   margin-right: 0.5em;
 }
 
-td.best {
+table.playdate-overview {
+  border-collapse: collapse;
+}
+
+.playdate-overview td.neutral {
+  background-color: #ddd;
+}
+.playdate-overview td.best {
   background-color: #0e5;
+}
+.playdate-overview td.option {
+  background-color: #ae5;
+}
+.playdate-overview td.bad {
+  background-color: #f88;
+}
+
+.playdate-overview td.neutral.current {
+  background-color: #ccc;
+}
+.playdate-overview td.best.current {
+  background-color: #0d4;
+}
+.playdate-overview td.option.current {
+  background-color: #9d4;
+}
+.playdate-overview td.bad.current {
+  background-color: #e77;
+}
+
+.playdate-overview td.player {
+  background-color: #ddd;
+  border-right: 1px solid #444;
+}
+.playdate-overview td.player.current {
+  background-color: #ccc;
+  /*border-right: 1px solid #444;*/
+}
+.playdate-overview th.player,
+.playdate-overview th.playdate {
+  background-color: #444;
+  color: #fff;
+  border-bottom: 1px solid #111;
+}
+.playdate-overview td.playdate {
+  width: 5em;
+  text-align: center;
+}
+
+.playdate-overview .action {
+  background-color: #aaa;
+}
+.playdate-overview .summary {
+  background-color: #05b;
+  color: #fff;
+  border-top: 1px solid #008;
+}
+
+th.candy {
+  padding: 0px;
+  background-color: #05b;
 }
 
 /* Below is from trestle */
