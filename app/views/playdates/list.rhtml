@@ -1,5 +1,7 @@
 <h1>Listing playdates</h1>
 
+<div class="content">
+<%= render :partial => 'shared/flash' %>
 <table>
   <tr>
   <% for column in Playdate.content_columns %>
@@ -19,12 +21,15 @@
 <% end %>
 </table>
 
+<p>
 <%= link_to 'Previous page', { :page => @playdate_pages.current.previous } if @playdate_pages.current.previous %>
 <%= link_to 'Next page', { :page => @playdate_pages.current.next } if @playdate_pages.current.next %> 
+</p>
 
-<br />
-
+<p>
 <%= link_to 'New playdate', :action => 'new' %>
 <%= link_to 'Availabilities', :controller => 'availabilities', :action => 'list' %>
 <%= link_to 'Players', :controller => 'players', :action => 'list' %>
 <%= link_to 'Home', :controller => 'main', :action => 'index' %>
+</p>
+</div>

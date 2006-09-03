@@ -1,8 +1,29 @@
-<h1>New playdate</h1>
+<h1>New playdates</h1>
 
-<%= start_form_tag :action => 'new' %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Save' %>
-<%= end_form_tag %>
+<div class="content">
+  <%= render :partial => 'shared/flash' %>
+  <p>Kies een methode om een of meer nieuwe datums te maken.</p>
+  <fieldset>
+    <legend>Kies een specifieke datum.</legend>
+    <%= start_form_tag :action => 'new' %>
+    <%= render :partial => 'form' %>
+    <%= submit_tag 'Opslaan' %>
+    <%= end_form_tag %>
+  </fieldset>
 
-<%= link_to 'Back to list', :action => 'list' %>
+  <fieldset>
+    <legend>Voeg een reeks toe.</legend>
+    <%= start_form_tag :action => 'new' %>
+    <p>
+    <label for="daytype">Soort dag:</label>
+    <%= select_tag 'daytype', daytype_options(@daytype) %>
+    </p>
+    <p>
+    <label for="period">Tot einde van:</label>
+    <%= select_tag 'period', period_options(@period) %>
+    </p>
+    <%= submit_tag 'Reeks maken' %>
+    <%= end_form_tag %>
+  </fieldset>
+  <%= link_to 'Back to list', :action => 'list' %>
+</div>

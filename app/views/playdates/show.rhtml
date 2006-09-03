@@ -1,3 +1,7 @@
+<h1>Playdate: <%=h @playdate.day.strftime() %></h1>
+
+<div class="content">
+<%= render :partial => 'shared/flash' %>
 <% for column in Playdate.content_columns %>
 <p>
   <b><%= column.human_name %>:</b> <%= h @playdate.send(column.name) %>
@@ -6,3 +10,4 @@
 
 <%= link_to 'Edit', :action => 'edit', :id => @playdate %> |
 <%= link_to 'Back to list', :action => 'list' %>
+</div>

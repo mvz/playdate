@@ -33,7 +33,7 @@ class AvailabilityTest < Test::Unit::TestCase
   end
 
   def test_status_character
-    assert_equal "+", availability(:onfriday)
-    assert_equal "h", availability(:onsaturday)
+    assert_equal "+", availabilities(:onfriday).status_character
+    assert_equal "h", availabilities(:onsaturday).status_character
   end
 end
