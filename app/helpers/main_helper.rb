@@ -1,14 +1,17 @@
 module MainHelper
+  STATUS_CLASSES = ["bad", "neutral", "option", "best"]
+  STATUS_TEXTS = ["Nee", "", "Ja", "Beste"] # "Misschien" for "" ?
   def status_to_class(status, max, numplayers)
-    return "best" if max >= MainController::MIN_PLAYERS && status[:yes] == max
-    return "option" if status[:yes] >= MainController::MIN_PLAYERS
-    return "bad" if status[:no] > (numplayers - MainController::MIN_PLAYERS)
-    return "neutral"
+    return STATUS_CLASSES[status_code(status, max, numplayers)]
   end
   def status_to_text(status, max, numplayers)
-    return "Beste" if max >= MainController::MIN_PLAYERS && status[:yes] == max
-    return "Ja" if status[:yes] >= MainController::MIN_PLAYERS
-    return "Nee" if status[:no] > (numplayers - MainController::MIN_PLAYERS)
-    return "" # "Misschien"
+    return STATUS_TEXTS[status_code(status, max, numplayers)]
+  end
+  def status_code(status, max, numplayers)
+    min = [numplayers, MainController::MIN_PLAYERS].min
+    return 3 if max >= min && status[:yes] == max
+    return 2 if status[:yes] >= min
+    return 0 if status[:no] > (numplayers - min)
+    return 1
   end
 end
