@@ -107,6 +107,21 @@ class PlaydatesControllerTest < Test::Unit::TestCase
     assert_equal num_playdates + 1, Playdate.count
   end
 
+  def test_new_range_using_post
+    num_playdates = Playdate.count
+
+    post 'new', {:period => 2, :daytype => 6}, @playersession
+
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+
+    assert Playdate.count >= num_playdates + 4
+
+    post 'new', {:period => 3, :daytype => 7}, @playersession
+
+    assert_response :success
+  end
+
   def test_show
     get 'show', {:id => 1}, @playersession
 

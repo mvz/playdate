@@ -90,7 +90,6 @@ class PlaydatesController < ApplicationController
       break if nw.month > endmonth
       unless Playdate.find_by_day(nw)
         Playdate.new(:day => nw).save
-        flash[:notice] += "#{nw.to_s}; "
         count += 1
       end
     end
