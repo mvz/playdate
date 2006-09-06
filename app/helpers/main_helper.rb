@@ -14,4 +14,7 @@ module MainHelper
     return 0 if status[:no] > (numplayers - min)
     return 1
   end
+  def class_if_current_user(player)
+      player == @current_user ? "current" : ""
+  end
 end

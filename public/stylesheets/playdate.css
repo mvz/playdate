@@ -38,20 +38,21 @@ table.playdate-overview {
   border-collapse: collapse;
 }
 
-.playdate-overview td.neutral {
+/*.playdate-overview td.playdate.neutral,*/
+.playdate-overview td.playdate {
   background-color: #ddd;
 }
-.playdate-overview td.best {
+.playdate-overview td.playdate.best {
   background-color: #0e5;
 }
-.playdate-overview td.option {
+.playdate-overview td.playdate.option {
   background-color: #ae5;
 }
-.playdate-overview td.bad {
+.playdate-overview td.playdate.bad {
   background-color: #f88;
 }
 
-.playdate-overview td.neutral.current {
+.playdate-overview td.playdate.current {
   background-color: #ccc;
 }
 .playdate-overview td.best.current {

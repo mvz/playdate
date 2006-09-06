@@ -1,4 +1,5 @@
-- Handle case where no dates should be displayed
-- Fix ugly 'Wijzigen' link
 - Test
   - At least: playdate deletion code.
+- Fix ugly 'Wijzigen' link
+- Fixup layouts
+- Solve problem of people who never come nor fill in status.

@@ -8,11 +8,11 @@
 
   <table class="playdate-overview">
     <tr>
-      <th id="candy1" class="candy" colspan="<%= @playdates.length + 1 %>"></th>
+      <th id="candy1" class="candy" colspan="<%= [@playdates.length, 1].max + 1 %>"></th>
     </tr>
     <tr>
       <th class="player">Speler</th>
-      <th class="playdate" colspan="<%= @playdates.length %>">Datum</th>
+      <th class="playdate" colspan="<%= [@playdates.length, 1].max %>">Datum</th>
     </tr>
 
     <tr>
@@ -22,32 +22,24 @@
         <%=h "#{(d=playdate.day).mday}/#{d.mon}" %>
       </td>
       <% end %>
+      <% if @playdates.length == 0 %><td class="playdate" nowrap>Geen relevante speeldata gedefinieerd.</td><% end %>
     </tr>
 
     <% for player in @players %>
     <tr>
 
-      <% if player == @current_user %>
-
-      <td class="player current">
-        <%=h player.abbreviation %> <%= link_to 'Wijzigen', :action => 'edit' %>
-      </td>
-
-      <% else %>
-
-      <td class="player">
+      <td class="player <%= class_if_current_user(player)%>">
         <%=h player.abbreviation %>
+        <%= link_to 'Wijzigen', :action => 'edit' if player == @current_user  %>
       </td>
-
-      <%end%>
 
       <% avs = player.availabilities_by_day %>
       <% for playdate in @playdates %>
-      <td class="playdate <%= status_to_class(playdate.status, @max, @players.length) %> <%= player == @current_user ? "current" : ""%>">
+      <td class="playdate <%= status_to_class(playdate.status, @max, @players.length) %> <%= class_if_current_user(player) %>">
         <%=h avs[playdate.day].nil? ? "" : avs[playdate.day].status_character %>
       </td>
       <% end %>
-
+      <% if @playdates.length == 0 %><td class="playdate <%= class_if_current_user(player) %>"></td><% end %>
     </tr>
     <% end %>
 
@@ -56,9 +48,10 @@
       <% for playdate in @playdates %>
       <td><%= status_to_text(playdate.status, @max, @players.length) %></td>
       <% end %>
+      <% if @playdates.length == 0 %><td></td><% end %>
     </tr>
     <tr>
-      <th id="candy2" class="candy" colspan="<%= @playdates.length + 1 %>"></th>
+      <th id="candy2" class="candy" colspan="<%= [@playdates.length, 1].max + 1 %>"></th>
     </tr>
   </table>
     <script type="text/javascript">
