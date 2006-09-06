@@ -4,16 +4,14 @@
 <%= render :partial => 'shared/flash' %>
 <table>
   <tr>
-  <% for column in Playdate.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th>Day</th>
+    <th>Availabilities</th>
   </tr>
   
 <% for playdate in @playdates %>
   <tr>
-  <% for column in Playdate.content_columns %>
-    <td><%=h playdate.send(column.name) %></td>
-  <% end %>
+    <td><%=h playdate.day %></td>
+    <td><%=h playdate.availabilities.length %></td>
     <td><%= link_to 'Show', :action => 'show', :id => playdate %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => playdate %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => playdate }, :post => true, :confirm => 'Are you sure you want to destroy this playdate?' %>

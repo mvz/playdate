@@ -9,6 +9,7 @@ class Availability < ActiveRecord::Base
   STATUS_NEE = 2
   STATUS_HUIS = 3
 
+  # TODO: Encapsulate these into methods
   VALUES = [ STATUS_MISSCHIEN, STATUS_NEE, STATUS_JA, STATUS_HUIS ]
   LONG_DISPLAY = {
     STATUS_MISSCHIEN  => "Misschien",

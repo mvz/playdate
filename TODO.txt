@@ -1,2 +1,4 @@
 - Handle case where no dates should be displayed
-- Link to playdates, not players, from playdates link on players page
+- Fix ugly 'Wijzigen' link
+- Test
+  - At least: playdate deletion code.

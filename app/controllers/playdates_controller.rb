@@ -13,7 +13,9 @@ class PlaydatesController < ApplicationController
 
   def destroy
     if request.post?
-      Playdate.find(params[:id]).destroy
+      pd = Playdate.find(params[:id])
+      pd.availabilities.each { |av| av.destroy }
+      pd.destroy
       flash[:notice] = 'The playdate was successfully destroyed.'
       redirect_to :action => 'list'
     else
@@ -33,7 +35,7 @@ class PlaydatesController < ApplicationController
   end
 
   def list
-    @playdate_pages, @playdates = paginate(:playdates)
+    @playdate_pages, @playdates = paginate(:playdates, :order => 'day')
   end
 
   def new

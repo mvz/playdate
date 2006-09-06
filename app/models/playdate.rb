@@ -5,15 +5,16 @@ class Playdate < ActiveRecord::Base
   validates_uniqueness_of :day
 
   def status
-    #players = Player.find_all.length
     stat = Hash.new(0)
+    # TODO: We really should be using symbols here. This just sucks.
     self.availabilities.each { |av| stat[av.status] += 1 }
     yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
     no = stat[Availability::STATUS_NEE]
     maybe = stat[Availability::STATUS_MISSCHIEN]
-    #return "superbest" if yes == players 
-    #return "badass" if no == players 
-    "#{players}:#{yes}/#{no}/#{maybe}"
     { :yes => yes, :no => no, :maybe => maybe }
+  end
+
+  def to_s
+    self.day.strftime
   end
 end

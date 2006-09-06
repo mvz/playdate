@@ -8,6 +8,6 @@
 regular_players.map { |p| [p.name, p.id] } %></p>
 <p><label for="availability_playdate">Playdate</label><br/>
 <%= select 'availability', 'playdate_id',
-Playdate.find_all.map { |d| [d.day, d.id] } %></p>
+Playdate.find(:all).map { |d| [d.day, d.id] } %></p>
 <!--[eoform:availability]-->
 

@@ -2,12 +2,19 @@
 
 <div class="content">
 <%= render :partial => 'shared/flash' %>
-<% for column in Playdate.content_columns %>
+<p><b>Day:</b> <%= h @playdate.day %></p>
+<p><b>Availabilities:</b></p>
+<table>
+  <tr><th>Player</th><th>Status</th></tr>
+  <% for av in @playdate.availabilities %>
+  <tr>
+    <td><%= av.player.name %></td>
+    <td><%= av.status_character %></td>
+  </tr>
+  <% end %>
+</table>
 <p>
-  <b><%= column.human_name %>:</b> <%= h @playdate.send(column.name) %>
-</p>
-<% end %>
-
 <%= link_to 'Edit', :action => 'edit', :id => @playdate %> |
 <%= link_to 'Back to list', :action => 'list' %>
+</p>
 </div>
