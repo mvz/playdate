@@ -6,6 +6,7 @@ class PlaydatesController; def rescue_action(e) raise e end; end
 
 class PlaydatesControllerTest < Test::Unit::TestCase
   fixtures :playdates
+  fixtures :availabilities
   fixtures :players
 
   def setup
@@ -35,13 +36,18 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy_using_post
-    assert_not_nil Playdate.find(1)
+    pd = Playdate.find(1)
+    assert_not_nil pd
+    num_avs = Availability.count
+    num_pd_avs = pd.availabilities.count
 
     post 'destroy', {:id => 1}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) { Playdate.find(1) }
+    assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
+    assert_equal num_avs - num_pd_avs, Availability.count
   end
 
   def test_destroy_without_id
