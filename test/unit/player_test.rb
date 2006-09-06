@@ -12,7 +12,6 @@ class PlayerTest < Test::Unit::TestCase
   DUPLICATE_ATTR_NAMES = %w(name)
 
   def setup
-    # Retrieve fixtures via their name
     @matijs = players(:matijs)
     @friday = playdates(:friday)
     @saturday = playdates(:saturday)
@@ -23,7 +22,9 @@ class PlayerTest < Test::Unit::TestCase
   def test_raw_validation
     player = Player.new
     assert !player.valid?, "Player should not be valid without initialisation parameters"
-    REQ_ATTR_NAMES.each {|attr_name| assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"}
+    REQ_ATTR_NAMES.each {
+      |attr_name| assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+    }
   end
 
   def test_new
@@ -43,9 +44,23 @@ class PlayerTest < Test::Unit::TestCase
     end
   end
 
-  def test_password
+  def test_validates_length_of
+    @matijs.password = "zop"
+    assert !@matijs.valid?, "Too short password should be invalid"
+    # TODO: Do we need to make this test pass?
+    #@matijs.password = ""
+    #assert !@matijs.valid?, "Empty password should be invalid before setting"
+    @matijs.password = "zoppa"
+    assert @matijs.valid?, "Five char password should be valid"
+    @matijs.password = ""
+    assert @matijs.valid?, "Empty password should be valid after setting once"
+  end
+
+  def test_password_and_authenticate
     @matijs.password = "zoppa"
     assert @matijs.check_password("zoppa")
+    @matijs.save!
+    assert_equal @matijs, Player.authenticate("matijs", "zoppa")
   end
 
   def test_duplicate

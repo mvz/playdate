@@ -7,10 +7,6 @@ class AvailabilityTest < Test::Unit::TestCase
 
   REQ_ATTR_NAMES = %w(player_id playdate_id status)
 
-  def setup
-    @new_params = { :player_id => players(:robert).id, :playdate_id => playdates(:friday).id, :status => 1 }
-  end
-
   def test_raw_validation
     availability = Availability.new
     assert !availability.valid?, "Availability should not be valid without initialisation parameters"
@@ -20,10 +16,11 @@ class AvailabilityTest < Test::Unit::TestCase
   end
 
   def test_new
-    availability = Availability.new(@new_params)
+    new_params = { :player_id => players(:robert).id, :playdate_id => playdates(:friday).id, :status => 1 }
+    availability = Availability.new(new_params)
     assert availability.valid?, "Availability should be valid"
     assert availability.status == 1
-    @new_params.each_pair do |attr_name,attr_value|
+    new_params.each_pair do |attr_name,attr_value|
       assert_equal attr_value, availability[attr_name], "Availability.@#{attr_name.to_s} incorrect"
     end
   end
@@ -34,6 +31,11 @@ class AvailabilityTest < Test::Unit::TestCase
 
   def test_status_character
     assert_equal "+", availabilities(:onfriday).status_character
-    assert_equal "h", availabilities(:onsaturday).status_character
+    @onsaturday = availabilities(:onsaturday)
+    assert_equal "h", @onsaturday.status_character
+    @onsaturday.status = Availability::STATUS_NEE
+    assert_equal "-", @onsaturday.status_character
+    @onsaturday.status = Availability::STATUS_MISSCHIEN
+    assert_equal "?", @onsaturday.status_character
   end
 end

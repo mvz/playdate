@@ -5,10 +5,7 @@ class PlaydateTest < Test::Unit::TestCase
 
   REQ_ATTR_NAMES = %w(day)
   DUPLICATE_ATTR_NAMES = %w(day)
-
-  def setup
-    @new_params = { :day => "2006-01-10" }
-  end
+  NEW_PARAMS = { :day => "2006-01-10" }
 
   def test_raw_validation
     dt = Playdate.new
@@ -19,7 +16,7 @@ class PlaydateTest < Test::Unit::TestCase
   end
 
   def test_new
-    dt = Playdate.new(@new_params)
+    dt = Playdate.new(NEW_PARAMS)
     assert dt.valid?, "Availability should be valid"
     assert_equal Date.new(2006,1,10), dt.day, "Playdate.day incorrect"
   end
@@ -29,5 +26,9 @@ class PlaydateTest < Test::Unit::TestCase
     playdate = Playdate.new(:day => current[:day])
     assert !playdate.valid?, "Player should be invalid, as @day is a duplicate"
     assert playdate.errors.invalid?(:day), "Should be an error message for :day"
+  end
+
+  def test_to_s
+    assert_equal "2006-02-10", playdates(:friday).to_s
   end
 end
