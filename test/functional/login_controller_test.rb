@@ -13,16 +13,6 @@ class LoginControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_index_without_player
-    get :index
-    assert_redirected_to :action => "login"
-  end
-
-  def test_index_with_player
-    get :index, {}, {:user_id => players(:matijs).id }
-    assert_response :success
-  end
-
   def test_login_using_get
     get :login
     assert_response :success
@@ -40,4 +30,6 @@ class LoginControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'login'
   end
+
+  # TODO: Test logout
 end

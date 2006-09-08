@@ -1,3 +1,2 @@
-- Test more
-- Fixup layouts
 - Solve problem of people who never come nor fill in status.
+- Test more

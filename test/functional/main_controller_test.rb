@@ -25,8 +25,13 @@ class MainControllerTest < Test::Unit::TestCase
     end
   end
 
+  def test_index_without_player
+    get :index, {}, {}
+    assert_redirected_to :action => "login"
+  end
+
   def test_index
-    get "index", {}, @playersession
+    get :index, {}, @playersession
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)

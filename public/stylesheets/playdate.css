@@ -70,12 +70,14 @@ table.playdate-overview {
 }
 
 .playdate-overview td.player {
+  width: 8em;
   border-right: 1px solid #999;
   font-weight: bold;
 }
 .playdate-overview th {
   background-color: #444;
   color: #fff;
+  padding: 0.2em;
   /* border-bottom: 1px solid #999;*/
 }
 .playdate-overview td.playdate {
