@@ -1,5 +1,4 @@
-<h1>Log out</h1>
-<div class="content">
+<% content_for("page_title") do %>Log out<% end %>
 <div class="playdate-form">
   <fieldset>
     <legend>Are you sure you want to log out?</legend>
@@ -8,5 +7,4 @@
     <p><%= link_to 'No, go back to list', :controller => 'main', :action => 'index' %></p>
     <%= end_form_tag %>
   </fieldset>
-</div>
 </div>

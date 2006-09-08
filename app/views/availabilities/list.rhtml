@@ -1,6 +1,7 @@
-<h1>Listing availabilities</h1>
+<% content_for "page_title" do %>
+Listing availabilities
+<% end %>
 
-<div class="content">
 <table>
   <tr>
     <th>Status</th>
@@ -27,7 +28,4 @@
 
 <p>
 <%= link_to 'New availability', :action => 'new' %>
-<%= link_to 'Playdates', :controller => 'playdates', :action => 'list' %>
-<%= link_to 'Players', :controller => 'players', :action => 'list' %>
 </p>
-</div>

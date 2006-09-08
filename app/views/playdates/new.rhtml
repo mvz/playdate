@@ -1,7 +1,7 @@
-<h1>New playdates</h1>
+<% content_for("page_title") do %>
+New playdates
+<% end %>
 
-<div class="content">
-  <%= render :partial => 'shared/flash' %>
   <p>Kies een methode om een of meer nieuwe datums te maken.</p>
   <fieldset>
     <legend>Kies een specifieke datum.</legend>
@@ -25,5 +25,4 @@
     <%= submit_tag 'Reeks maken' %>
     <%= end_form_tag %>
   </fieldset>
-  <%= link_to 'Back to list', :action => 'list' %>
-</div>
+  <%= link_to 'Terug naar lijst', :action => 'list' %>

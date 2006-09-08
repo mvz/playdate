@@ -1,4 +1,3 @@
 - Test more
-- Fix ugly 'Wijzigen' link
 - Fixup layouts
 - Solve problem of people who never come nor fill in status.

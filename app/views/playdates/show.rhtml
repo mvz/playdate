@@ -1,7 +1,7 @@
-<h1>Playdate: <%=h @playdate.day.strftime() %></h1>
+<% content_for("page_title") do %>
+Playdate: <%=h @playdate.day.strftime() %>
+<% end %>
 
-<div class="content">
-<%= render :partial => 'shared/flash' %>
 <p><b>Day:</b> <%= h @playdate.day %></p>
 <p><b>Availabilities:</b></p>
 <table>
@@ -17,4 +17,3 @@
 <%= link_to 'Edit', :action => 'edit', :id => @playdate %> |
 <%= link_to 'Back to list', :action => 'list' %>
 </p>
-</div>

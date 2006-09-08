@@ -13,7 +13,25 @@
   </head>
   <body>
     <div id="box" class="wrapper">
-      <%= @content_for_layout %>
+      <% if @current_user %>
+      <p class="logout">Ingelogd als <%=h @current_user.full_name %>.
+      <%= link_to 'Uitloggen', :controller => 'login', :action => 'logout' %></p>
+      <% end %>
+
+      <h1><%= yield :page_title %></h1>
+
+      <div class="content">
+        <%= render :partial => 'shared/flash' %>
+
+        <%= yield %>
+        <% if @current_user and @current_user.is_admin? %>
+        <p>
+        <%= link_to 'Playdates', :controller => 'playdates', :action => 'list' %>
+        <%= link_to 'Availabilities', :controller => 'availabilities', :action => 'list' %>
+        <%= link_to 'Players', :controller => 'players', :action => 'list' %>
+        </p>
+        <% end %>
+      </div>
     </div>
     <script type="text/javascript">
       Rico.Corner.round('box', {color: '#fff', bgColor: '#e00', compact: false});

@@ -1,7 +1,7 @@
-<h1>Listing playdates</h1>
+<% content_for("page_title") do %>
+Listing playdates
+<% end %>
 
-<div class="content">
-<%= render :partial => 'shared/flash' %>
 <table>
   <tr>
     <th>Day</th>
@@ -26,8 +26,4 @@
 
 <p>
 <%= link_to 'New playdate', :action => 'new' %>
-<%= link_to 'Availabilities', :controller => 'availabilities', :action => 'list' %>
-<%= link_to 'Players', :controller => 'players', :action => 'list' %>
-<%= link_to 'Home', :controller => 'main', :action => 'index' %>
 </p>
-</div>

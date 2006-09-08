@@ -39,7 +39,9 @@ table.playdate-overview {
 }
 
 /*.playdate-overview td.playdate.neutral,*/
-.playdate-overview td.playdate {
+.playdate-overview td.playdate,
+.playdate-overview td.player,
+.playdate-overview td.action {
   background-color: #ddd;
 }
 .playdate-overview td.playdate.best {
@@ -52,6 +54,8 @@ table.playdate-overview {
   background-color: #f88;
 }
 
+.playdate-overview td.player.current,
+.playdate-overview td.action.current,
 .playdate-overview td.playdate.current {
   background-color: #ccc;
 }
@@ -66,28 +70,26 @@ table.playdate-overview {
 }
 
 .playdate-overview td.player {
-  background-color: #ddd;
-  border-right: 1px solid #444;
+  border-right: 1px solid #999;
+  font-weight: bold;
 }
-.playdate-overview td.player.current {
-  background-color: #ccc;
-  /*border-right: 1px solid #444;*/
-}
-.playdate-overview th.player,
-.playdate-overview th.playdate {
+.playdate-overview th {
   background-color: #444;
   color: #fff;
-  border-bottom: 1px solid #111;
+  /* border-bottom: 1px solid #999;*/
 }
 .playdate-overview td.playdate {
   width: 5em;
   text-align: center;
 }
-
-.playdate-overview .action {
-  background-color: #aaa;
+.playdate-overview td.action a {
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
 }
-.playdate-overview .summary {
+
+.playdate-overview tr.summary th,
+.playdate-overview tr.summary td {
   background-color: #05b;
   color: #fff;
   border-top: 1px solid #008;

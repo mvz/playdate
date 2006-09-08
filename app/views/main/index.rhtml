@@ -1,10 +1,6 @@
-<p class="logout">Ingelogd als <%=h @current_user.full_name %>.
-<%= link_to 'Uitloggen', :controller => 'login', :action => 'logout' %></p>
-
-<h1>Playdate! The Application</h1>
-
-<div class="content">
-  <%= render :partial => 'shared/flash' %>
+<% content_for("page_title") do %>
+Playdate! The Application
+<% end %>
 
   <table class="playdate-overview">
     <tr>
@@ -13,16 +9,18 @@
     <tr>
       <th class="player">Speler</th>
       <th class="playdate" colspan="<%= [@playdates.length, 1].max %>">Datum</th>
+      <th class="action"></th>
     </tr>
 
     <tr>
       <td class="player"></td>
       <% for playdate in @playdates %>
       <td class="playdate <%= status_to_class(playdate.status, @max, @players.length) %>">
-        <%=h "#{(d=playdate.day).mday}/#{d.mon}" %>
+        <%=h nice_date_display(playdate.day) %>
       </td>
       <% end %>
       <% if @playdates.length == 0 %><td class="playdate" nowrap>Geen relevante speeldata gedefinieerd.</td><% end %>
+      <td class="action"></td>
     </tr>
 
     <% for player in @players %>
@@ -30,7 +28,6 @@
 
       <td class="player <%= class_if_current_user(player)%>">
         <%=h player.abbreviation %>
-        <%= link_to 'Wijzigen', :action => 'edit' if player == @current_user  %>
       </td>
 
       <% avs = player.availabilities_by_day %>
@@ -40,6 +37,9 @@
       </td>
       <% end %>
       <% if @playdates.length == 0 %><td class="playdate <%= class_if_current_user(player) %>"></td><% end %>
+      <td class="action <%= class_if_current_user(player)%>">
+        <%= link_to 'Wijzigen', :action => 'edit' if player == @current_user  %>
+      </td>
     </tr>
     <% end %>
 
@@ -49,6 +49,7 @@
       <td><%= status_to_text(playdate.status, @max, @players.length) %></td>
       <% end %>
       <% if @playdates.length == 0 %><td></td><% end %>
+      <td></td>
     </tr>
     <tr>
       <th id="candy2" class="candy" colspan="<%= [@playdates.length, 1].max + 1 %>"></th>
@@ -58,11 +59,3 @@
       Rico.Corner.round('candy1', {color: '#05b', bgColor: '#fff', compact: false, corners: 'top'});
       Rico.Corner.round('candy2', {color: '#05b', bgColor: '#fff', compact: false, corners: 'bottom'});
     </script>
-      <% if @current_user and @current_user.is_admin? %>
-      <p>
-      <%= link_to 'Playdates', :controller => 'playdates', :action => 'list' %>
-      <%= link_to 'Availabilities', :controller => 'availabilities', :action => 'list' %>
-      <%= link_to 'Players', :controller => 'players', :action => 'list' %>
-      </p>
-      <% end %>
-</div>

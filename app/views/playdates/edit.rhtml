@@ -1,7 +1,6 @@
-<h1>Editing playdate</h1>
-
-<div class="content">
-<%= render :partial => 'shared/flash' %>
+<% content_for("page_title") do %>
+Editing playdate
+<% end %>
 
 <%= start_form_tag :action => 'edit', :id => @playdate %>
   <%= render :partial => 'form' %>
@@ -11,4 +10,3 @@
 
 <%= link_to 'Show', :action => 'show', :id => @playdate %> |
 <%= link_to 'Back to list', :action => 'list' %>
-</div>
