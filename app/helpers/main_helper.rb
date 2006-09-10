@@ -15,7 +15,7 @@ module MainHelper
     return 1
   end
   def class_if_current_user(player)
-      player == @current_user ? "current" : ""
+    player == @current_user ? "current" : ""
   end
   def nice_date_display(date)
     "#{date.mday}/#{date.mon}"

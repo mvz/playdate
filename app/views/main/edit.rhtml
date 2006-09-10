@@ -16,15 +16,10 @@ Beschikbaarheid bewerken
     <tr>
       <th>Beschikbaarheid</th>
       <% avs = @current_user.availabilities_by_day %>
-      <%
-      opts = Availability::VALUES.map do |v|
-      [Availability::LONG_DISPLAY[v], v]
-      end
-      %>
       <% for playdate in @playdates %>
       <td>
         <% fields_for :availability, avs[playdate.day] do |av_fields| %>
-        <%= av_fields.select 'status', opts, {}, { "index" => playdate.id } %>
+        <%= av_fields.select 'status', availability_options, {}, { "index" => playdate.id } %>
         <% end %>
       </td>
       <% end %>

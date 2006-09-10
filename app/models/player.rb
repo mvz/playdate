@@ -16,7 +16,7 @@ class Player < ActiveRecord::Base
 
   SALT = 'change this to your own salt'
 
-  @scaffold_columns = %w(name full_name abbreviation is_admin).map {|c|
+  @scaffold_columns = %w(name full_name abbreviation is_admin default_status).map {|c|
     AjaxScaffold::ScaffoldColumn.new(self, {:name => c})
   }
 
@@ -45,9 +45,18 @@ class Player < ActiveRecord::Base
   end
 
   def availabilities_by_day
+    # TODO: Deprecated?
     self.availabilities.inject({}) { |h,av|
       h[av.playdate.day] = av; h
     }
+  end
+
+  def availability_for_playdate(pd)
+    a = self.availabilities.find_by_playdate_id(pd.id)
+    unless a
+      a = self.availabilities.build({:playdate => p, :status => Availability::STATUS_USE_DEFAULT})
+    end
+    a
   end
 
   private

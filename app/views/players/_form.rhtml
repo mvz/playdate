@@ -17,6 +17,11 @@
 </div>
 
 <div class="form-element">
+  <label for="player_default_status">Default Availability</label>
+  <%= select 'player', 'default_status', availability_options, {:class=>"text-input"} %>
+</div>
+
+<div class="form-element">
   <label for="player_password">Password</label>
   <%= password_field 'player', 'password' , {:class=>"text-input"} %>
 </div>

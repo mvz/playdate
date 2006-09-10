@@ -6,8 +6,22 @@ class MainController < ApplicationController
   def index
     @players = Player.find(:all, :order => "abbreviation")
     @playdates = relevant_playdates
-    @stats = @playdates.map {|p| p.status }
-    @max = @stats.map {|s| s[:yes] }.max
+    @stats = @playdates.inject({}) do |h,pd|
+      stat = Hash.new(0)
+      @players.each do |p|
+        av = p.availability_for_playdate(pd)
+        s = av.status
+        s = (s == Availability::STATUS_USE_DEFAULT) ?  p.default_status || Availability::STATUS_MISSCHIEN : s
+        stat[s] += 1
+      end
+      yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
+      no = stat[Availability::STATUS_NEE]
+      maybe = stat[Availability::STATUS_MISSCHIEN]
+      h[pd] = { :yes => yes, :no => no, :maybe => maybe }
+      #h[pd] = pd.status
+      h
+    end
+    @max = @stats.map {|d,s| s[:yes] }.max
   end
 
   def edit
