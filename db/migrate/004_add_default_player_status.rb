@@ -1,6 +1,6 @@
 class AddDefaultPlayerStatus < ActiveRecord::Migration
   def self.up
-    add_column :players, :default_status, :int
+    add_column :players, :default_status, :integer
   end
 
   def self.down
