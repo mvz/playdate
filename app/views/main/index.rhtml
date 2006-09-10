@@ -33,7 +33,7 @@ Playdate! The Application
       <% avs = player.availabilities_by_day %>
       <% for playdate in @playdates %>
       <td class="playdate <%= status_to_class(@stats[playdate], @max, @players.length) %> <%= class_if_current_user(player) %>">
-        <%=h availability_status_character(avs[playdate.day], player) %>
+        <%= availability_status_character(avs[playdate.day], player) %>
       </td>
       <% end %>
       <% if @playdates.length == 0 %><td class="playdate <%= class_if_current_user(player) %>"></td><% end %>

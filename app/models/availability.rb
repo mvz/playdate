@@ -20,7 +20,7 @@ class Availability < ActiveRecord::Base
   SHORT_DISPLAY = {
     STATUS_MISSCHIEN  => "?",
     STATUS_JA         => "+",
-    STATUS_NEE        => "-",
+    STATUS_NEE        => "&minus;",
     STATUS_HUIS       => "h"
   }
   def status_character
