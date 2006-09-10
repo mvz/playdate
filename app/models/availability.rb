@@ -8,7 +8,6 @@ class Availability < ActiveRecord::Base
   STATUS_JA = 1
   STATUS_NEE = 2
   STATUS_HUIS = 3
-  STATUS_USE_DEFAULT = 100
 
   # TODO: Encapsulate these into methods
   VALUES = [ STATUS_MISSCHIEN, STATUS_NEE, STATUS_JA, STATUS_HUIS ]
@@ -26,15 +25,6 @@ class Availability < ActiveRecord::Base
   }
   def status_character
     # TODO: Deprecate?
-    if self.status == STATUS_USE_DEFAULT
-      case self.player.default_status || STATUS_MISSCHIEN
-      when STATUS_MISSCHIEN
-        ""
-      else
-        "(" + SHORT_DISPLAY[self.player.default_status] + ")"
-      end
-    else
-      SHORT_DISPLAY[self.status]
-    end
+    SHORT_DISPLAY[self.status]
   end
 end
