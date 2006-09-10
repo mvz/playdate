@@ -20,4 +20,13 @@ module MainHelper
   def nice_date_display(date)
     "#{date.mday}/#{date.mon}"
   end
+  def availability_status_character(av, pl)
+    if av.nil?
+      s = pl.default_status || Availability::STATUS_MISSCHIEN
+      return "" if s == Availability::STATUS_MISSCHIEN
+      return "(" + Availability::SHORT_DISPLAY[s] + ")"
+    else
+      return Availability::SHORT_DISPLAY[av.status]
+    end
+  end
 end

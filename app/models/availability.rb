@@ -25,12 +25,13 @@ class Availability < ActiveRecord::Base
     STATUS_HUIS       => "h"
   }
   def status_character
+    # TODO: Deprecate?
     if self.status == STATUS_USE_DEFAULT
       case self.player.default_status || STATUS_MISSCHIEN
       when STATUS_MISSCHIEN
         ""
       else
-      "(" + SHORT_DISPLAY[self.player.default_status] + ")"
+        "(" + SHORT_DISPLAY[self.player.default_status] + ")"
       end
     else
       SHORT_DISPLAY[self.status]

@@ -52,11 +52,7 @@ class Player < ActiveRecord::Base
   end
 
   def availability_for_playdate(pd)
-    a = self.availabilities.find_by_playdate_id(pd.id)
-    unless a
-      a = self.availabilities.build({:playdate => p, :status => Availability::STATUS_USE_DEFAULT})
-    end
-    a
+    self.availabilities.find_by_playdate_id(pd.id)
   end
 
   private
