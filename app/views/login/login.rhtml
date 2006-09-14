@@ -1,13 +1,13 @@
-<% content_for("page_title") do %>Log in to Playdate<% end %>
+<% content_for("page_title") do %>Inloggen in Playdate<% end %>
 <div class="playdate-form">
   <fieldset>
-    <legend>Please type your user name and password below.</legend>
+    <legend>Vul hier je gebruikersnaam en wachtwoord in.</legend>
     <%= start_form_tag %>
-    <p><label for="name">Name:</label>
+    <p><label for="name">Naam:</label>
     <%= text_field_tag :name, params[:name] %></p>
-    <p><label for="password">Password:</label>
+    <p><label for="password">Wachtwoord:</label>
     <%= password_field_tag :password, params[:password] %></p>
-    <p><%= submit_tag "Login" %></p>
+    <p><%= submit_tag "Inloggen" %></p>
     <%= end_form_tag %>
   </fieldset>
 </div>

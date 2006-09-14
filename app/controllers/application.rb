@@ -18,11 +18,11 @@ class ApplicationController < ActionController::Base
     Player.find_by_id(session[:user_id])
   end
   def access_denied_not_logged_in
-    flash[:notice] = "Please log in"
+    flash[:notice] = "Log eerst in om Playdate te gebruiken."
     redirect_to(:controller => "login", :action => "login")
   end
   def access_denied_no_admin
-    flash[:notice] = "Access denied: You are not the administrator"
+    flash[:notice] = "Toegang geweigerd: Je bent geen beheerder."
     redirect_to(:controller => "login", :action => "index")
   end
 end

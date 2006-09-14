@@ -6,9 +6,11 @@
     <title>Playdate! The Application - <%= controller.controller_name %>: <%= controller.action_name %></title>
     <%= stylesheet_link_tag 'playdate' %>
     <%= stylesheet_link_tag 'ajax_scaffold', :media => 'all' %>
+    <!--
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'rico_corner' %>
     <%= javascript_include_tag 'ajax_scaffold' %>
+    -->
   </head>
   <body>
     <div id="box" class="wrapper">
@@ -25,9 +27,9 @@
         <%= yield %>
         <% if @current_user and @current_user.is_admin? %>
         <p>
-        <%= link_to 'Playdates', :controller => 'playdates', :action => 'list' %>
-        <%= link_to 'Availabilities', :controller => 'availabilities', :action => 'list' %>
-        <%= link_to 'Players', :controller => 'players', :action => 'list' %>
+        <%= link_to 'Speeldagen', :controller => 'playdates', :action => 'list' %>
+        <%= link_to 'Beschikbaarheid', :controller => 'availabilities', :action => 'list' %>
+        <%= link_to 'Spelers', :controller => 'players', :action => 'list' %>
         </p>
         <% end %>
       </div>

@@ -8,7 +8,7 @@ class LoginController < ApplicationController
         session[:user_id] = player.id
         redirect_to(:controller => "main", :action => "index")
       else
-        flash[:notice] = "Login failed"
+        flash[:notice] = "Inloggen mislukt"
       end
     end
   end
