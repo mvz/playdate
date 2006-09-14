@@ -33,6 +33,9 @@
         </p>
         <% end %>
       </div>
+      <% if @current_user %>
+      <p class="logout"><%= link_to 'Wachtwoord wijzigen', :controller => 'login', :action => 'edit' %></p>
+      <% end %>
     </div>
     <script type="text/javascript">
       Rico.Corner.round('box', {color: '#fff', bgColor: '#e00', compact: false});

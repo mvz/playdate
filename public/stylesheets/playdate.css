@@ -22,7 +22,7 @@ h1 {
   background-color: #05b;
   color: #fff;
   padding: 0.5em;
-  margin-top: 0em;
+  margin-top: 0.25em;
   margin-bottom: 0.5em;
 }
 
@@ -30,12 +30,12 @@ h1 {
   font-size: 80%;
   text-align: right;
   margin: 0px;
-  margin-bottom: 0.5em;
   margin-right: 0.5em;
 }
 
 table.playdate-overview {
   border-collapse: collapse;
+  margin-bottom: 0.5em;
 }
 
 /*.playdate-overview td.playdate.neutral,*/

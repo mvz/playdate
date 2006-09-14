@@ -9,7 +9,6 @@ class Player < ActiveRecord::Base
   validates_confirmation_of :password
   validates_uniqueness_of :name
   validates_length_of :password, :minimum => 5,
-    :message => "Password must be at least 5 characters",
     :if => Proc.new { |user|
          user.password_hash.nil? or user.password.to_s.length > 0
        }
