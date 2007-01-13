@@ -41,6 +41,8 @@ Rails::Initializer.run do |config|
   # See Rails::Configuration for more options
 end
 
+ActionController::Base.session_options[:session_key] = 'playdate_session_id'
+
 # Add new inflection rules using the following format 
 # (all these examples are active by default):
 # Inflector.inflections do |inflect|
