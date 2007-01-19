@@ -6,8 +6,8 @@
     <title>Playdate! The Application - <%= controller.controller_name %>: <%= controller.action_name %></title>
     <%= stylesheet_link_tag 'playdate' %>
     <%= stylesheet_link_tag 'ajax_scaffold', :media => 'all' %>
-    <% unless ENV['RAILS_ENV'] == 'development'  %>
     <%= javascript_include_tag :defaults %>
+    <% unless ENV['RAILS_ENV'] == 'development'  %>
     <%= javascript_include_tag 'rico_corner' %>
     <%= javascript_include_tag 'ajax_scaffold' %>
     <% end %>
@@ -16,7 +16,7 @@
     <div id="box" class="wrapper">
       <% if @current_user %>
       <p class="logout">Ingelogd als <%=h @current_user.full_name %>.
-      <%= link_to 'Uitloggen', :controller => 'login', :action => 'logout', :post => true %></p>
+      <%= link_to 'Uitloggen', {:controller => 'login', :action => 'logout'}, :post => true %></p>
       <% end %>
 
       <h1><%= yield :page_title %></h1>
