@@ -16,81 +16,96 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
     @playersession = {:user_id => players(:matijs).id }
   end
 
+  def assert_redirect_to_playdate_view(id)
+    assert_redirected_to :controller => 'playdates', :action => 'view', :id => "#{id}"
+  end
+
   def test_authorization
     [:destroy, :edit, :list, :new, :show].each do |a|
       [:get, :post].each do |m|
-        method(m).call(a, {}, {})
+        method(m).call(a, {:playdate_id => 1}, {})
         assert_redirected_to :controller => "login", :action => "login"
       end
     end
   end
 
+  # Destroy using get: Go to edit
   def test_destroy_using_get
     assert_not_nil Availability.find(1)
 
-    get 'destroy', {:id => 1}, @playersession
+    get 'destroy', {:playdate_id => 1, :availability_id => 1}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'edit'
-
-    assert_not_nil Availability.find(1)
-  end
-
-  def test_destroy_using_post
-    assert_not_nil Availability.find(1)
-
-    post 'destroy', {:id => 1}, @playersession
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-
-    assert_raise(ActiveRecord::RecordNotFound) { Availability.find(1) }
-  end
-
-  def test_destroy_without_id
-    assert_not_nil Availability.find(1)
-
-    post 'destroy', {}, @playersession
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
     assert flash.has_key?(:notice)
 
     assert_not_nil Availability.find(1)
   end
 
+  # Destroy using post: Destroy, go to view of playdate (which has a list
+  # of availabilities)
+  def test_destroy_using_post
+    assert_not_nil Availability.find(1)
+
+    post 'destroy', {:playdate_id => 1, :availability_id => 1}, @playersession
+    assert_response :redirect
+    assert_redirect_to_playdate_view(1)
+
+    assert_raise(ActiveRecord::RecordNotFound) { Availability.find(1) }
+  end
+
+  # Destroy without availability-id: Go to view of playdate (which has a
+  # list of availabilities)
+  def test_destroy_without_id
+    assert_not_nil Availability.find(1)
+
+    post 'destroy', {:playdate_id => 1}, @playersession
+    assert_response :redirect
+    assert_redirect_to_playdate_view(1)
+    assert flash.has_key?(:notice)
+
+    assert_not_nil Availability.find(1)
+  end
+
+  # Edit using get: Show edit screen.
   def test_edit_using_get
-    get 'edit', {:id => 1}, @playersession
+    get 'edit', {:playdate_id => 1, :availability_id => 1}, @playersession
 
     assert_response :success
     assert_template 'edit'
 
     assert_not_nil assigns(:availability)
     assert assigns(:availability).valid?
+
+    # Unknown id combo
+    get 'edit', {:playdate_id => 2, :availability_id => 1}, @playersession
+    assert_response :redirect
+    assert_redirect_to_playdate_view(2)
   end
 
+  # Edit using post: Edit, then return to list of availabilities for
+  # playdate.
   def test_edit_using_post
-    post 'edit', {:id => 1, :player_id => 2, :playdate_id => 1},
-      @playersession
+    post 'edit', {:playdate_id => 1, :availability_id => 1}, @playersession
+
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirect_to_playdate_view(1)
   end
 
   def test_edit_without_id
-    post 'edit', {}, @playersession
+    post 'edit', {:playdate_id => 1}, @playersession
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirect_to_playdate_view(1)
     assert flash.has_key?(:notice)
   end
 
   def test_list
-    get 'list', {}, @playersession
-
-    assert_response :success
-    assert_template 'list'
-
-    assert_not_nil assigns(:availabilities)
+    assert_raise ActionController::UnknownAction do
+      get 'list', {:playdate_id => 1}, @playersession
+    end
   end
 
   def test_new_using_get
-    get 'new', {}, @playersession
+    get 'new', {:playdate_id => 1}, @playersession
 
     assert_response :success
     assert_template 'new'
@@ -101,19 +116,18 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   def test_new_using_post
     num_availabilities = Availability.count
 
-    post 'new', {:availability => {
-      :player_id => players(:robert).id,
-      :playdate_id => playdates(:friday).id, :status => 1 }},
+    post 'new', {:playdate_id => playdates(:friday).id,
+      :availability => {:player_id => players(:robert).id, :status => 1 }},
       @playersession
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirect_to_playdate_view(1)
 
     assert_equal num_availabilities + 1, Availability.count
   end
 
   def test_show
-    get 'show', {:id => 1}, @playersession
+    get 'show', {:playdate_id => 1, :availability_id => 1}, @playersession
 
     assert_response :success
     assert_template 'show'
@@ -123,10 +137,10 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   end
 
   def test_show_without_id
-    get 'show', {}, @playersession
+    get 'show', {:playdate_id => 1}, @playersession
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirect_to_playdate_view(1)
     assert flash.has_key?(:notice)
   end
 end

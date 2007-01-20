@@ -20,9 +20,11 @@ class ApplicationController < ActionController::Base
   def access_denied_not_logged_in
     flash[:notice] = "Log eerst in om Playdate te gebruiken."
     redirect_to(:controller => "login", :action => "login")
+    return false
   end
   def access_denied_no_admin
     flash[:notice] = "Toegang geweigerd: Je bent geen beheerder."
     redirect_to(:controller => "login", :action => "index")
+    return false
   end
 end

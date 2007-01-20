@@ -13,7 +13,6 @@ class MainControllerTest < Test::Unit::TestCase
     @controller = MainController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @playersession = {:user_id => players(:matijs).id }
   end
 
   def test_authorization
@@ -31,9 +30,17 @@ class MainControllerTest < Test::Unit::TestCase
   end
 
   def test_index
-    get :index, {}, @playersession
+    get :index, {}, {:user_id => players(:matijs).id }
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
   end
+
+  def test_index_as_admin
+    get :index, {}, {:user_id => players(:admin).id }
+    assert_response :success
+    assert_template 'index'
+    assert_not_nil assigns(:playdates)
+  end
+
 end
