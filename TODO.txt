@@ -7,12 +7,3 @@
 
 Wellicht een idee om het naar de mailing list te sturen? Dan is uitzetten
 wel van de baan, maar ik heb daar niet zo'n probleem mee.
-
-> - aanname dat de gebruiker weet wat hij doet: als ik op de logout
->   link klik hoef ik niet nog een (of meerdere) weet u het wel zeker
->   buttons te zien.
-
-Een probleem is dat er browsers zijn die vanzelf al links volgen zodat
-browsen sneller lijkt. Als ze dan de link uitloggen volgen is dat niet zo
-mooi. Met javascript is e.e.a. wel op te lossen, maar voor mensen die
-javascript uit hebben staan blijft het denk ik toch een tweetrapsraket.

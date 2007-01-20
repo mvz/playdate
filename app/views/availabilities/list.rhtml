@@ -11,7 +11,7 @@ Listing availabilities
   
 <% for availability in @availabilities %>
   <tr>
-    <td><%=h availability.status_character %></td>
+    <td><%= availability.status_character %></td>
     <td><%=h availability.player.abbreviation %></td>
     <td><%=h availability.playdate %></td>
     <td><%= link_to 'Show', :action => 'show', :id => availability %></td>
