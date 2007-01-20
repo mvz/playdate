@@ -17,7 +17,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_authorization
-    [:destroy, :edit, :list, :new, :show].each do |a|
+    [:destroy, :edit, :list, :new, :show, :prune].each do |a|
       [:get, :post].each do |m|
         method(m).call(a, {}, {})
         assert_redirected_to :controller => "login", :action => "login"
@@ -40,13 +40,13 @@ class PlaydatesControllerTest < Test::Unit::TestCase
     assert_not_nil pd
     num_avs = Availability.count
     num_pd_avs = pd.availabilities.count
+    assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
 
     post 'destroy', {:id => 1}, @playersession
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) { Playdate.find(1) }
-    assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
     assert_equal num_avs - num_pd_avs, Availability.count
   end
 
@@ -144,5 +144,32 @@ class PlaydatesControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to :action => 'list'
     assert flash.has_key?(:notice)
+  end
+
+  def test_prune_using_get
+    get 'prune', @playersession
+
+    assert_response :success
+    assert_template 'prune'
+  end
+
+  def test_prune_using_get
+    num_playdates = Playdate.count
+    get 'prune', {}, @playersession
+
+    assert_response :success
+    assert_template 'prune'
+    assert Playdate.count == num_playdates
+  end
+
+  def test_prune_using_post
+    num_playdates = Playdate.count
+    assert num_playdates == 4
+    post 'prune', {}, @playersession
+
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
+    assert Playdate.count == 2
+    assert Playdate.find(:all).map {|pd| pd.id }.sort == [3, 4]
   end
 end

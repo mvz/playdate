@@ -14,12 +14,13 @@ class PlaydatesController < ApplicationController
   def destroy
     if request.post?
       pd = Playdate.find(params[:id])
+      # FIXME: Can't this be done automatically?
       pd.availabilities.each { |av| av.destroy }
       pd.destroy
-      flash[:notice] = 'The playdate was successfully destroyed.'
+      flash[:notice] = 'De speeldag is verwijderd.'
       redirect_to :action => 'list'
     else
-      flash[:notice] = 'Click Destroy to destroy the playdate.'
+      flash[:notice] = 'Kies Verwijderen om de speeldag te verwijderen.'
       redirect_to :action => 'edit', :id => params[:id]
     end
   end
@@ -28,7 +29,7 @@ class PlaydatesController < ApplicationController
     @playdate = Playdate.find(params[:id])
     if request.post?
       if @playdate.update_attributes(params[:playdate])
-        flash[:notice] = 'The playdate was successfully edited.'
+        flash[:notice] = 'De speeldag is gewijzigd.'
         redirect_to :action => 'show', :id => @playdate
       end
     end
@@ -57,10 +58,21 @@ class PlaydatesController < ApplicationController
     @playdate = Playdate.find(params[:id])
   end
 
+  def prune
+    if request.post?
+      Playdate.find(:all, :conditions => "day < '#{Date.today()}'").each do |pd|
+        pd.availabilities.each { |av| av.destroy }
+        pd.destroy
+      end
+      flash[:notice] = 'Oude speeldagen zijn opgeruimd.'
+      redirect_to :action => 'list'
+    end
+  end
+
   private
   def save_new_playdate(pd)
     if pd.save
-      flash[:notice] = 'A new playdate was successfully added.'
+      flash[:notice] = 'De nieuwe speeldag is toegevoegd.'
       redirect_to :action => 'list'
     end
   end
@@ -102,4 +114,6 @@ class PlaydatesController < ApplicationController
       flash[:notice] = "Er zijn geen nieuwe datums toegevoegd."
     end
   end
+
+
 end

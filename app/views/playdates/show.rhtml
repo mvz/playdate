@@ -8,10 +8,10 @@ Speeldag: <%=h @playdate.day.strftime() %>
   <tr><th>Speler</th><th>Status</th></tr>
   <% for av in @playdate.availabilities %>
   <tr>
-    <td><%= av.player.name %></td>
+    <td><%=h av.player.name %></td>
     <td><%= av.status_character %></td>
-    <td><%= link_to 'Edit', :controller => 'availabilities', :action => 'edit', :id => av %></td>
-    <td><%= link_to 'Destroy', { :controller => 'availabilities', :action => 'destroy', :id => av }, :post => true, :confirm => 'Are you sure you want to destroy this av?' %>
+    <td><%= link_to 'Bewerken', :controller => 'availabilities', :action => 'edit', :id => av %></td>
+    <td><%= link_to 'Verwijderen', { :controller => 'availabilities', :action => 'destroy', :id => av }, :post => true, :confirm => 'Are you sure you want to destroy this av?' %>
   </tr>
   <% end %>
 </table>
