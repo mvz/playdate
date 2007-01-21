@@ -26,5 +26,5 @@ Speeldagen
 
 <p>
 <%= link_to 'Nieuwe speeldag', :action => 'new' %>
-<%= link_to 'Opruimen', :action => 'prune' %>
+<%= link_to 'Opruimen', {:action => 'prune'}, :post => true, :confirm => 'Weet je zeker dat je oude speeldagen wilt opruimen?' %>
 </p>

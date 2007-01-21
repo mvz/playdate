@@ -1,6 +1,11 @@
 - Test more
+
+D Add updated_at column to availabilities, in preparation for PlayDateSpam.
+- Add Atom feed.
+
+- Actually only allow adding availabilities to current playdate in New &c.
 - Remove AjaxScaffold for players.
-- Add updated_at column to availabilities, in preparation for PlayDateSpam.
+
 - Add e-mail column to players.
 - Add update-me column to players.
 - Add mailer script in scripts/
