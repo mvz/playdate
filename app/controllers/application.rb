@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
   def access_denied_no_admin
     flash[:notice] = "Toegang geweigerd: Je bent geen beheerder."
-    redirect_to(:controller => "login", :action => "index")
+    redirect_to(:controller => "main", :action => "index")
     return false
   end
 end

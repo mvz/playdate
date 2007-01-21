@@ -19,6 +19,10 @@ Speeldag: <%=h @playdate.day.strftime() %>
   <% end %>
 </table>
 <p>
+<%= link_to 'Beschikbaarheid toevoegen', { :controller => 'availabilities',
+      :action => 'new', :playdate_id => @playdate.id } %>
+</p>
+<p>
 <%= link_to 'Bewerken', :action => 'edit', :id => @playdate %> |
 <%= link_to 'Terug naar lijst', :action => 'list' %>
 </p>

@@ -38,7 +38,9 @@ class MainController < ApplicationController
       redirect_to :action => 'index'
     end
   end
+
   private
+
   def relevant_playdates
     Playdate.find(:all, :order => "day",
                   :conditions => ["day >= ?", Date.today])

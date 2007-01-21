@@ -24,13 +24,11 @@ class PlayersControllerTest < Test::Unit::TestCase
   def test_authorization
     [:component, :create, :component_update, :destroy].each do |a|
       [:get, :post].each do |m|
-        {"login" => {}, "index" => @playersession}.each do |redirect,session|
-          [
-            lambda { method(m).call(a, {}, session) },
-            lambda { xhr m, a, {}, session }
-          ].each do |e|
+        {"login" => {}, "main" => @playersession}.each do |redirect,session|
+          [ lambda { method(m).call(a, {}, session) },
+            lambda { xhr m, a, {}, session } ].each do |e|
             e.call
-            assert_redirected_to :controller => "login", :action => redirect
+            assert_redirected_to :controller => redirect
           end
         end
       end

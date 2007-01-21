@@ -1,5 +1,5 @@
 class AvailabilitiesController < ApplicationController
-  before_filter :authorize
+  before_filter :authorize_admin
   before_filter :check_playdate_id
   before_filter :check_availability_id, :only => [ 'show', 'edit', 'destroy' ]
   #verify :only => [ 'show', 'edit', 'destroy' ],
@@ -43,13 +43,17 @@ class AvailabilitiesController < ApplicationController
     end
   end
 
+  def list
+    redirect_to_playdate_view
+  end
+
   def show
     @availability = Availability.find(params[:availability_id])
   end
   private
 
   def redirect_to_playdate_view
-    redirect_to :controller => "playdates", :action => 'view', :id => params[:playdate_id]
+    redirect_to :controller => "playdates", :action => 'show', :id => params[:playdate_id]
   end
 
   def check_playdate_id

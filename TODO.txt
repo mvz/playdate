@@ -1,6 +1,4 @@
 - Test more
-- Remove direct admin interface to availabilities: Do everything from
-  playdates admin.
 - Remove AjaxScaffold for players.
 - Add updated_at column to availabilities, in preparation for PlayDateSpam.
 - Add e-mail column to players.

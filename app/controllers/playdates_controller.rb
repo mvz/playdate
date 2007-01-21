@@ -1,5 +1,5 @@
 class PlaydatesController < ApplicationController
-  before_filter :authorize
+  before_filter :authorize_admin
   verify :only => [ 'show', 'edit', 'destroy' ],
          :params => :id,
          :add_flash => { :notice => 'Missing playdate ID.' },

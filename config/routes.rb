@@ -29,6 +29,15 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'login/:action', :controller => "login",
     :action => 'login', :requirements => { :action => action_requirement }
+
+  # Availabilities are only admin'ed through a specific playdate.
+  map.connect 'playdates/:playdate_id/availabilities/:action',
+    :controller => 'availabilities', :action => 'list',
+    :requirements => { :playdate_id => id_requirement, :action => action_requirement }
+  map.connect 'playdates/:playdate_id/availabilities/:availability_id/:action',
+    :controller => 'availabilities', :action => 'show',
+    :requirements => { :playdate_id => id_requirement, :availability_id => id_requirement, :action => action_requirement }
+
   map.connect 'playdates/:action', :controller => "playdates",
     :action => 'list', :requirements => { :action => action_requirement }
   map.connect 'playdates/:id/:action', :controller => "playdates", :action => 'show',
@@ -39,11 +48,4 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'players/:id/:action', :controller => "players", :action => 'show',
     :requirements => { :id => id_requirement, :action => action_requirement }
 
-  # Availabilities are only admin'ed through a specific playdate.
-  map.connect 'playdates/:playdate_id/availabilities/:action',
-    :controller => 'availabilities', :action => 'new',
-    :requirements => { :playdate_id => id_requirement, :action => action_requirement }
-  map.connect 'playdates/:playdate_id/availabilities/:availability_id/:action',
-    :controller => 'availabilities', :action => 'show',
-    :requirements => { :playdate_id => id_requirement, :availability_id => id_requirement, :action => action_requirement }
 end
