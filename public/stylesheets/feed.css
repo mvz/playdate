@@ -1,0 +1,9 @@
+td {
+  width: 5em;
+}
+.summary th {
+  border-top: 1px solid black;
+}
+.head th {
+  border-bottom: 1px solid black;
+}

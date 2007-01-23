@@ -1,9 +1,10 @@
-<table>
-  <tr><th>Speler</th><th>Datum</th></tr>
+<% width = 100/(@playdates.length + 1) %>
+<table width="100%">
+  <tr class="head"><th>Speler</th><th colspan="<%= @playdates.length %>">Datum</th></tr>
   <tr>
-    <td></td>
+    <td width="<%= width %>%"></td>
     <% for playdate in @playdates %>
-    <td><%=h nice_date_display(playdate.day) %></td>
+    <td width="<%= width %>%"><%=h nice_date_display(playdate.day) %></td>
     <% end %>
   </tr>
 
