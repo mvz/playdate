@@ -19,6 +19,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'login', :controller => "login", :action => 'login'
   map.connect 'logout', :controller => "login", :action => 'logout'
 
+  map.connect 'feed', :controller => "main", :action => 'feed'
+
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'

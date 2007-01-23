@@ -53,4 +53,23 @@ class MainControllerTest < Test::Unit::TestCase
     newavs = players(:robert).availabilities.sort_by {|a| a.playdate_id}
     assert newavs.map{|a| [a.playdate_id, a.status]}.flatten == [1, 2, 2, 3]
   end
+
+  def test_feed
+    get :feed, {}, {}
+    assert_response :success
+    #assert_template 'feed'
+    assert_template '_feed_table' # FIXME: I want feed to be the template name!
+    assert_not_nil assigns(:playdates)
+    assert_not_nil assigns(:link)
+    assert_nil assigns(:updated_at)
+    assert_nil assigns(:date)
+
+    av = playdates(:tomorrow).availabilities.build(:player_id => players(:robert).id, :status => 1)
+    av.save!
+
+    get :feed, {}, {}
+    assert_response :success
+    assert_equal assigns(:updated_at).to_s, av.updated_at.to_s
+    assert_not_nil assigns(:stats)
+  end
 end

@@ -1,0 +1,26 @@
+<table>
+  <tr><th>Speler</th><th>Datum</th></tr>
+  <tr>
+    <td></td>
+    <% for playdate in @playdates %>
+    <td><%=h nice_date_display(playdate.day) %></td>
+    <% end %>
+  </tr>
+
+  <% for player in @players %>
+  <% avs = player.availabilities_by_day %>
+  <tr>
+    <td><%=h player.abbreviation %></td>
+    <% for playdate in @playdates %>
+    <td><%= availability_status_character(avs[playdate.day], player) %></td>
+    <% end %>
+  </tr>
+  <% end %>
+
+  <tr class="summary">
+    <th>Optie?</th>
+    <% for playdate in @playdates %>
+    <td><%= status_to_text(@stats[playdate], @max, @players.length) %></td>
+    <% end %>
+  </tr>
+</table>
