@@ -2,12 +2,12 @@
 <div class="playdate-form">
   <fieldset>
     <legend>Vul hier je gebruikersnaam en wachtwoord in.</legend>
-    <%= start_form_tag %>
+    <% form_tag do %>
     <p><label for="name">Naam:</label>
     <%= text_field_tag :name, params[:name] %></p>
     <p><label for="password">Wachtwoord:</label>
     <%= password_field_tag :password, params[:password] %></p>
     <p><%= submit_tag "Inloggen" %></p>
-    <%= end_form_tag %>
+    <% end %>
   </fieldset>
 </div>

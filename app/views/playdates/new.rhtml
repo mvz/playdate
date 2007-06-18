@@ -1,19 +1,19 @@
 <% content_for("page_title") do %>
-Nieuwe speeldagen
+  Nieuwe speeldagen
 <% end %>
 
-  <p>Kies een methode om een of meer nieuwe datums te maken.</p>
-  <fieldset>
-    <legend>Kies een specifieke datum.</legend>
-    <%= start_form_tag :action => 'new' %>
+<p>Kies een methode om een of meer nieuwe datums te maken.</p>
+<fieldset>
+  <legend>Kies een specifieke datum.</legend>
+  <% form_tag :action => 'new' do %>
     <%= render :partial => 'form' %>
     <%= submit_tag 'Opslaan' %>
-    <%= end_form_tag %>
-  </fieldset>
+  <% end %>
+</fieldset>
 
-  <fieldset>
-    <legend>Voeg een reeks toe.</legend>
-    <%= start_form_tag :action => 'new' %>
+<fieldset>
+  <legend>Voeg een reeks toe.</legend>
+  <% form_tag :action => 'new' do %>
     <p>
     <label for="daytype">Soort dag:</label>
     <%= select_tag 'daytype', daytype_options(@daytype) %>
@@ -23,6 +23,6 @@ Nieuwe speeldagen
     <%= select_tag 'period', period_options(@period) %>
     </p>
     <%= submit_tag 'Reeks maken' %>
-    <%= end_form_tag %>
-  </fieldset>
-  <%= link_to 'Terug naar lijst', :action => 'list' %>
+  <% end %>
+</fieldset>
+<%= link_to 'Terug naar lijst', :action => 'list' %>

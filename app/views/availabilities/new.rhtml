@@ -1,12 +1,12 @@
 <% content_for("page_title") do %>
-New availability
+  New availability
 <% end %>
 
 <div class="content">
-<%= start_form_tag :action => 'new' %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Save' %>
-<%= end_form_tag %>
+  <% form_tag :action => 'new' do -%>
+    <%= render :partial => 'form' %>
+    <%= submit_tag 'Save' %>
+  <% end -%>
 
-<%= link_to 'Back to list', :action => 'list' %>
+  <%= link_to 'Back to list', :action => 'list' %>
 </div>

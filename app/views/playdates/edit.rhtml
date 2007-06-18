@@ -1,11 +1,11 @@
 <% content_for("page_title") do %>
-Editing playdate
+  Editing playdate
 <% end %>
 
-<%= start_form_tag :action => 'edit', :id => @playdate %>
+<% form_tag :action => 'edit', :id => @playdate do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Save' %>
-<%= end_form_tag %>
+<% end %>
 <%= button_to 'Destroy', { :action => 'destroy', :id => @playdate }, :confirm => 'Are you sure you want to destroy this playdate?' %>
 
 <%= link_to 'Show', :action => 'show', :id => @playdate %> |

@@ -27,7 +27,7 @@ class MainController < ApplicationController
     set_overview_fields
 
     @feed_title = "Playdate! The Application"
-    @headers["Content-Type"] = "application/atom+xml; charset=utf-8"
+    headers["Content-Type"] = "application/atom+xml; charset=utf-8"
     @link = url_for :action => "index"
 
     @updated_at = @playdates.map { |d|
