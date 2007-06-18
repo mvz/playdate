@@ -14,7 +14,7 @@ Speeldag: <%=h @playdate.day.strftime() %>
       :action => 'edit', :availability_id => av, :playdate_id => @playdate.id } %></td>
     <td><%= link_to 'Verwijderen', { :controller => 'availabilities',
       :action => 'destroy', :availability_id => av, :playdate_id => @playdate.id },
-      :post => true, :confirm => 'Weet je zeker dat je deze beschikbaarheid wil verwijderen?' %>
+      :method => :post, :confirm => 'Weet je zeker dat je deze beschikbaarheid wil verwijderen?' %>
   </tr>
   <% end %>
 </table>
