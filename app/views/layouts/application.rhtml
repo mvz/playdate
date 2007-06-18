@@ -23,7 +23,7 @@
       <h1><%= yield :page_title %></h1>
 
       <div class="content">
-        <%= render :partial => 'shared/flash' %>
+        <%= render :partial => 'shared/showflash' %>
 
         <%= yield %>
         <% if @current_user and @current_user.is_admin? %>
