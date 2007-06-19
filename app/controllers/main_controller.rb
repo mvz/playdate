@@ -18,7 +18,7 @@ class MainController < ApplicationController
         av.status = av_param[:status]
         av.save!
       end
-      flash[:notice] = 'Wijzigingen succesvol.'
+      flash[:notice] = 'Wijzigingen opgeslagen.'
       redirect_to :action => 'index'
     end
   end
