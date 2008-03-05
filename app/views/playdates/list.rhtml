@@ -19,10 +19,7 @@ Speeldagen
 <% end %>
 </table>
 
-<p>
-<%= link_to 'Vorige pagina', { :page => @playdate_pages.current.previous } if @playdate_pages.current.previous %>
-<%= link_to 'Volgende pagina', { :page => @playdate_pages.current.next } if @playdate_pages.current.next %> 
-</p>
+<%= will_paginate @playdates %>
 
 <p>
 <%= link_to 'Nieuwe speeldag', :action => 'new' %>

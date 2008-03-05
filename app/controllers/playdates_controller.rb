@@ -36,7 +36,7 @@ class PlaydatesController < ApplicationController
   end
 
   def list
-    @playdate_pages, @playdates = paginate(:playdates, :order => 'day')
+    @playdates = Playdate.paginate(:page => params[:page], :order => 'day')
   end
 
   def new

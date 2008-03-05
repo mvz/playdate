@@ -39,7 +39,7 @@
   </tbody>
 </table>
 <div class="ajax-scaffold-footer">
-  <%= render :partial => 'pagination_links', :locals => { :paginator => @paginator } %>
+  <%= will_paginate @players %>
 </div>
 <% if @show_wrapper %>
 </div>

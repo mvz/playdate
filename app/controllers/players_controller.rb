@@ -36,11 +36,11 @@ class PlayersController < ApplicationController
     end
   end
 
-  def component  
+  def component
     @show_wrapper = true if @show_wrapper.nil?
     @sort_sql = Player.scaffold_columns_hash[current_sort(params)].sort_sql rescue nil
     @sort_by = @sort_sql.nil? ? "#{Player.table_name}.#{Player.primary_key} asc" : @sort_sql  + " " + current_sort_direction(params)
-    @paginator, @players = paginate(:players, :order => @sort_by, :per_page => default_per_page)
+    @players = Player.paginate(:page => params[:page], :order => @sort_by, :per_page => default_per_page)
     
     render :action => "component", :layout => false
   end
