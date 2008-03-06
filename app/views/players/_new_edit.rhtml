@@ -5,10 +5,7 @@
 <tr id="<%= element_row_id(@options) %>" <%= "style=\"display:none;\"" if request.xhr? %>>
   <td id="<%= element_cell_id(@options) %>" class="<%= @options[:action] %>" colspan="<%= num_columns %>">
   
-    <%= form_remote_tag :url => @options.merge(:controller => '/players'), 
-    			:loading => "Element.show('#{loading_indicator_id(@options)}'); Form.disable('#{element_form_id(@options)}');",
-    			:html => { :href => url_for(@options.merge(:controller => '/players')),
-                     :id => element_form_id(@options) } %>
+    <%= form_tag @options.merge(:controller => '/players'), :id => element_form_id(@options) %>
       
       <%= hidden_field_tag "scaffold_id", @options[:scaffold_id] %>
          
@@ -25,13 +22,10 @@
       <p class="form-footer">
       	<%= submit_tag Inflector.titleize(@options[:action]), :class => "submit" %>
       	<% cancel_params = @options.merge(:controller => '/players', :action => 'cancel', :referring_action => @options[:action]) %>
-      	<%= link_to_remote "Cancel",
-      	  { :url => cancel_params,
-      	    :loading => "Element.show('#{loading_indicator_id(@options)}');" },
-	        { :href => url_for(cancel_params) } %>    	                          
+      	<%= link_to "Cancel", cancel_params %>    	                          
       	<%= loading_indicator_tag @options %>
     	</p>
-    <%= end_form_tag %>
+    </form>
   </td>
 </tr>
 <% if not request.xhr? %>

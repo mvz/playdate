@@ -49,15 +49,8 @@ class PlayersController < ApplicationController
     @player = Player.new
     @successful = true
 
-    return render(:action => 'new.rjs') if request.xhr?
-
-    # Javascript disabled fallback
-    if @successful
-      @options = { :action => "create" }
-      render :partial => "new_edit", :layout => true
-    else 
-      return_to_main
-    end
+    @options = { :action => "create" }
+    render :partial => "new_edit", :layout => true
   end
   
   def create
@@ -68,7 +61,6 @@ class PlayersController < ApplicationController
       flash[:error], @successful  = $!.to_s, false
     end
     
-    return render(:action => 'create.rjs') if request.xhr?
     if @successful
       return_to_main
     else
@@ -85,8 +77,6 @@ class PlayersController < ApplicationController
       flash[:error], @successful  = $!.to_s, false
     end
     
-    return render(:action => 'edit.rjs') if request.xhr?
-
     if @successful
       @options = { :scaffold_id => params[:scaffold_id], :action => "update", :id => params[:id] }
       render :partial => 'new_edit', :layout => true
@@ -106,8 +96,6 @@ class PlayersController < ApplicationController
       flash[:error], @successful  = $!.to_s, false
     end
     
-    return render(:action => 'update.rjs') if request.xhr?
-
     if @successful
       return_to_main
     else
@@ -123,17 +111,10 @@ class PlayersController < ApplicationController
       flash[:error], @successful  = $!.to_s, false
     end
     
-    return render(:action => 'destroy.rjs') if request.xhr?
-    
-    # Javascript disabled fallback
     return_to_main
   end
   
   def cancel
-    @successful = true
-    
-    return render(:action => 'cancel.rjs') if request.xhr?
-    
     return_to_main
   end
 end

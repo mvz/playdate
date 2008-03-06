@@ -1,4 +1,5 @@
-<% # The following is used when the browser doesn't have javascript enabled %>
+<% # The following is used when the browser doesn't have javascript enabled
+%>
 <% classAttr = cycle("", "class=\"even\"") %>
 <% @options = params.merge(:controller => '/players', :action => "view", :id => player.send("#{Player.primary_key}")) %>
 
@@ -17,18 +18,11 @@
         </td>
         <td> 
           <% edit_options = @options.merge(:action => 'edit') %>
- 	        <%= link_to_remote "Edit", 
-   	                    { :url => edit_options, 
-                          :loading => "Element.show('#{loading_indicator_id(@options)}');" },
-   	                    { :href => url_for(edit_options) } %>
+ 	        <%= link_to "Edit", edit_options %>
    	     </td>
    	     <td>
    	       <% delete_options = @options.merge(:action => 'destroy') %>
- 	         <%= link_to_remote "Delete", 
-   	                    { :url => delete_options, 
-   	                      :confirm => 'Are you sure?',
-                          :loading => "Element.show('#{loading_indicator_id(@options)}');" },
-   	                    { :href => url_for( delete_options ) } %>
+ 	         <%= link_to "Delete", delete_options %>
    	      </td>
    	    </tr>
    	  </table>

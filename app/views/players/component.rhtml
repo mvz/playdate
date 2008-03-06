@@ -6,11 +6,7 @@
       <div class="actions">  
         <% new_params = params.merge(:controller => '/players', :action => 'new') %>
         <%= loading_indicator_tag(new_params) %>
-        <%= link_to_remote "Create New",
-          { :url => new_params,
-            :loading => "Element.show('#{loading_indicator_id(new_params)}');" },
-          { :href => url_for(new_params), 
-			      :class => "create" } %> 		 
+        <%= link_to "Create New", new_params, :class => "create"  %> 		 
       </div>
       <h2>Players</h2>
   </div>

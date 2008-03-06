@@ -7,6 +7,7 @@ class AvailabilitiesController < ApplicationController
   #       :add_flash => { :notice => 'Missing availability ID.' },
   #       :redirect_to => { :controller => 'playdates', :action => 'list' }
 
+  # TODO: Can we get rid of all these?
   def destroy
     if request.post?
       Availability.find(params[:availability_id]).destroy
