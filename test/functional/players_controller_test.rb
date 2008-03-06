@@ -58,9 +58,17 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_destroy
     player_count = Player.find(:all).length
-    post :destroy, {:id => @first.id}, @adminsession
+    post :destroy, {:id => players(:matijs).id}, @adminsession
     assert_response :redirect
     assert_equal player_count - 1, Player.find(:all).length, "Number of Players should be one less"
+    assert_redirected_to REDIRECT_TO_MAIN
+  end
+
+  def test_cannot_destroy_self
+    player_count = Player.find(:all).length
+    post :destroy, {:id => players(:admin).id}, @adminsession
+    assert_equal player_count, Player.find(:all).length, "Number of Players should stay the same"
+    assert_response :redirect
     assert_redirected_to REDIRECT_TO_MAIN
   end
 
