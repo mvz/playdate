@@ -45,6 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'playdates/:id/:action', :controller => "playdates", :action => 'show',
     :requirements => { :id => id_requirement, :action => action_requirement }
 
+  map.resources :players
   map.connect 'players/:action', :controller => "players", :action => 'list',
     :requirements => { :action => action_requirement }
   map.connect 'players/:id/:action', :controller => "players", :action => 'show',

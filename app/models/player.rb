@@ -1,4 +1,3 @@
-require 'ajax_scaffold'
 require 'digest/sha2'
 
 class Player < ActiveRecord::Base
