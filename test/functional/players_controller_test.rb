@@ -58,10 +58,28 @@ class PlayersControllerTest < Test::Unit::TestCase
 
   def test_destroy
     player_count = Player.find(:all).length
+
+
+    player = players(:matijs)
+    num_avs = Availability.count
+    num_player_avs = player.availabilities.count
+    assert num_player_avs > 0, "Test won't work if pd has no availabilities"
+
     post :destroy, {:id => players(:matijs).id}, @adminsession
     assert_response :redirect
     assert_equal player_count - 1, Player.find(:all).length, "Number of Players should be one less"
     assert_redirected_to REDIRECT_TO_MAIN
+
+    assert_equal num_avs - num_player_avs, Availability.count
+  end
+
+  def test_destroy_using_get
+    id = players(:matijs).id
+    get 'destroy', {:id => id}, @adminsession
+    assert_response :redirect
+    assert_redirected_to :action => 'edit'
+
+    assert_not_nil Playdate.find(id)
   end
 
   def test_cannot_destroy_self

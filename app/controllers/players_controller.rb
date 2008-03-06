@@ -71,9 +71,16 @@ class PlayersController < ApplicationController
         format.html { redirect_to(players_url) }
         format.xml  { head :unprocessable_entity }
       else
-        @player.destroy
-        format.html { redirect_to(players_url) }
-        format.xml  { head :ok }
+        if request.post?
+          @player.availabilities.each { |av| av.destroy }
+          @player.destroy
+          format.html { redirect_to(players_url) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = 'Kies Verwijderen om de speler te verwijderen'
+          format.html { redirect_to(edit_player_url(@player)) }
+          format.xml  { head :unprocessable_entity }
+        end
       end
     end
   end
