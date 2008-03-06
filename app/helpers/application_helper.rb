@@ -22,4 +22,7 @@ module ApplicationHelper
     result << content_tag('ul', list)
     return result
   end
+  def status_display(status)
+    return Availability::LONG_DISPLAY[status]
+  end
 end

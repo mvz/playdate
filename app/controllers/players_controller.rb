@@ -2,7 +2,7 @@ class PlayersController < ApplicationController
   before_filter :authorize_admin
 
   def index
-    @players = Player.find(:all)
+    @players = Player.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
