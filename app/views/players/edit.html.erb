@@ -1,12 +1,15 @@
-<h1>Editing player</h1>
+<% content_for("page_title") do %>
+  Speler bewerken
+<% end %>
 
 <%= error_messages_for :player %>
 
 <% form_for(@player) do |f| %>
   <p>
-    <%= f.submit "Update" %>
+  <%= render :partial => 'form_fields', :locals => {:f => f} %>
+  <%= f.submit "Update" %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @player %> |
-<%= link_to 'Back', players_path %>
+<%= link_to 'Tonen', @player %> |
+<%= link_to 'Terug', players_path %>
