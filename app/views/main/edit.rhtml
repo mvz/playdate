@@ -9,21 +9,19 @@
       <table>
         <tr>
           <th>Datum</th>
-          <% for playdate in @playdates %>
-            <td><%=h nice_date_display(playdate.day) %></td>
-          <% end %>
-        </tr>
-        <tr>
           <th>Beschikbaarheid</th>
-          <% avs = @current_user.availabilities_by_day %>
-          <% for playdate in @playdates %>
+        </tr>
+        <% avs = @current_user.availabilities_by_day %>
+        <% for playdate in @playdates %>
+          <tr>
+            <td><%=h nice_date_display(playdate.day) %></td>
             <td>
               <% fields_for :availability, avs[playdate.day] do |av_fields| %>
                 <%= av_fields.select 'status', availability_options, {}, { "index" => playdate.id } %>
               <% end %>
             </td>
-          <% end %>
-        </tr>
+          </tr>
+        <% end %>
       </table>
       <p><%= submit_tag 'Opslaan' %></p>
       <p><%= link_to 'Terug naar overzicht', :action => 'index' %></p>
