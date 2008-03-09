@@ -15,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   # -- just remember to delete public/index.html.
   map.connect '', :controller => "main"
   map.connect 'edit', :controller => "main", :action => 'edit'
+  map.connect 'more', :controller => "main", :action => 'more'
 
   map.connect 'login', :controller => "login", :action => 'login'
   map.connect 'logout', :controller => "login", :action => 'logout'

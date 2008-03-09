@@ -22,6 +22,30 @@ class MainController < ApplicationController
       redirect_to :action => 'index'
     end
   end
+
+  def more
+    if request.post?
+      last_date = Playdate.find(:first, :order => 'day DESC').day
+      today = Date.today
+      if last_date < today
+        last_date = today
+      end
+      eom = today.end_of_month
+
+      period = 1
+      if last_date + 7 > today.end_of_month
+        period = 2
+      end
+
+      count = Playdate.make_new_range(period, PlaydatesController::DAY_SATURDAY)
+      if count > 0 then
+        flash[:notice] = 'Data toegevoegd'
+      else
+        flash[:notice] = 'Geen data toegevoegd'
+      end
+      redirect_to :action => 'index'
+    end
+  end
   
   def feed
     set_overview_fields

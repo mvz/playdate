@@ -16,7 +16,7 @@ class MainControllerTest < Test::Unit::TestCase
   end
 
   def test_authorization
-    [:index, :edit].each do |a|
+    [:index, :edit, :more].each do |a|
       [:get, :post].each do |m|
         method(m).call(a, {}, {})
         assert_redirected_to :controller => "login", :action => "login"
@@ -52,6 +52,23 @@ class MainControllerTest < Test::Unit::TestCase
     assert Availability.count == 4
     newavs = players(:robert).availabilities.sort_by {|a| a.playdate_id}
     assert newavs.map{|a| [a.playdate_id, a.status]}.flatten == [1, 2, 2, 3]
+  end
+
+  def test_more_using_get
+    oldcount = Playdate.count
+    get :more, {}, {:user_id => players(:matijs).id }
+    assert_response :success
+    assert_template 'more'
+    assert_equal Playdate.count, oldcount
+  end
+
+  def test_more_using_post
+    oldcount = Playdate.count
+    post :more, {}, {:user_id => players(:matijs).id }
+    assert_response :redirect
+    assert_redirected_to :action => "index"
+    assert_operator Playdate.count, :>, oldcount + 1
+    assert_operator Playdate.count, :<, oldcount + 6
   end
 
   def test_feed
