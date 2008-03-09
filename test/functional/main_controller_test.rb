@@ -29,6 +29,8 @@ class MainControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
+    assert_select "a[href=/more]"
+    assert_select "a[href=/playdates]", false
   end
 
   def test_index_as_admin
@@ -36,6 +38,7 @@ class MainControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
+    assert_select "a[href=/playdates]"
   end
 
   def test_edit_using_get

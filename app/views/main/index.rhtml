@@ -20,7 +20,9 @@ Playdate! The Application
       </td>
       <% end %>
       <% if @playdates.length == 0 %><td class="playdate" nowrap>Geen relevante speeldata gedefinieerd.</td><% end %>
-      <td class="action"></td>
+        <td class="action">
+          <%= link_to 'Meer>>', {:action => 'more'}, :method => :post %>
+        </td>
     </tr>
 
     <% for player in @players %>
