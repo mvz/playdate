@@ -87,7 +87,7 @@ class PlaydatesController < ApplicationController
       return
     end
 
-    count = make_new_range(period, daytype)
+    count = Playdate.make_new_range(period, daytype)
 
     if count > 0
       flash[:notice] = "Saved #{count}."
@@ -96,25 +96,4 @@ class PlaydatesController < ApplicationController
       flash[:notice] = "Er zijn geen nieuwe datums toegevoegd."
     end
   end
-
-  def make_new_range(months, daytype)
-    today = Date.today()
-    start = (daytype - today.wday) % 7
-
-    finish = 31 * months
-    enddate = today.months_since(months).beginning_of_month
-
-    count = 0
-
-    (start..finish).step(7) do |d|
-      nw = today + d
-      break if nw >= enddate
-      unless Playdate.find_by_day(nw)
-        Playdate.new(:day => nw).save
-        count += 1
-      end
-    end
-    return count
-  end
-
 end
