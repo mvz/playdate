@@ -124,7 +124,8 @@ class PlaydatesControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
-    assert Playdate.count >= num_playdates + 4
+    assert_operator Playdate.count, :>=, num_playdates + 4
+    assert_operator Playdate.count, :<=, num_playdates + 10
 
     post 'new', {:period => 3, :daytype => 7}, @adminsession
 
