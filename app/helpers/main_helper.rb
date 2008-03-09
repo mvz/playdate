@@ -29,4 +29,14 @@ module MainHelper
       return Availability::SHORT_DISPLAY[av.status]
     end
   end
+  def can_dates_be_added?
+    startdate = Date.today + 1
+    enddate = Date.today.next_month.end_of_month
+    (startdate).upto(enddate) do |day|
+      if [5, 6].include?(day.wday) and (not Playdate.find_by_day(day)) then
+        return true
+      end
+    end
+    return false
+  end
 end

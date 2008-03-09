@@ -13,28 +13,28 @@
   </head>
   <body>
     <div id="box" class="wrapper">
-      <% if @current_user %>
+      <% if @current_user -%>
       <p class="logout">Ingelogd als <%=h @current_user.full_name %>.
       <%= link_to 'Uitloggen', {:controller => 'login', :action => 'logout'}, :method => :post %></p>
-      <% end %>
+      <% end -%>
 
       <h1><%= yield :page_title %></h1>
 
       <div class="content">
-        <%= render :partial => 'shared/showflash' %>
+        <%= render :partial => 'shared/showflash' -%>
 
-        <%= yield %>
-        <% if @current_user and @current_user.is_admin? %>
+        <%= yield -%>
+        <% if @current_user and @current_user.is_admin? -%>
         <p>
         <%= link_to 'Speeldagen', :controller => 'playdates', :action => 'list' %>
         <%= link_to 'Spelers', :controller => 'players', :action => 'list' %>
         <%= link_to 'Hoofd', :controller => 'main', :action => 'index' %>
         </p>
-        <% end %>
+        <% end -%>
       </div>
-      <% if @current_user %>
+      <% if @current_user -%>
       <p class="logout"><%= link_to 'Wachtwoord wijzigen', :controller => 'login', :action => 'edit' %></p>
-      <% end %>
+      <% end -%>
     </div>
     <script type="text/javascript">
       Rico.Corner.round('box', {color: '#fff', bgColor: '#e00', compact: false});

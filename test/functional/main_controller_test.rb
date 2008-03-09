@@ -41,6 +41,18 @@ class MainControllerTest < Test::Unit::TestCase
     assert_select "a[href=/playdates]"
   end
 
+  def test_index_all_dates_present
+    startdate = Date.today + 1
+    enddate = Date.today.next_month.end_of_month
+    (startdate).upto(enddate) do |day|
+      if [5, 6].include?(day.wday)
+        Playdate.new(:day => day).save!
+      end
+    end
+    get :index, {}, {:user_id => players(:matijs).id }
+    assert_select "a[href=/more]", false
+  end
+
   def test_edit_using_get
     get :edit, {}, {:user_id => players(:matijs).id }
     assert_response :success
