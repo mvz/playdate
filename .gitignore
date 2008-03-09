@@ -2,4 +2,3 @@
 /log/*.log
 /db/playdate_dev
 /db/schema.rb
-/config/environment.rb
