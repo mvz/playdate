@@ -87,26 +87,8 @@ class PlaydatesController < ApplicationController
       return
     end
 
-    today = Date.today()
-    start = (daytype - today.wday) % 7
+    count = make_new_range(period, daytype)
 
-    case period  
-    when PERIOD_THIS_MONTH 
-      finish = 31; endmonth = today.month
-    when PERIOD_NEXT_MONTH
-      finish = 62; endmonth = today.month + 1
-    end
-
-    count = 0
-
-    (start..finish).step(7) do |d|
-      nw = today + d
-      break if nw.month > endmonth
-      unless Playdate.find_by_day(nw)
-        Playdate.new(:day => nw).save
-        count += 1
-      end
-    end
     if count > 0
       flash[:notice] = "Saved #{count}."
       redirect_to :action => 'list'
@@ -115,5 +97,24 @@ class PlaydatesController < ApplicationController
     end
   end
 
+  def make_new_range(months, daytype)
+    today = Date.today()
+    start = (daytype - today.wday) % 7
+
+    finish = 31 * months
+    enddate = today.months_since(months).beginning_of_month
+
+    count = 0
+
+    (start..finish).step(7) do |d|
+      nw = today + d
+      break if nw >= enddate
+      unless Playdate.find_by_day(nw)
+        Playdate.new(:day => nw).save
+        count += 1
+      end
+    end
+    return count
+  end
 
 end
