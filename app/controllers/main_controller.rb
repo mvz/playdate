@@ -38,6 +38,7 @@ class MainController < ApplicationController
       end
 
       count = Playdate.make_new_range(period, PlaydatesController::DAY_SATURDAY)
+      count += Playdate.make_new_range(period, PlaydatesController::DAY_FRIDAY)
       if count > 0 then
         flash[:notice] = 'Data toegevoegd'
       else
