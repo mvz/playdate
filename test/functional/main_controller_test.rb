@@ -59,6 +59,7 @@ class MainControllerTest < Test::Unit::TestCase
     get :more, {}, {:user_id => players(:matijs).id }
     assert_response :success
     assert_template 'more'
+    assert_tag(:tag => 'form')
     assert_equal Playdate.count, oldcount
   end
 
