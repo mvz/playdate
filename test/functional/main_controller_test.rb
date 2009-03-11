@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class MainControllerTest < ActionController::TestCase
+  MainController::MIN_PLAYERS = 2
+
   def test_authorization
     [:index, :edit, :more].each do |a|
       [:get, :post].each do |m|
@@ -10,11 +12,12 @@ class MainControllerTest < ActionController::TestCase
     end
   end
 
-  def test_index
+  def test_index_as_user
     get :index, {}, {:user_id => players(:matijs).id }
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
+    assert_equal [playdates(:today), playdates(:tomorrow)], assigns(:playdates)
     assert_not_nil assigns(:stats)
     assert_select "a[href=/more]"
     assert_select "a[href=/playdates]", false
@@ -39,6 +42,56 @@ class MainControllerTest < ActionController::TestCase
     end
     get :index, {}, {:user_id => players(:matijs).id }
     assert_select "a[href=/more]", false
+  end
+
+  def test_index_shows_no_for_bad_day
+    [:matijs, :robert].each do |p|
+      players(p).availabilities.build(
+        { :playdate => playdates(:today),
+          :status => Availability::STATUS_NEE }).save!
+    end
+
+    get :index, {}, {:user_id => players(:matijs).id }
+
+    assert_select "tr.summary td:first-of-type", "Nee"
+  end
+
+  def test_index_shows_empty_for_neutral_day
+    get :index, {}, {:user_id => players(:matijs).id }
+
+    assert_select "tr.summary td:first-of-type", ""
+  end
+
+  def test_index_shows_best_for_only_good_day
+    [:matijs, :robert].each do |p|
+      players(p).availabilities.build(
+        { :playdate => playdates(:today),
+          :status => Availability::STATUS_JA }).save!
+    end
+
+    get :index, {}, {:user_id => players(:matijs).id }
+
+    assert_select "tr.summary td:first-of-type", "Beste"
+  end
+
+  def test_index_both_days_good_but_first_is_best
+    [:matijs, :robert].each do |p|
+      [:today, :tomorrow].each do |d|
+        players(p).availabilities.build(
+          { :playdate => playdates(d),
+            :status => Availability::STATUS_JA }).save!
+      end
+    end
+
+    # today is best, tomorrow is good
+    players(:admin).availabilities.build(
+      { :playdate => playdates(:today),
+          :status => Availability::STATUS_JA }).save!
+
+    get :index, {}, {:user_id => players(:matijs).id }
+
+    assert_select "tr.summary td:nth-of-type(1)", "Beste"
+    assert_select "tr.summary td:nth-of-type(2)", "Ja"
   end
 
   def test_edit_using_get
