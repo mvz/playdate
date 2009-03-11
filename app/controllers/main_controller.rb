@@ -78,7 +78,7 @@ class MainController < ApplicationController
   end
 
   def statistics(dates, players)
-    return dates.inject({}) do |h,pd|
+    stats = dates.inject({}) do |h,pd|
       stat = Hash.new(0)
       players.each do |p|
         av = p.availability_for_playdate(pd)
@@ -93,5 +93,20 @@ class MainController < ApplicationController
       h[pd] = { :yes => yes, :no => no, :maybe => maybe }
       h
     end
+
+    max = stats.map {|d,s| s[:yes] }.max
+    numplayers = players.length
+
+    stats.each_value do |s|
+      s[:code] = status_code(s, max, numplayers)
+    end
+  end
+
+  def status_code(status, max, numplayers)
+    min = [numplayers, MainController::MIN_PLAYERS].min
+    return 3 if max >= min && status[:yes] == max
+    return 2 if status[:yes] >= min
+    return 0 if status[:no] > (numplayers - min)
+    return 1
   end
 end
