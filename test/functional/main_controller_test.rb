@@ -1,20 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'main_controller'
 
-# Re-raise errors caught by the controller.
-class MainController; def rescue_action(e) raise e end; end
-
-class MainControllerTest < Test::Unit::TestCase
-  fixtures :playdates
-  fixtures :availabilities
-  fixtures :players
-
-  def setup
-    @controller = MainController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
-
+class MainControllerTest < ActionController::TestCase
   def test_authorization
     [:index, :edit, :more].each do |a|
       [:get, :post].each do |m|

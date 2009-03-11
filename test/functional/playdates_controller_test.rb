@@ -1,21 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'playdates_controller'
 
-# Re-raise errors caught by the controller.
-class PlaydatesController; def rescue_action(e) raise e end; end
-
-class PlaydatesControllerTest < Test::Unit::TestCase
-  fixtures :playdates
-  fixtures :availabilities
-  fixtures :players
-
-  def setup
-    @controller = PlaydatesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @adminsession = {:user_id => players(:admin).id }
-  end
-
+class PlaydatesControllerTest < ActionController::TestCase
   def test_authorization
     playersession = {:user_id => players(:matijs).id }
     [:destroy, :edit, :list, :new, :show, :prune].each do |a|
@@ -31,7 +16,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_destroy_using_get
     assert_not_nil Playdate.find(1)
 
-    get 'destroy', {:id => 1}, @adminsession
+    get 'destroy', {:id => 1}, adminsession
     assert_response :redirect
     assert_redirected_to :action => 'edit'
 
@@ -45,7 +30,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
     num_pd_avs = pd.availabilities.count
     assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
 
-    post 'destroy', {:id => 1}, @adminsession
+    post 'destroy', {:id => 1}, adminsession
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
@@ -56,7 +41,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_destroy_without_id
     assert_not_nil Playdate.find(1)
 
-    post 'destroy', {}, @adminsession
+    post 'destroy', {}, adminsession
     assert_response :redirect
     assert_redirected_to :action => 'list'
     assert flash.has_key?(:notice)
@@ -65,7 +50,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_using_get
-    get 'edit', {:id => 1}, @adminsession
+    get 'edit', {:id => 1}, adminsession
 
     assert_response :success
     assert_template 'edit'
@@ -75,20 +60,20 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit_using_post
-    post 'edit', {:id => 1}, @adminsession
+    post 'edit', {:id => 1}, adminsession
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 1
   end
 
   def test_edit_without_id
-    post 'edit', {}, @adminsession
+    post 'edit', {}, adminsession
     assert_response :redirect
     assert_redirected_to :action => 'list'
     assert flash.has_key?(:notice)
   end
 
   def test_list
-    get 'list', {}, @adminsession
+    get 'list', {}, adminsession
 
     assert_response :success
     assert_template 'list'
@@ -97,7 +82,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_new_using_get
-    get 'new', {}, @adminsession
+    get 'new', {}, adminsession
 
     assert_response :success
     assert_template 'new'
@@ -108,7 +93,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_new_using_post
     num_playdates = Playdate.count
 
-    post 'new', {:playdate => {:day => "2006-03-11"}}, @adminsession
+    post 'new', {:playdate => {:day => "2006-03-11"}}, adminsession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -119,7 +104,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_new_range_using_post
     num_playdates = Playdate.count
 
-    post 'new', {:period => 2, :daytype => 6}, @adminsession
+    post 'new', {:period => 2, :daytype => 6}, adminsession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -127,13 +112,13 @@ class PlaydatesControllerTest < Test::Unit::TestCase
     assert_operator Playdate.count, :>=, num_playdates + 4
     assert_operator Playdate.count, :<=, num_playdates + 10
 
-    post 'new', {:period => 3, :daytype => 7}, @adminsession
+    post 'new', {:period => 3, :daytype => 7}, adminsession
 
     assert_response :success
   end
 
   def test_show
-    get 'show', {:id => 1}, @adminsession
+    get 'show', {:id => 1}, adminsession
 
     assert_response :success
     assert_template 'show'
@@ -143,7 +128,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_show_without_id
-    get 'show', {}, @adminsession
+    get 'show', {}, adminsession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -151,7 +136,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   end
 
   def test_prune_using_get
-    get 'prune', @adminsession
+    get 'prune', adminsession
 
     assert_response :success
     assert_template 'prune'
@@ -159,7 +144,7 @@ class PlaydatesControllerTest < Test::Unit::TestCase
 
   def test_prune_using_get
     num_playdates = Playdate.count
-    get 'prune', {}, @adminsession
+    get 'prune', {}, adminsession
 
     assert_response :success
     assert_template 'prune'
@@ -169,11 +154,15 @@ class PlaydatesControllerTest < Test::Unit::TestCase
   def test_prune_using_post
     num_playdates = Playdate.count
     assert num_playdates == 4
-    post 'prune', {}, @adminsession
+    post 'prune', {}, adminsession
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
     assert Playdate.count == 2
     assert Playdate.find(:all).map {|pd| pd.id }.sort == [3, 4]
+  end
+
+  def adminsession
+    {:user_id => players(:admin).id }
   end
 end

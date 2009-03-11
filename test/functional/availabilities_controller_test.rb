@@ -1,21 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'availabilities_controller'
 
-# Re-raise errors caught by the controller.
-class AvailabilitiesController; def rescue_action(e) raise e end; end
-
-class AvailabilitiesControllerTest < Test::Unit::TestCase
-  fixtures :players
-  fixtures :playdates
-  fixtures :availabilities
-
-  def setup
-    @controller = AvailabilitiesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @adminsession = {:user_id => players(:admin).id }
-  end
-
+class AvailabilitiesControllerTest < ActionController::TestCase
   def assert_redirect_to_playdate_view(id)
     assert_redirected_to :controller => 'playdates', :action => 'show', :id => "#{id}"
   end
@@ -36,7 +21,7 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   def test_destroy_using_get
     assert_not_nil Availability.find(1)
 
-    get 'destroy', {:playdate_id => 1, :availability_id => 1}, @adminsession
+    get 'destroy', {:playdate_id => 1, :availability_id => 1}, adminsession
     assert_response :redirect
     assert_redirected_to :action => 'edit'
     assert flash.has_key?(:notice)
@@ -49,7 +34,7 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   def test_destroy_using_post
     assert_not_nil Availability.find(1)
 
-    post 'destroy', {:playdate_id => 1, :availability_id => 1}, @adminsession
+    post 'destroy', {:playdate_id => 1, :availability_id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
 
@@ -61,7 +46,7 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   def test_destroy_without_id
     assert_not_nil Availability.find(1)
 
-    post 'destroy', {:playdate_id => 1}, @adminsession
+    post 'destroy', {:playdate_id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
     assert flash.has_key?(:notice)
@@ -71,7 +56,7 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
 
   # Edit using get: Show edit screen.
   def test_edit_using_get
-    get 'edit', {:playdate_id => 1, :availability_id => 1}, @adminsession
+    get 'edit', {:playdate_id => 1, :availability_id => 1}, adminsession
 
     assert_response :success
     assert_template 'edit'
@@ -80,7 +65,7 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
     assert assigns(:availability).valid?
 
     # Unknown id combo
-    get 'edit', {:playdate_id => 2, :availability_id => 1}, @adminsession
+    get 'edit', {:playdate_id => 2, :availability_id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(2)
   end
@@ -88,27 +73,27 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   # Edit using post: Edit, then return to list of availabilities for
   # playdate.
   def test_edit_using_post
-    post 'edit', {:playdate_id => 1, :availability_id => 1}, @adminsession
+    post 'edit', {:playdate_id => 1, :availability_id => 1}, adminsession
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
   end
 
   def test_edit_without_id
-    post 'edit', {:playdate_id => 1}, @adminsession
+    post 'edit', {:playdate_id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
     assert flash.has_key?(:notice)
   end
 
   def test_list
-    get 'list', {:playdate_id => 1}, @adminsession
+    get 'list', {:playdate_id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
   end
 
   def test_new_using_get
-    get 'new', {:playdate_id => 1}, @adminsession
+    get 'new', {:playdate_id => 1}, adminsession
 
     assert_response :success
     assert_template 'new'
@@ -121,7 +106,7 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
 
     post 'new', {:playdate_id => playdates(:friday).id,
       :availability => {:player_id => players(:robert).id, :status => 1 }},
-      @adminsession
+      adminsession
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
@@ -130,7 +115,7 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get 'show', {:playdate_id => 1, :availability_id => 1}, @adminsession
+    get 'show', {:playdate_id => 1, :availability_id => 1}, adminsession
 
     assert_response :success
     assert_template 'show'
@@ -140,10 +125,14 @@ class AvailabilitiesControllerTest < Test::Unit::TestCase
   end
 
   def test_show_without_id
-    get 'show', {:playdate_id => 1}, @adminsession
+    get 'show', {:playdate_id => 1}, adminsession
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
     assert flash.has_key?(:notice)
+  end
+  
+  def adminsession
+    {:user_id => players(:admin).id }
   end
 end
