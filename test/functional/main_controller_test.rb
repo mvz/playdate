@@ -94,6 +94,28 @@ class MainControllerTest < ActionController::TestCase
     assert_select "tr.summary td:nth-of-type(2)", "Ja"
   end
 
+  def test_index_with_house_better_than_without
+    [:today, :tomorrow].each do |d|
+      players(:matijs).availabilities.build(
+        { :playdate => playdates(d),
+          :status => Availability::STATUS_JA }).save!
+    end
+
+    # today is good, tomorrow is best
+    players(:robert).availabilities.build(
+      { :playdate => playdates(:today),
+        :status => Availability::STATUS_JA }).save!
+
+    players(:robert).availabilities.build(
+      { :playdate => playdates(:tomorrow),
+        :status => Availability::STATUS_HUIS }).save!
+
+    get :index, {}, {:user_id => players(:matijs).id }
+
+    assert_select "tr.summary td:nth-of-type(1)", "Ja"
+    assert_select "tr.summary td:nth-of-type(2)", "Beste"
+  end
+
   def test_edit_using_get
     get :edit, {}, {:user_id => players(:matijs).id }
     assert_response :success
