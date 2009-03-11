@@ -1,5 +1,7 @@
 - Test more
 
+- Don't show playdate entry for adding availability: it is not used.
+
 D Add updated_at column to availabilities, in preparation for PlayDateSpam.
 - Add Atom feed.
 
