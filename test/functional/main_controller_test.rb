@@ -15,6 +15,7 @@ class MainControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
+    assert_not_nil assigns(:stats)
     assert_select "a[href=/more]"
     assert_select "a[href=/playdates]", false
   end
@@ -24,6 +25,7 @@ class MainControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
+    assert_not_nil assigns(:stats)
     assert_select "a[href=/playdates]"
   end
 
