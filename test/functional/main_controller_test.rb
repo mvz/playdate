@@ -33,7 +33,8 @@ class MainControllerTest < ActionController::TestCase
   end
 
   def test_index_all_dates_present
-    startdate = Date.today + 1
+    # today and tomorrow are already there
+    startdate = Date.today + 2
     enddate = Date.today.next_month.end_of_month
     (startdate).upto(enddate) do |day|
       if [5, 6].include?(day.wday)
