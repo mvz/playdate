@@ -21,7 +21,7 @@
   <tr class="summary">
     <th>Optie?</th>
     <% for playdate in @playdates %>
-    <td><%= status_to_text(@stats[playdate], @max, @players.length) %></td>
+    <td><%= status_to_text(@stats[playdate]) %></td>
     <% end %>
   </tr>
 </table>

@@ -2,11 +2,11 @@ module MainHelper
   STATUS_CLASSES = ["bad", "neutral", "option", "best"]
   STATUS_TEXTS = ["Nee", "", "Ja", "Beste"] # "Misschien" for "" ?
 
-  def status_to_class(status, max, numplayers)
+  def status_to_class(status)
     return STATUS_CLASSES[status[:code]]
   end
 
-  def status_to_text(status, max, numplayers)
+  def status_to_text(status)
     return STATUS_TEXTS[status[:code]]
   end
 

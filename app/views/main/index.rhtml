@@ -13,7 +13,7 @@
     <tr>
       <td class="player"></td>
       <% for playdate in @playdates -%>
-        <td class="playdate <%= status_to_class(@stats[playdate], @max, @players.length) %>">
+        <td class="playdate <%= status_to_class(@stats[playdate]) %>">
           <%=h nice_date_display(playdate.day) %>
         </td>
       <% end -%>
@@ -32,7 +32,7 @@
         <td class="player <%= class_if_current_user(player)%>"><%=h player.abbreviation %></td>
         <% avs = player.availabilities_by_day -%>
         <% for playdate in @playdates -%>
-          <td class="playdate <%= status_to_class(@stats[playdate], @max, @players.length) %> <%= class_if_current_user(player) %>">
+          <td class="playdate <%= status_to_class(@stats[playdate]) %> <%= class_if_current_user(player) %>">
             <%= availability_status_character(avs[playdate.day], player) %>
           </td>
         <% end -%>
@@ -48,7 +48,7 @@
     <tr class="summary">
       <th>Optie?</th>
       <% for playdate in @playdates -%>
-        <td><%= status_to_text(@stats[playdate], @max, @players.length) %></td>
+        <td><%= status_to_text(@stats[playdate]) %></td>
       <% end -%>
     <% if @playdates.length == 0 %><td></td><% end %>
       <td></td>
