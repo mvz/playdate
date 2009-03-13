@@ -90,21 +90,31 @@ class MainController < ApplicationController
       yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
       no = stat[Availability::STATUS_NEE]
       maybe = stat[Availability::STATUS_MISSCHIEN]
-      h[pd] = { :yes => yes, :no => no, :maybe => maybe }
+      house = stat[Availability::STATUS_HUIS]
+      h[pd] = { :yes => yes, :no => no, :maybe => maybe, :house => house }
       h
     end
 
     max = stats.map {|d,s| s[:yes] }.max
+    max_has_house = (not stats.find {
+      |d,s| s[:yes] == max && s[:house] > 0}.nil?)
     numplayers = players.length
+    min = [numplayers, MainController::MIN_PLAYERS].min
 
     stats.each_value do |s|
-      s[:code] = status_code(s, max, numplayers)
+      s[:code] = status_code(s, min, max, max_has_house, numplayers)
     end
   end
 
-  def status_code(status, max, numplayers)
-    min = [numplayers, MainController::MIN_PLAYERS].min
-    return 3 if max >= min && status[:yes] == max
+  def status_code(status, min, max, max_has_house, numplayers)
+    if max >= min && status[:yes] == max
+      if max_has_house
+        return 3 if status[:house] > 0
+        return 2
+      else
+        return 3
+      end
+    end
     return 2 if status[:yes] >= min
     return 0 if status[:no] > (numplayers - min)
     return 1
