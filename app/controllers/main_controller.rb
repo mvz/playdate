@@ -12,7 +12,7 @@ class MainController < ApplicationController
     if request.post?
       params[:availability].each do |p_id, av_param|
         d = Playdate.find(p_id) or next
-        av = @current_user.availability_for_playdate(d.day) ||
+        av = @current_user.availability_for_playdate(d) ||
           @current_user.availabilities.build({:playdate => d})
         av.status = av_param[:status]
         av.save!
