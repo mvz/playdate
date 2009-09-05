@@ -10,10 +10,9 @@ class MainController < ApplicationController
   def edit
     @playdates = relevant_playdates
     if request.post?
-      avs = @current_user.availabilities_by_day
       params[:availability].each do |p_id, av_param|
         d = Playdate.find(p_id) or next
-        av = avs[d.day] ||
+        av = @current_user.availability_for_playdate(d.day) ||
           @current_user.availabilities.build({:playdate => d})
         av.status = av_param[:status]
         av.save!
