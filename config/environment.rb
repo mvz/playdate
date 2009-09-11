@@ -20,6 +20,10 @@ Rails::Initializer.run do |config|
   # To use Rails without a database, you must remove the Active Record framework
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
+  # Specify gems that this application depends on and have them installed with rake gems:install
+  config.gem 'mislav-will_paginate', :version => '~> 2.3.11', :lib => 'will_paginate', 
+          :source => 'http://gems.github.com'
+
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -57,5 +61,3 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 end
-
-require 'will_paginate'
