@@ -1,0 +1,17 @@
+--- 
+nl: 
+  activerecord: 
+    errors: 
+      messages: 
+        inclusion: is niet opgenomen in de lijst 
+        exclusion: is niet toegestaan in de lijst 
+        invalid: is ongeldig 
+        confirmation: is niet gelijk aan de bevestiging 
+        accepted: moet geaccepteerd worden 
+        empty: mag niet leeg zijn 
+        blank: mag niet leeg zijn 
+        too_long: is te lang (maximum is {{count}} tekens) 
+        too_short: is te kort (minimum is {{count}} tekens) 
+        wrong_length: heeft de verkeerde lengte (moet {{count}} tekens zijn) 
+        taken: is al in gebruik 
+        not_a_number: is geen getal 
