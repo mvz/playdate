@@ -127,7 +127,7 @@ class MainControllerTest < ActionController::TestCase
   def test_edit_using_post
     post :edit, {:availability => { 1 => {:status => 2}, 2 => {:status => 3} } }, {:user_id => players(:robert).id}
     assert_response :redirect
-    assert_redirected_to :action => "index"
+    assert_redirected_to :controller => 'main', :action => "index"
     assert Availability.count == 4
     newavs = players(:robert).availabilities.sort_by {|a| a.playdate_id}
     assert newavs.map{|a| [a.playdate_id, a.status]}.flatten == [1, 2, 2, 3]
@@ -146,7 +146,7 @@ class MainControllerTest < ActionController::TestCase
     oldcount = Playdate.count
     post :more, {}, {:user_id => players(:matijs).id }
     assert_response :redirect
-    assert_redirected_to :action => "index"
+    assert_redirected_to :controller => 'main', :action => "index"
     assert_operator Playdate.count, :>, oldcount + 1
     assert_operator Playdate.count, :<, oldcount + 12
     startdate = Date.today + 1

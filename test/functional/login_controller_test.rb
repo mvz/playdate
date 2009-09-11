@@ -22,7 +22,7 @@ class LoginControllerTest < ActionController::TestCase
   def test_change_password_using_get
     get :edit
     assert_response :redirect
-    assert_redirected_to :action => "login"
+    assert_redirected_to :controller => "login", :action => "login"
     get :edit, {}, {:user_id => players(:matijs).id }
     assert_response :success
   end
@@ -30,7 +30,7 @@ class LoginControllerTest < ActionController::TestCase
   def test_change_password_using_post
     post :edit, {:player => {:password => 'slurp', :password_confirmation => 'slurp'}}
     assert_response :redirect
-    assert_redirected_to :action => "login"
+    assert_redirected_to :controller => "login", :action => "login"
     post :edit, {:player => {:password => 'slurp', :password_confirmation => 'slurp'}}, {:user_id => players(:matijs).id }
     assert_response :redirect
     assert_redirected_to :controller => "main", :action => "index"
@@ -50,7 +50,7 @@ class LoginControllerTest < ActionController::TestCase
   def test_logout_using_post
     post :logout, {}, {:user_id => players(:matijs).id }
     assert_response :redirect
-    assert_redirected_to 'login'
+    assert_redirected_to :controller => 'login', :action => 'login'
     assert_nil session[:user_id]
   end
 end

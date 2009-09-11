@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PlayerTest < Test::Unit::TestCase
-  fixtures :players
-  fixtures :playdates
-  fixtures :availabilities
-
+class PlayerTest < ActiveSupport::TestCase
   # TODO: More tests!!
 
   NEW_PLAYER = {:name => 'Testy', :password => 'test123', :password_confirmation => 'test123'}

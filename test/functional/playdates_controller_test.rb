@@ -5,9 +5,13 @@ class PlaydatesControllerTest < ActionController::TestCase
     playersession = {:user_id => players(:matijs).id }
     [:destroy, :edit, :list, :new, :show, :prune].each do |a|
       [:get, :post].each do |m|
-        {"login" => {}, "main" => playersession}.each do |redirect,session|
+        [
+          [{}, "login", "login"],
+          [playersession, "main", "index"]
+        ].each do |session,controller,action|
           method(m).call(a, {}, session)
-          assert_redirected_to :controller => redirect
+          assert_redirected_to :controller => controller,
+            :action => action
         end
       end
     end
@@ -18,7 +22,7 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     get 'destroy', {:id => 1}, adminsession
     assert_response :redirect
-    assert_redirected_to :action => 'edit'
+    assert_redirected_to :controller => 'playdates', :action => 'edit', :id => 1
 
     assert_not_nil Playdate.find(1)
   end
@@ -32,7 +36,7 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     post 'destroy', {:id => 1}, adminsession
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) { Playdate.find(1) }
     assert_equal num_avs - num_pd_avs, Availability.count
@@ -43,7 +47,7 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     post 'destroy', {}, adminsession
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'list'
     assert flash.has_key?(:notice)
 
     assert_not_nil Playdate.find(1)
@@ -62,13 +66,13 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_edit_using_post
     post 'edit', {:id => 1}, adminsession
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :controller => 'playdates', :action => 'show', :id => 1
   end
 
   def test_edit_without_id
     post 'edit', {}, adminsession
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'list'
     assert flash.has_key?(:notice)
   end
 
@@ -96,7 +100,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     post 'new', {:playdate => {:day => "2006-03-11"}}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'list'
 
     assert_equal num_playdates + 1, Playdate.count
   end
@@ -107,7 +111,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     post 'new', {:period => 2, :daytype => 6}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'list'
 
     assert_operator Playdate.count, :>=, num_playdates + 4
     assert_operator Playdate.count, :<=, num_playdates + 10
@@ -131,7 +135,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     get 'show', {}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'list'
     assert flash.has_key?(:notice)
   end
 
@@ -157,7 +161,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     post 'prune', {}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'list'
     assert Playdate.count == 2
     assert Playdate.find(:all).map {|pd| pd.id }.sort == [3, 4]
   end

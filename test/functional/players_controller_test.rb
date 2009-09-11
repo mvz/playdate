@@ -1,15 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'players_controller'
 
-# Re-raise errors caught by the controller.
-class PlayersController; def rescue_action(e) raise e end; end
-
-class PlayersControllerTest < Test::Unit::TestCase
-  fixtures :players
-
+class PlayersControllerTest < ActionController::TestCase
   NEW_PLAYER = {:name => 'Testy', :password => 'test123', :password_confirmation => 'test123'}
-  REDIRECT_TO_MAIN = {:action => 'index'}
+  REDIRECT_TO_MAIN = {:controller => 'players', :action => 'index'}
 
+  # TODO: Clean this up
   def setup
     @controller = PlayersController.new
     @request    = ActionController::TestRequest.new
@@ -22,10 +17,14 @@ class PlayersControllerTest < Test::Unit::TestCase
   def test_authorization
     [:create, :destroy, :update].each do |a|
       [:get, :post].each do |m|
-        {"login" => {}, "main" => @playersession}.each do |redirect,session|
+        [
+          [{}, "login", "login"],
+          [@playersession, "main", "index"]
+        ].each do |session,controller,action|
           [ lambda { method(m).call(a, {}, session) } ].each do |e|
             e.call
-            assert_redirected_to :controller => redirect
+            assert_redirected_to :controller => controller,
+              :action => action
           end
         end
       end

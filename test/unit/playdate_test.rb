@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PlaydateTest < Test::Unit::TestCase
-  fixtures :playdates
-
+class PlaydateTest < ActiveSupport::TestCase
   REQ_ATTR_NAMES = %w(day)
   DUPLICATE_ATTR_NAMES = %w(day)
   NEW_PARAMS = { :day => "2006-01-10" }

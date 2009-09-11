@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AvailabilityTest < Test::Unit::TestCase
-  fixtures :players
-  fixtures :playdates
-  fixtures :availabilities
-
+class AvailabilityTest < ActiveSupport::TestCase
   REQ_ATTR_NAMES = %w(player playdate)
 
   def test_raw_validation

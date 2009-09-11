@@ -9,9 +9,13 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     playersession = {:user_id => players(:matijs).id }
     [:destroy, :edit, :list, :new, :show].each do |a|
       [:get, :post].each do |m|
-        {"login" => {}, "main" => playersession}.each do |redirect,session|
+        [
+          [{}, "login", "login"],
+          [playersession, "main", "index"]
+        ].each do |session,controller,action|
           method(m).call(a, {:playdate_id => 1, :availability_id => 1}, session)
-          assert_redirected_to :controller => redirect
+          assert_redirected_to(:controller => controller,
+                               :action => action)
         end
       end
     end
@@ -23,7 +27,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
     get 'destroy', {:playdate_id => 1, :availability_id => 1}, adminsession
     assert_response :redirect
-    assert_redirected_to :action => 'edit'
+    assert_redirected_to :controller => 'availabilities',
+      :action => 'edit', :playdate_id => 1, :availability_id => 1
     assert flash.has_key?(:notice)
 
     assert_not_nil Availability.find(1)
