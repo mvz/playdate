@@ -4,22 +4,17 @@ class PlayersControllerTest < ActionController::TestCase
   NEW_PLAYER = {:name => 'Testy', :password => 'test123', :password_confirmation => 'test123'}
   REDIRECT_TO_MAIN = {:controller => 'players', :action => 'index'}
 
-  # TODO: Clean this up
   def setup
-    @controller = PlayersController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @first = Player.find(:first)
     @adminsession = {:user_id => players(:admin).id }
-    @playersession = {:user_id => players(:matijs).id }
   end
 
   def test_authorization
+    playersession = {:user_id => players(:matijs).id }
     [:create, :destroy, :update].each do |a|
       [:get, :post].each do |m|
         [
           [{}, "login", "login"],
-          [@playersession, "main", "index"]
+          [playersession, "main", "index"]
         ].each do |session,controller,action|
           [ lambda { method(m).call(a, {}, session) } ].each do |e|
             e.call
@@ -41,6 +36,7 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   def test_update
+    @first = Player.find(:first)
     player_count = Player.find(:all).length
     post :update,
       {:id => @first.id, :player => @first.attributes.merge(NEW_PLAYER)},
