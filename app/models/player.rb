@@ -15,10 +15,6 @@ class Player < ActiveRecord::Base
 
   SALT = 'change this to your own salt'
 
-  @scaffold_columns = %w(name full_name abbreviation is_admin default_status).map {|c|
-    AjaxScaffold::ScaffoldColumn.new(self, {:name => c})
-  }
-
   def password
     @password
   end
