@@ -3,15 +3,16 @@ admin:
   id: 1
   name: "admin"
   is_admin: true
+  password_hash: "total_nonsense"
 matijs:
   id: 2
   abbreviation: "MvZ"
   is_admin: false
   name: "matijs"
-  #password: "matpas"
-  #password_confirmation: "matpas"
+  password_hash: "total_nonsense"
 robert:
   id: 3
   abbreviation: "RJ"
   is_admin: false
   name: "robert"
+  password_hash: "total_nonsense"

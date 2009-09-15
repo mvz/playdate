@@ -1,8 +1,10 @@
 class Availability < ActiveRecord::Base
   belongs_to :player
   belongs_to :playdate
-  validates_presence_of :player_id, :playdate_id, :status
+  validates_presence_of :player, :playdate
   validates_uniqueness_of :playdate_id, :scope => [:player_id]
+  validates_associated :player, :playdate
+  validates_inclusion_of :status, :in => 0..3
 
   STATUS_MISSCHIEN = 0
   STATUS_JA = 1

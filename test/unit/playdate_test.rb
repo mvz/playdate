@@ -15,6 +15,12 @@ class PlaydateTest < Test::Unit::TestCase
     }
   end
 
+  def test_fixtures_valid
+    [:friday, :saturday].each do |p|
+      assert playdates(p).valid?, "Playdate #{p} should be valid"
+    end
+  end
+
   def test_new
     dt = Playdate.new(NEW_PARAMS)
     assert dt.valid?, "Availability should be valid"

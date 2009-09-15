@@ -5,7 +5,7 @@ class AvailabilityTest < Test::Unit::TestCase
   fixtures :playdates
   fixtures :availabilities
 
-  REQ_ATTR_NAMES = %w(player_id playdate_id status)
+  REQ_ATTR_NAMES = %w(player playdate)
 
   def test_raw_validation
     availability = Availability.new
@@ -18,10 +18,17 @@ class AvailabilityTest < Test::Unit::TestCase
   def test_new
     new_params = { :player_id => players(:robert).id, :playdate_id => playdates(:friday).id, :status => 1 }
     availability = Availability.new(new_params)
+    availability.valid?
     assert availability.valid?, "Availability should be valid"
     assert availability.status == 1
     new_params.each_pair do |attr_name,attr_value|
       assert_equal attr_value, availability[attr_name], "Availability.@#{attr_name.to_s} incorrect"
+    end
+  end
+
+  def test_fixtures_valid
+    [:onfriday, :onsaturday].each do |a|
+      assert availabilities(a).valid?, "Availability #{a} should be valid"
     end
   end
 

@@ -27,6 +27,12 @@ class PlayerTest < Test::Unit::TestCase
     }
   end
 
+  def test_fixtures_valid
+    [:admin, :matijs, :robert].each do |p|
+      assert players(p).valid?, "Player #{p} should be valid"
+    end
+  end
+
   def test_new
     player = Player.new(NEW_PLAYER)
     assert player.valid?, "Player should be valid"
