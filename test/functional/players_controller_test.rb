@@ -14,9 +14,7 @@ class PlayersControllerTest < Test::Unit::TestCase
     @controller = PlayersController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    # Retrieve fixtures via their name
-    # @first = players(:first)
-    @first = Player.find_first
+    @first = Player.find(:first)
     @adminsession = {:user_id => players(:admin).id }
     @playersession = {:user_id => players(:matijs).id }
   end

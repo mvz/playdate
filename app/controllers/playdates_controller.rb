@@ -7,9 +7,9 @@ class PlaydatesController < ApplicationController
 
   PERIOD_THIS_MONTH = 1
   PERIOD_NEXT_MONTH = 2
-  # TODO: Use constants from Date directly
-  DAY_FRIDAY = Date::DAYS["friday"]
-  DAY_SATURDAY = Date::DAYS["saturday"]
+  # TODO: Use something more robust?
+  DAY_FRIDAY = 5 # Date::DAYS["friday"]
+  DAY_SATURDAY = 6 # Date::DAYS["saturday"]
 
   def destroy
     if request.post?
