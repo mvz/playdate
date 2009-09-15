@@ -3,9 +3,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 class PlayerTest < Test::Unit::TestCase
   fixtures :players
 
-	NEW_PLAYER = {}	# e.g. {:name => 'Test Player', :description => 'Dummy'}
-	REQ_ATTR_NAMES 			 = %w( ) # name of fields that must be present, e.g. %(name description)
-	DUPLICATE_ATTR_NAMES = %w( ) # name of fields that cannot be a duplicate, e.g. %(name description)
+  # e.g. {:name => 'Test Player', :description => 'Dummy'}
+  NEW_PLAYER = {:name => 'Testy', :password => 'test123', :password_confirmation => 'test123'}
+
+  # name of fields that must be present, e.g. %(name description)
+  REQ_ATTR_NAMES = %w(name password password_confirmation)
+
+  # name of fields that cannot be a duplicate, e.g. %(name description)
+  DUPLICATE_ATTR_NAMES = %w(name)
 
   def setup
     # Retrieve fixtures via their name
@@ -23,31 +28,31 @@ class PlayerTest < Test::Unit::TestCase
     end
   end
 
-	def test_new
+  def test_new
     player = Player.new(NEW_PLAYER)
     assert player.valid?, "Player should be valid"
-   	NEW_PLAYER.each do |attr_name|
+    NEW_PLAYER.each do |attr_name|
       assert_equal NEW_PLAYER[attr_name], player.attributes[attr_name], "Player.@#{attr_name.to_s} incorrect"
     end
- 	end
+  end
 
-	def test_validates_presence_of
-   	REQ_ATTR_NAMES.each do |attr_name|
-			tmp_player = NEW_PLAYER.clone
-			tmp_player.delete attr_name.to_sym
-			player = Player.new(tmp_player)
-			assert !player.valid?, "Player should be invalid, as @#{attr_name} is invalid"
-    	assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+  def test_validates_presence_of
+    REQ_ATTR_NAMES.each do |attr_name|
+      tmp_player = NEW_PLAYER.clone
+      tmp_player.delete attr_name.to_sym
+      player = Player.new(tmp_player)
+      assert !player.valid?, "Player should be invalid, as @#{attr_name} is invalid"
+      assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
     end
- 	end
+  end
 
-	def test_duplicate
+  def test_duplicate
     current_player = Player.find_first
-   	DUPLICATE_ATTR_NAMES.each do |attr_name|
-   		player = Player.new(NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name]))
-			assert !player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
-    	assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
-		end
-	end
+    DUPLICATE_ATTR_NAMES.each do |attr_name|
+      player = Player.new(NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name]))
+      assert !player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
+      assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+    end
+  end
 end
 
