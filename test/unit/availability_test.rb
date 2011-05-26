@@ -7,7 +7,7 @@ class AvailabilityTest < ActiveSupport::TestCase
     availability = Availability.new
     assert !availability.valid?, "Availability should not be valid without initialisation parameters"
     REQ_ATTR_NAMES.each {|attr_name|
-      assert availability.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+      assert availability.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     }
   end
 

@@ -19,7 +19,7 @@ class PlayerTest < ActiveSupport::TestCase
     player = Player.new
     assert !player.valid?, "Player should not be valid without initialisation parameters"
     REQ_ATTR_NAMES.each {
-      |attr_name| assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+      |attr_name| assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     }
   end
 
@@ -42,7 +42,7 @@ class PlayerTest < ActiveSupport::TestCase
       tmp_player.delete attr_name.to_sym
       player = Player.new(tmp_player)
       assert !player.valid?, "Player should be invalid, as @#{attr_name} is invalid"
-      assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+      assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     end
   end
 
@@ -70,7 +70,7 @@ class PlayerTest < ActiveSupport::TestCase
     DUPLICATE_ATTR_NAMES.each do |attr_name|
       player = Player.new(NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name]))
       assert !player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
-      assert player.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+      assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     end
   end
 

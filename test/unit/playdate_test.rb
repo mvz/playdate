@@ -9,7 +9,7 @@ class PlaydateTest < ActiveSupport::TestCase
     dt = Playdate.new
     assert !dt.valid?, "Playdate should not be valid without initialisation parameters"
     REQ_ATTR_NAMES.each {|attr_name|
-      assert dt.errors.invalid?(attr_name.to_sym), "Should be an error message for :#{attr_name}"
+      assert dt.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     }
   end
 
@@ -29,7 +29,7 @@ class PlaydateTest < ActiveSupport::TestCase
     current = Playdate.find(:first)
     playdate = Playdate.new(:day => current[:day])
     assert !playdate.valid?, "Player should be invalid, as @day is a duplicate"
-    assert playdate.errors.invalid?(:day), "Should be an error message for :day"
+    assert playdate.errors[:day].any?, "Should be an error message for :day"
   end
 
   def test_to_s
