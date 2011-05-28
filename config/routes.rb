@@ -1,4 +1,4 @@
-ActionController::Routing::Routes.draw do |map|
+PlayDate::Application.routes.draw do |map|
   map.root :controller => "main"
 
   map.connect 'edit', :controller => "main", :action => 'edit'
