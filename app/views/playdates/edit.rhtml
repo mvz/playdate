@@ -2,7 +2,7 @@
   Editing playdate
 <% end %>
 
-<% form_tag :action => 'edit', :id => @playdate do %>
+<%= form_tag :action => 'edit', :id => @playdate do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Save' %>
 <% end %>

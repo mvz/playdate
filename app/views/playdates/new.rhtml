@@ -5,7 +5,7 @@
 <p>Kies een methode om een of meer nieuwe datums te maken.</p>
 <fieldset>
   <legend>Kies een specifieke datum.</legend>
-  <% form_tag :action => 'new' do %>
+  <%= form_tag :action => 'new' do %>
     <%= render :partial => 'form' %>
     <%= submit_tag 'Opslaan' %>
   <% end %>
@@ -13,7 +13,7 @@
 
 <fieldset>
   <legend>Voeg een reeks toe.</legend>
-  <% form_tag :action => 'new' do %>
+  <%= form_tag :action => 'new' do %>
     <p>
     <label for="daytype">Soort dag:</label>
     <%= select_tag 'daytype', daytype_options(@daytype) %>
