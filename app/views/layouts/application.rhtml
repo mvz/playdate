@@ -23,7 +23,7 @@
         <%= yield -%>
         <% if @current_user and @current_user.is_admin? -%>
         <p>
-        <%= link_to 'Speeldagen', :controller => 'playdates', :action => 'list' %>
+        <%= link_to 'Speeldagen', :controller => 'playdates', :action => 'index' %>
         <%= link_to 'Spelers', :controller => 'players', :action => 'index' %>
         <%= link_to 'Hoofd', :controller => 'main', :action => 'index' %>
         </p>

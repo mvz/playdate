@@ -16,7 +16,6 @@ PlayDate::Application.routes.draw do
 
   resources :playdates do
     collection do
-      get :list
       get :prune
       post :prune
     end

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class PlaydatesControllerTest < ActionController::TestCase
   def test_authorization
     playersession = {:user_id => players(:matijs).id }
-    [:destroy, :edit, :list, :new, :show, :prune].each do |a|
+    [:destroy, :edit, :index, :new, :show, :prune].each do |a|
       [:get, :post].each do |m|
         [
           [{}, "login", "login"],
@@ -36,7 +36,7 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     post 'destroy', {:id => 1}, adminsession
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'index'
 
     assert_raise(ActiveRecord::RecordNotFound) { Playdate.find(1) }
     assert_equal num_avs - num_pd_avs, Availability.count
@@ -74,11 +74,11 @@ class PlaydatesControllerTest < ActionController::TestCase
     end
   end
 
-  def test_list
-    get 'list', {}, adminsession
+  def test_index
+    get 'index', {}, adminsession
 
     assert_response :success
-    assert_template 'list'
+    assert_template 'index'
 
     assert_not_nil assigns(:playdates)
   end
@@ -98,7 +98,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     post 'new', {:playdate => {:day => "2006-03-11"}}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'index'
 
     assert_equal num_playdates + 1, Playdate.count
   end
@@ -109,7 +109,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     post 'new', {:period => 2, :daytype => 6}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'index'
 
     assert_operator Playdate.count, :>=, num_playdates + 4
     assert_operator Playdate.count, :<=, num_playdates + 10
@@ -157,7 +157,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     post 'prune', {}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'list'
+    assert_redirected_to :controller => 'playdates', :action => 'index'
     assert Playdate.count == 2
     assert Playdate.find(:all).map {|pd| pd.id }.sort == [3, 4]
   end

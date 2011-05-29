@@ -20,7 +20,7 @@ class MainControllerTest < ActionController::TestCase
     assert_equal [playdates(:today), playdates(:tomorrow)], assigns(:playdates)
     assert_not_nil assigns(:stats)
     assert_select "a[href=/more]"
-    assert_select "a[href=/playdates/list]", false
+    assert_select "a[href=/playdates]", false
   end
 
   def test_index_as_admin
@@ -29,7 +29,7 @@ class MainControllerTest < ActionController::TestCase
     assert_template 'index'
     assert_not_nil assigns(:playdates)
     assert_not_nil assigns(:stats)
-    assert_select "a[href=/playdates/list]"
+    assert_select "a[href=/playdates]"
   end
 
   def test_index_all_dates_present

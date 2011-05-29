@@ -3,7 +3,7 @@ class PlaydatesController < ApplicationController
   verify :only => [ 'show', 'edit', 'destroy' ],
          :params => :id,
          :add_flash => { :notice => 'Missing playdate ID.' },
-         :redirect_to => { :action => 'list' }
+         :redirect_to => { :action => 'index' }
 
   PERIOD_THIS_MONTH = 1
   PERIOD_NEXT_MONTH = 2
@@ -18,7 +18,7 @@ class PlaydatesController < ApplicationController
       pd.availabilities.each { |av| av.destroy }
       pd.destroy
       flash[:notice] = 'De speeldag is verwijderd.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       flash[:notice] = 'Kies Verwijderen om de speeldag te verwijderen.'
       redirect_to :action => 'edit', :id => params[:id]
@@ -35,7 +35,7 @@ class PlaydatesController < ApplicationController
     end
   end
 
-  def list
+  def index
     @playdates = Playdate.paginate(:page => params[:page], :order => 'day')
   end
 
@@ -65,7 +65,7 @@ class PlaydatesController < ApplicationController
         pd.destroy
       end
       flash[:notice] = 'Oude speeldagen zijn opgeruimd.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 
@@ -73,7 +73,7 @@ class PlaydatesController < ApplicationController
   def save_new_playdate(pd)
     if pd.save
       flash[:notice] = 'De nieuwe speeldag is toegevoegd.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 
@@ -91,7 +91,7 @@ class PlaydatesController < ApplicationController
 
     if count > 0
       flash[:notice] = "Saved #{count}."
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       flash[:notice] = "Er zijn geen nieuwe datums toegevoegd."
     end
