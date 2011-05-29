@@ -41,7 +41,7 @@ class PlayersController < ApplicationController
         format.html { redirect_to(players_url) }
         format.xml  { render :xml => @player, :status => :created, :location => @player }
       else
-        format.html { render :action => "new" }
+        format.html { render :new }
         format.xml  { render :xml => @player.errors, :status => :unprocessable_entity }
       end
     end
@@ -56,7 +56,7 @@ class PlayersController < ApplicationController
         format.html { redirect_to(players_url) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :edit }
         format.xml  { render :xml => @player.errors, :status => :unprocessable_entity }
       end
     end

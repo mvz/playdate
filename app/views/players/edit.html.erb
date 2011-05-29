@@ -6,7 +6,7 @@
 
 <% form_for(@player) do |f| %>
   <p>
-  <%= render :partial => 'form_fields', :locals => {:f => f} %>
+  <%= render 'form_fields', :f => f %>
   <%= f.submit "Update" %>
   </p>
 <% end %>
