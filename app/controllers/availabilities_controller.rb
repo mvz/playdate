@@ -50,6 +50,8 @@ class AvailabilitiesController < ApplicationController
 
   def show
     @availability = Availability.find(params[:id])
+    @player = @availability.player
+    @playdate = @availability.playdate
   end
 
   private

@@ -4,9 +4,9 @@
 </p>
 <% end %>
 <p><b>Player:</b>
-<%=h @availability.player.full_name %></p>
+<%=h @player.full_name %></p>
 <p><b>Playdate:</b>
-<%=h @availability.playdate.day %></p>
+<%=h @playdate.day %></p>
 
 <%= link_to 'Edit', :action => 'edit', :id => @availability %> |
 <%= link_to 'Back to list', :action => 'index' %>
