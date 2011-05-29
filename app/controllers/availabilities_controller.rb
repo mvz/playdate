@@ -44,13 +44,14 @@ class AvailabilitiesController < ApplicationController
     end
   end
 
-  def list
+  def index
     redirect_to_playdate_view
   end
 
   def show
     @availability = Availability.find(params[:id])
   end
+
   private
 
   def redirect_to_playdate_view

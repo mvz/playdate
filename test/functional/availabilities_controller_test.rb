@@ -7,7 +7,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
   def test_authorization
     playersession = {:user_id => players(:matijs).id }
-    [:destroy, :edit, :list, :new, :show].each do |a|
+    [:destroy, :edit, :index, :new, :show].each do |a|
       [:get, :post].each do |m|
         [
           [{}, "login", "login"],
@@ -93,8 +93,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     end
   end
 
-  def test_list
-    get 'list', {:playdate_id => 1}, adminsession
+  def test_index
+    get 'index', {:playdate_id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
   end

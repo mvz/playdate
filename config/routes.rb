@@ -20,11 +20,7 @@ PlayDate::Application.routes.draw do
       get :prune
       post :prune
     end
-    resources :availabilities do
-      collection do
-        get :list
-      end
-    end
+    resources :availabilities
   end
 
   resources :players do
