@@ -23,9 +23,5 @@ PlayDate::Application.routes.draw do
     resources :availabilities
   end
 
-  resources :players do
-    collection do
-      get :list
-    end
-  end
+  resources :players
 end
