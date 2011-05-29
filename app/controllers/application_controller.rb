@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     @current_user or access_denied_not_logged_in
   end
 
-  def authorize_admin 
+  def authorize_admin
     authorize or return false
     @current_user.is_admin or access_denied_no_admin
   end

@@ -46,7 +46,7 @@ class MainController < ApplicationController
       redirect_to :action => 'index'
     end
   end
-  
+
   def feed
     set_overview_fields
 

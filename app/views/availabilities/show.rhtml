@@ -3,9 +3,9 @@
   <b><%= column.human_name %>:</b> <%= h @availability.send(column.name) %>
 </p>
 <% end %>
-<p><b>Player:</b> 
+<p><b>Player:</b>
 <%=h @availability.player.full_name %></p>
-<p><b>Playdate:</b> 
+<p><b>Playdate:</b>
 <%=h @availability.playdate.day %></p>
 
 <%= link_to 'Edit', :action => 'edit', :id => @availability %> |
