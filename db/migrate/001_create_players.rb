@@ -8,16 +8,6 @@ class CreatePlayers < ActiveRecord::Migration
       t.column :password_salt, :string
       t.column :is_admin, :boolean
     end
-    unless $schema_generator
-      admin = Player.create(:name => 'admin',
-                            :password => 'trundle',
-                            :password_confirmation => 'trundle',
-                            :is_admin => true)
-      admin.valid? or raise "No user created?"
-    end
-  rescue Exception => e
-    drop_table :players
-    raise e
   end
 
   def self.down

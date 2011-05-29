@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
+
+admin = Player.create(:name => 'admin',
+                      :password => 'trundle',
+                      :password_confirmation => 'trundle',
+                      :is_admin => true)
+admin.valid? or raise "No user created?"
