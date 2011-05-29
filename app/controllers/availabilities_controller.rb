@@ -73,7 +73,7 @@ class AvailabilitiesController < ApplicationController
       return false
     end
     av = Availability.find(params[:availability_id])
-    unless av.playdate_id.to_s == params[:playdate_id]
+    unless av.playdate_id.to_s == params[:playdate_id].to_s
       flash[:notice] = "Beschikbaarheid niet gevonden"
       redirect_to_playdate_view
       return false

@@ -26,12 +26,17 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_not_nil Availability.find(1)
 
     get 'destroy', {:playdate_id => 1, :availability_id => 1}, adminsession
-    assert_response :redirect
-    assert_redirected_to :controller => 'availabilities',
-      :action => 'edit', :playdate_id => 1, :availability_id => 1
-    assert flash.has_key?(:notice)
 
     assert_not_nil Availability.find(1)
+
+    assert_response :redirect
+
+    assert flash.has_key?(:notice)
+    assert_equal 'Click Destroy to destroy the availability.',
+      flash[:notice]
+
+    assert_redirected_to :controller => 'availabilities',
+      :action => 'edit', :playdate_id => 1, :availability_id => 1
   end
 
   # Destroy using post: Destroy, go to view of playdate (which has a list
