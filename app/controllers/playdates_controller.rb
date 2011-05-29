@@ -49,8 +49,6 @@ class PlaydatesController < ApplicationController
       else
         save_new_range(@period, @daytype)
       end
-    #else
-    #  @playdate = Playdate.new
     end
   end
 
