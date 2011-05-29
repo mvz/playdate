@@ -16,7 +16,7 @@ class PlayersControllerTest < ActionController::TestCase
           [{}, "login", "login"],
           [playersession, "main", "index"]
         ].each do |session,controller,action|
-          [ lambda { method(m).call(a, {}, session) } ].each do |e|
+          [ lambda { method(m).call(a, {:id => 1}, session) } ].each do |e|
             e.call
             assert_redirected_to :controller => controller,
               :action => action

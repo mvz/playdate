@@ -13,7 +13,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
           [{}, "login", "login"],
           [playersession, "main", "index"]
         ].each do |session,controller,action|
-          method(m).call(a, {:playdate_id => 1, :availability_id => 1}, session)
+          method(m).call(a, {:playdate_id => 1, :id => 1}, session)
           assert_redirected_to(:controller => controller,
                                :action => action)
         end
@@ -25,7 +25,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   def test_destroy_using_get
     assert_not_nil Availability.find(1)
 
-    get 'destroy', {:playdate_id => 1, :availability_id => 1}, adminsession
+    get 'destroy', {:playdate_id => 1, :id => 1}, adminsession
 
     assert_not_nil Availability.find(1)
 
@@ -36,7 +36,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
       flash[:notice]
 
     assert_redirected_to :controller => 'availabilities',
-      :action => 'edit', :playdate_id => 1, :availability_id => 1
+      :action => 'edit', :playdate_id => 1, :id => 1
   end
 
   # Destroy using post: Destroy, go to view of playdate (which has a list
@@ -44,29 +44,27 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   def test_destroy_using_post
     assert_not_nil Availability.find(1)
 
-    post 'destroy', {:playdate_id => 1, :availability_id => 1}, adminsession
+    post 'destroy', {:playdate_id => 1, :id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
 
     assert_raise(ActiveRecord::RecordNotFound) { Availability.find(1) }
   end
 
-  # Destroy without availability-id: Go to view of playdate (which has a
-  # list of availabilities)
+  # Destroy without availability-id: No route.
   def test_destroy_without_id
     assert_not_nil Availability.find(1)
 
-    post 'destroy', {:playdate_id => 1}, adminsession
-    assert_response :redirect
-    assert_redirect_to_playdate_view(1)
-    assert flash.has_key?(:notice)
+    assert_raise(ActionController::RoutingError) do
+      post 'destroy', {:playdate_id => 1}, adminsession
+    end
 
     assert_not_nil Availability.find(1)
   end
 
   # Edit using get: Show edit screen.
   def test_edit_using_get
-    get 'edit', {:playdate_id => 1, :availability_id => 1}, adminsession
+    get 'edit', {:playdate_id => 1, :id => 1}, adminsession
 
     assert_response :success
     assert_template 'edit'
@@ -75,7 +73,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert assigns(:availability).valid?
 
     # Unknown id combo
-    get 'edit', {:playdate_id => 2, :availability_id => 1}, adminsession
+    get 'edit', {:playdate_id => 2, :id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(2)
   end
@@ -83,17 +81,16 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   # Edit using post: Edit, then return to list of availabilities for
   # playdate.
   def test_edit_using_post
-    post 'edit', {:playdate_id => 1, :availability_id => 1}, adminsession
+    post 'edit', {:playdate_id => 1, :id => 1}, adminsession
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
   end
 
   def test_edit_without_id
-    post 'edit', {:playdate_id => 1}, adminsession
-    assert_response :redirect
-    assert_redirect_to_playdate_view(1)
-    assert flash.has_key?(:notice)
+    assert_raise(ActionController::RoutingError) do
+      post 'edit', {:playdate_id => 1}, adminsession
+    end
   end
 
   def test_list
@@ -125,7 +122,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get 'show', {:playdate_id => 1, :availability_id => 1}, adminsession
+    get 'show', {:playdate_id => 1, :id => 1}, adminsession
 
     assert_response :success
     assert_template 'show'
@@ -135,11 +132,9 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   end
 
   def test_show_without_id
-    get 'show', {:playdate_id => 1}, adminsession
-
-    assert_response :redirect
-    assert_redirect_to_playdate_view(1)
-    assert flash.has_key?(:notice)
+    assert_raise(ActionController::RoutingError) do
+      get 'show', {:playdate_id => 1}, adminsession
+    end
   end
   
   def adminsession

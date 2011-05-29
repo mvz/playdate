@@ -9,7 +9,7 @@ class PlaydatesControllerTest < ActionController::TestCase
           [{}, "login", "login"],
           [playersession, "main", "index"]
         ].each do |session,controller,action|
-          method(m).call(a, {}, session)
+          method(m).call(a, {:id => 1}, session)
           assert_redirected_to :controller => controller,
             :action => action
         end
@@ -45,10 +45,9 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_destroy_without_id
     assert_not_nil Playdate.find(1)
 
-    post 'destroy', {}, adminsession
-    assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'list'
-    assert flash.has_key?(:notice)
+    assert_raise(ActionController::RoutingError) do
+      post 'destroy', {}, adminsession
+    end
 
     assert_not_nil Playdate.find(1)
   end
@@ -70,10 +69,9 @@ class PlaydatesControllerTest < ActionController::TestCase
   end
 
   def test_edit_without_id
-    post 'edit', {}, adminsession
-    assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'list'
-    assert flash.has_key?(:notice)
+    assert_raise(ActionController::RoutingError) do
+      post 'edit', {}, adminsession
+    end
   end
 
   def test_list
@@ -132,11 +130,9 @@ class PlaydatesControllerTest < ActionController::TestCase
   end
 
   def test_show_without_id
-    get 'show', {}, adminsession
-
-    assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'list'
-    assert flash.has_key?(:notice)
+    assert_raise(ActionController::RoutingError) do
+      get 'show', {}, adminsession
+    end
   end
 
   def test_prune_using_get
