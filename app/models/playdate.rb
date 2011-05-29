@@ -4,6 +4,10 @@ class Playdate < ActiveRecord::Base
   validates_presence_of :day
   validates_uniqueness_of :day
 
+  default_scope order('day')
+  scope :relevant, where("day >= ?", Date.today)
+  scope :irrelevant, where("day < ?", Date.today)
+
   def to_s
     self.day.strftime
   end

@@ -58,7 +58,7 @@ class PlaydatesController < ApplicationController
 
   def prune
     if request.post?
-      Playdate.find(:all, :conditions => "day < '#{Date.today()}'").each do |pd|
+      Playdate.irrelevant.each do |pd|
         pd.availabilities.each { |av| av.destroy }
         pd.destroy
       end

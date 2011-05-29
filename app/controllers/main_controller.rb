@@ -24,7 +24,7 @@ class MainController < ApplicationController
 
   def more
     if request.post?
-      last_date = Playdate.find(:first, :order => 'day DESC').day
+      last_date = Playdate.last.day
       today = Date.today
       if last_date < today
         last_date = today
@@ -65,12 +65,11 @@ class MainController < ApplicationController
   private
 
   def relevant_playdates
-    Playdate.find(:all, :order => "day",
-                  :conditions => ["day >= ?", Date.today])
+    Playdate.relevant
   end
 
   def set_overview_fields
-    @players = Player.find(:all, :order => "abbreviation")
+    @players = Player.all
     @playdates = relevant_playdates
     @stats = statistics(@playdates, @players)
     @max = @stats.map {|d,s| s[:yes] }.max

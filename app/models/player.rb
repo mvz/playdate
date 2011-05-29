@@ -15,6 +15,8 @@ class Player < ActiveRecord::Base
 
   SALT = 'change this to your own salt'
 
+  default_scope order('abbreviation')
+
   def password
     @password
   end
