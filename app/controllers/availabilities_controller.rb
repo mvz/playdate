@@ -70,17 +70,25 @@ class AvailabilitiesController < ApplicationController
   end
 
   def check_availability_id
+    check_availability_id_present && check_availability_found
+  end
+
+  def check_availability_id_present
     if params[:id].nil?
       flash[:notice] = "Geen beschikbaarheid opgegeven"
       redirect_to_playdate_view
       return false
     end
+    true
+  end
+
+  def check_availability_found
     av = Availability.find(params[:id])
     unless av.playdate_id.to_s == params[:playdate_id].to_s
       flash[:notice] = "Beschikbaarheid niet gevonden"
       redirect_to_playdate_view
       return false
     end
-    return true
+    true
   end
 end
