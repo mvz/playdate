@@ -136,7 +136,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
       get 'show', {:playdate_id => 1}, adminsession
     end
   end
-  
+
   def adminsession
     {:user_id => players(:admin).id }
   end

@@ -25,4 +25,4 @@ Dates are created by the players. All players can add dates. Shortcuts
 exist to add certain often-used date ranges (all fridays in a month, all
 saturdays in a month, etc.). No dates can be added in the past, nor more
 than N months in the future. Each player can only indicate his own
-availability. 
+availability.
