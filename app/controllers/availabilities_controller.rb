@@ -1,3 +1,4 @@
+# Administrative controller for editing availabilities.
 class AvailabilitiesController < ApplicationController
   before_filter :authorize_admin
   before_filter :check_playdate_id
