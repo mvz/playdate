@@ -3,10 +3,6 @@ class AvailabilitiesController < ApplicationController
   before_filter :authorize_admin
   before_filter :check_playdate_id
   before_filter :check_availability_id, :only => [ 'show', 'edit', 'destroy' ]
-  #verify :only => [ 'show', 'edit', 'destroy' ],
-  #       :params => :id,
-  #       :add_flash => { :notice => 'Missing availability ID.' },
-  #       :redirect_to => { :controller => 'playdates', :action => 'list' }
 
   # TODO: Can we get rid of all these?
   def destroy

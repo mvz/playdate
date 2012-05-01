@@ -1,9 +1,5 @@
 class PlaydatesController < ApplicationController
   before_filter :authorize_admin
-  verify :only => [ 'show', 'edit', 'destroy' ],
-         :params => :id,
-         :add_flash => { :notice => 'Missing playdate ID.' },
-         :redirect_to => { :action => 'index' }
 
   PERIOD_THIS_MONTH = 1
   PERIOD_NEXT_MONTH = 2
