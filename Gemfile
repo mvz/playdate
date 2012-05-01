@@ -10,6 +10,9 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem 'dynamic_form'
 
 # Use unicorn as the web server
+
+gem 'jquery-rails'
+
 # gem 'unicorn'
 
 # Deploy with Capistrano
