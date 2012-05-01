@@ -31,7 +31,6 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
     assert_response :redirect
 
-    assert flash.has_key?(:notice)
     assert_equal 'Click Destroy to destroy the availability.',
       flash[:notice]
 
