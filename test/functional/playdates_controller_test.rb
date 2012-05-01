@@ -42,14 +42,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_equal num_avs - num_pd_avs, Availability.count
   end
 
-  def test_destroy_without_id
-    assert_not_nil Playdate.find(1)
-
-    assert_raise(ActionController::RoutingError) do
-      post 'destroy', {}, adminsession
-    end
-
-    assert_not_nil Playdate.find(1)
+  def test_no_route_to_destroy_without_id
+    assert_not_routed action: 'destroy', controller: 'playdates'
   end
 
   def test_edit_using_get
@@ -68,10 +62,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_redirected_to :controller => 'playdates', :action => 'show', :id => 1
   end
 
-  def test_edit_without_id
-    assert_raise(ActionController::RoutingError) do
-      post 'edit', {}, adminsession
-    end
+  def test_no_route_to_edit_without_id
+    assert_not_routed action: 'edit', controller: 'playdates'
   end
 
   def test_index
@@ -129,10 +121,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert assigns(:playdate).valid?
   end
 
-  def test_show_without_id
-    assert_raise(ActionController::RoutingError) do
-      get 'show', {}, adminsession
-    end
+  def test_no_route_to_show_without_id
+    assert_not_routed action: 'show', controller: 'playdates'
   end
 
   def test_prune_using_get

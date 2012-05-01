@@ -11,3 +11,12 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+class ActionController::TestCase
+  def assert_not_routed options
+    assert_raises ActionController::RoutingError do
+      url = @controller.url_for options
+      recognized_request_for url
+    end
+  end
+end

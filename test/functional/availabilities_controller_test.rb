@@ -50,15 +50,9 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_raise(ActiveRecord::RecordNotFound) { Availability.find(1) }
   end
 
-  # Destroy without availability-id: No route.
-  def test_destroy_without_id
-    assert_not_nil Availability.find(1)
-
-    assert_raise(ActionController::RoutingError) do
-      post 'destroy', {:playdate_id => 1}, adminsession
-    end
-
-    assert_not_nil Availability.find(1)
+  def test_no_route_to_destroy_without_id
+    assert_not_routed action: 'destroy', controller: 'availabilities'
+    assert_not_routed action: 'destroy', controller: 'availabilities', playdate_id: 1
   end
 
   # Edit using get: Show edit screen.
@@ -86,10 +80,9 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_redirect_to_playdate_view(1)
   end
 
-  def test_edit_without_id
-    assert_raise(ActionController::RoutingError) do
-      post 'edit', {:playdate_id => 1}, adminsession
-    end
+  def test_no_route_to_edit_without_id
+    assert_not_routed action: 'edit', controller: 'availabilities'
+    assert_not_routed action: 'edit', controller: 'availabilities', playdate_id: 1
   end
 
   def test_index
@@ -130,10 +123,9 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert assigns(:availability).valid?
   end
 
-  def test_show_without_id
-    assert_raise(ActionController::RoutingError) do
-      get 'show', {:playdate_id => 1}, adminsession
-    end
+  def test_no_route_to_show_without_id
+    assert_not_routed action: 'show', controller: 'availabilities'
+    assert_not_routed action: 'show', controller: 'availabilities', playdate_id: 1
   end
 
   def adminsession
