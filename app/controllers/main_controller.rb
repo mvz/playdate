@@ -58,7 +58,7 @@ class MainController < ApplicationController
       d.availabilities.map { |a|
         a.updated_at} }.flatten.reject {|t| t.nil?}.max
 
-    @content = render_to_string :partial => "main/feed_table"
+    @content = render_to_string :partial => "main/feed_table.html"
     render :layout => false
   end
 

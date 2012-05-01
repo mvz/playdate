@@ -7,7 +7,7 @@ PlayDate::Application.routes.draw do
   match "/login" => "login#login"
   match "/logout" => "login#logout"
 
-  match "/feed" => "main#feed"
+  match "/feed" => "main#feed", :format => false, :defaults => { :format => 'xml' }
 
   id_requirement     = /\d+/
   action_requirement = /[A-Za-z]\S*/
