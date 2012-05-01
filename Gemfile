@@ -29,5 +29,5 @@ gem 'will_paginate', '~> 3.0.pre2'
 # and rake tasks are available in development mode:
 group :development, :test do
   #gem 'test_benchmark'
-  gem 'memory_test_fix'
+  #gem 'memory_test_fix'
 end
