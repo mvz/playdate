@@ -39,7 +39,7 @@ class PlayersControllerTest < ActionController::TestCase
     @first = Player.find(:first)
     player_count = Player.find(:all).length
     post :update,
-      {:id => @first.id, :player => @first.attributes.merge(NEW_PLAYER)},
+      {:id => @first.id, :player => NEW_PLAYER},
       @adminsession
     player = check_attrs(%w(player))
     player.reload

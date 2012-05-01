@@ -4,6 +4,8 @@ class Player < ActiveRecord::Base
   has_many :availabilities
   has_many :playdates, :through => :availabilities
 
+  attr_accessible :name, :password, :password_confirmation
+
   validates_presence_of :name
   validates_length_of :name, :minimum => 1
   validates_confirmation_of :password
@@ -49,7 +51,15 @@ class Player < ActiveRecord::Base
   end
 
   def availability_for_playdate(pd)
-    self.availabilities.find_by_playdate_id(pd.id)
+    availabilities.find_by_playdate_id(pd.id) ||
+      default_availability_for_playdate(pd)
+  end
+
+  def default_availability_for_playdate(pd)
+    availabilities.build.tap do |av|
+      av.playdate = pd
+      av.status = default_status || Availability::STATUS_MISSCHIEN
+    end
   end
 
   private

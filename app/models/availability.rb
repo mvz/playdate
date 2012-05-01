@@ -1,6 +1,9 @@
 class Availability < ActiveRecord::Base
   belongs_to :player
   belongs_to :playdate
+
+  attr_accessible :player_id, :playdate_id, :status
+
   validates_presence_of :player, :playdate
   validates_uniqueness_of :playdate_id, :scope => [:player_id]
   validates_associated :player, :playdate

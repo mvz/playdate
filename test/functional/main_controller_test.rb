@@ -47,9 +47,10 @@ class MainControllerTest < ActionController::TestCase
 
   def test_index_shows_no_for_bad_day
     [:matijs, :robert].each do |p|
-      players(p).availabilities.build(
-        { :playdate => playdates(:today),
-          :status => Availability::STATUS_NEE }).save!
+      players(p).availabilities.build.tap do |av|
+        av.playdate = playdates(:today)
+        av.status = Availability::STATUS_NEE
+      end.save!
     end
 
     get :index, {}, {:user_id => players(:matijs).id }
@@ -65,9 +66,10 @@ class MainControllerTest < ActionController::TestCase
 
   def test_index_shows_best_for_only_good_day
     [:matijs, :robert].each do |p|
-      players(p).availabilities.build(
-        { :playdate => playdates(:today),
-          :status => Availability::STATUS_JA }).save!
+      players(p).availabilities.build.tap do |av|
+        av.playdate = playdates(:today)
+        av.status = Availability::STATUS_JA
+      end.save!
     end
 
     get :index, {}, {:user_id => players(:matijs).id }
@@ -78,16 +80,18 @@ class MainControllerTest < ActionController::TestCase
   def test_index_both_days_good_but_first_is_best
     [:matijs, :robert].each do |p|
       [:today, :tomorrow].each do |d|
-        players(p).availabilities.build(
-          { :playdate => playdates(d),
-            :status => Availability::STATUS_JA }).save!
+        players(p).availabilities.build.tap do |av|
+          av.playdate = playdates(d)
+          av.status = Availability::STATUS_JA
+        end.save!
       end
     end
 
     # today is best, tomorrow is good
-    players(:admin).availabilities.build(
-      { :playdate => playdates(:today),
-          :status => Availability::STATUS_JA }).save!
+    players(:admin).availabilities.build.tap do |av|
+      av.playdate = playdates(:today)
+      av.status = Availability::STATUS_JA
+    end.save!
 
     get :index, {}, {:user_id => players(:matijs).id }
 
@@ -97,19 +101,22 @@ class MainControllerTest < ActionController::TestCase
 
   def test_index_with_house_better_than_without
     [:today, :tomorrow].each do |d|
-      players(:matijs).availabilities.build(
-        { :playdate => playdates(d),
-          :status => Availability::STATUS_JA }).save!
+      players(:matijs).availabilities.build.tap do |av|
+        av.playdate = playdates(d)
+        av.status = Availability::STATUS_JA
+      end.save!
     end
 
     # today is good, tomorrow is best
-    players(:robert).availabilities.build(
-      { :playdate => playdates(:today),
-        :status => Availability::STATUS_JA }).save!
+    players(:robert).availabilities.build.tap do |av|
+      av.playdate = playdates(:today)
+      av.status = Availability::STATUS_JA
+    end.save!
 
-    players(:robert).availabilities.build(
-      { :playdate => playdates(:tomorrow),
-        :status => Availability::STATUS_HUIS }).save!
+    players(:robert).availabilities.build.tap do |av|
+      av.playdate = playdates(:tomorrow)
+      av.status = Availability::STATUS_HUIS
+    end.save!
 
     get :index, {}, {:user_id => players(:matijs).id }
 

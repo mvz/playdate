@@ -5,21 +5,23 @@ class AvailabilityTest < ActiveSupport::TestCase
 
   def test_raw_validation
     availability = Availability.new
-    assert !availability.valid?, "Availability should not be valid without initialisation parameters"
+    assert !availability.valid?
     REQ_ATTR_NAMES.each {|attr_name|
       assert availability.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     }
   end
 
   def test_new
-    new_params = { :player_id => players(:robert).id, :playdate_id => playdates(:friday).id, :status => 1 }
-    availability = Availability.new(new_params)
-    availability.valid?
-    assert availability.valid?, "Availability should be valid"
-    assert availability.status == 1
-    new_params.each_pair do |attr_name,attr_value|
-      assert_equal attr_value, availability[attr_name], "Availability.@#{attr_name.to_s} incorrect"
-    end
+    availability = Availability.new
+
+    availability.player = players(:robert)
+    availability.playdate = playdates(:friday)
+    availability.status = Availability::STATUS_JA
+
+    assert availability.valid?
+    assert_equal 1, availability.status
+    assert_equal players(:robert), availability.player
+    assert_equal playdates(:friday), availability.playdate
   end
 
   def test_fixtures_valid
