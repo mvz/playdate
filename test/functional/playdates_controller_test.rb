@@ -130,6 +130,10 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert assigns(:playdate).valid?
 
     assert_select "h1", "Speeldag: 2006-02-10"
+
+    assert_select "a[href=?]", edit_playdate_availability_path(1, 1)
+    # XXX: Rather technical test.
+    assert_select "a[href=?][data-method=delete]", playdate_availability_path(1, 1)
   end
 
   def test_no_route_to_show_without_id
