@@ -1,3 +1,7 @@
+<% content_for :page_title do -%>
+  Availability
+<% end -%>
+
 <% for column in Availability.content_columns %>
 <p>
   <b><%= column.human_name %>:</b> <%= h @availability.send(column.name) %>

@@ -5,6 +5,7 @@ class LoginControllerTest < ActionController::TestCase
     get :login
     assert_response :success
     assert_template 'login'
+    assert_select "h1", "Inloggen in Playdate"
   end
 
   def test_login_using_post
@@ -25,6 +26,7 @@ class LoginControllerTest < ActionController::TestCase
     assert_redirected_to :controller => "login", :action => "login"
     get :edit, {}, {:user_id => players(:matijs).id }
     assert_response :success
+    assert_select "h1", "Wachtwoord wijzigen"
   end
 
   def test_change_password_using_post
@@ -45,6 +47,7 @@ class LoginControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil session[:user_id]
     assert_template 'logout'
+    assert_select "h1", "Uitloggen"
   end
 
   def test_logout_using_post

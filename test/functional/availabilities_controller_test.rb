@@ -65,6 +65,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:availability)
     assert assigns(:availability).valid?
 
+    assert_select "h1", "Editing availability"
+
     # Unknown id combo
     get 'edit', {:playdate_id => 2, :id => 1}, adminsession
     assert_response :redirect
@@ -98,6 +100,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_template 'new'
 
     assert_not_nil assigns(:availability)
+
+    assert_select "h1", "New availability"
   end
 
   def test_new_using_post
@@ -121,6 +125,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:availability)
     assert assigns(:availability).valid?
+
+    assert_select "h1", "Availability"
   end
 
   def test_no_route_to_show_without_id

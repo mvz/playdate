@@ -1,4 +1,4 @@
-<% content_for("page_title") do %>
+<% content_for :page_title do %>
 Speeldag: <%=h @playdate.day.strftime() %>
 <% end %>
 
@@ -14,7 +14,7 @@ Speeldag: <%=h @playdate.day.strftime() %>
       :action => 'edit', :availability_id => av, :playdate_id => @playdate.id } %></td>
     <td><%= link_to 'Verwijderen', { :controller => 'availabilities',
       :action => 'destroy', :availability_id => av, :playdate_id => @playdate.id },
-      :method => :post, :confirm => 'Weet je zeker dat je deze beschikbaarheid wil verwijderen?' %>
+      :method => :post, :confirm => 'Weet je zeker dat je deze beschikbaarheid wil verwijderen?' %></td>
   </tr>
   <% end %>
 </table>

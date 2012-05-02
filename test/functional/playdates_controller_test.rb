@@ -54,6 +54,8 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:playdate)
     assert assigns(:playdate).valid?
+
+    assert_select "h1", "Editing playdate"
   end
 
   def test_edit_using_post
@@ -73,6 +75,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_template 'index'
 
     assert_not_nil assigns(:playdates)
+
+    assert_select "h1", "Speeldagen"
   end
 
   def test_new_using_get
@@ -82,6 +86,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_template 'new'
 
     assert_not_nil assigns(:playdate)
+
+    assert_select "h1", "Nieuwe speeldagen"
   end
 
   def test_new_using_post
@@ -119,6 +125,8 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:playdate)
     assert assigns(:playdate).valid?
+
+    assert_select "h1", "Speeldag: 2006-02-10"
   end
 
   def test_no_route_to_show_without_id
@@ -139,6 +147,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'prune'
     assert Playdate.count == num_playdates
+
+    assert_select "h1", "Opruimen"
   end
 
   def test_prune_using_post

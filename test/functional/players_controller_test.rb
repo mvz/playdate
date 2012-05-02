@@ -26,6 +26,27 @@ class PlayersControllerTest < ActionController::TestCase
     end
   end
 
+  def test_index
+    get :index, {}, @adminsession
+
+    assert_template 'index'
+    assert_select "h1", "Spelers"
+  end
+
+  def test_edit
+    get :edit, {:id => 1}, @adminsession
+
+    assert_template 'edit'
+    assert_select "h1", "Speler bewerken"
+  end
+
+  def test_new
+    get :new, {}, @adminsession
+
+    assert_template 'new'
+    assert_select "h1", "Nieuwe speler"
+  end
+
   def test_create
     player_count = Player.find(:all).length
     post :create, {:player => NEW_PLAYER}, @adminsession

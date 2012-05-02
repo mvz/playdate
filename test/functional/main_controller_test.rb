@@ -21,6 +21,8 @@ class MainControllerTest < ActionController::TestCase
     assert_not_nil assigns(:stats)
     assert_select "a[href=/more]"
     assert_select "a[href=/playdates]", false
+
+    assert_select "h1", "Playdate! The Application"
   end
 
   def test_index_as_admin
@@ -139,6 +141,7 @@ class MainControllerTest < ActionController::TestCase
         assert_select element, "option", "Huis"
       end
     end
+    assert_select "h1", "Beschikbaarheid bewerken"
   end
 
   def test_edit_using_post
@@ -157,6 +160,7 @@ class MainControllerTest < ActionController::TestCase
     assert_template 'more'
     assert_tag(:tag => 'form')
     assert_equal Playdate.count, oldcount
+    assert_select "h1", "Speeldagen toevoegen"
   end
 
   def test_more_using_post
