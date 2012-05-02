@@ -129,6 +129,16 @@ class MainControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'edit'
     assert_not_nil assigns(:playdates)
+    assert_equal 2, assigns(:playdates).count
+    assert_select "select", assigns(:playdates).count
+    assert_select "select" do |elements|
+      elements.each do |element|
+        assert_select element, "option", "Ja"
+        assert_select element, "option", "Nee"
+        assert_select element, "option", "Misschien"
+        assert_select element, "option", "Huis"
+      end
+    end
   end
 
   def test_edit_using_post
