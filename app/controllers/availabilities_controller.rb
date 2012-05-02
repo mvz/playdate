@@ -6,15 +6,10 @@ class AvailabilitiesController < ApplicationController
 
   # TODO: Can we get rid of all these?
   def destroy
-    if request.post?
+    if request.delete?
       Availability.find(params[:id]).destroy
       flash[:notice] = 'The availability was successfully destroyed.'
       redirect_to_playdate_view
-    else
-      flash[:notice] = 'Click Destroy to destroy the availability.'
-      redirect_to :action => 'edit',
-        :id => params[:id],
-        :playdate_id => params[:playdate_id]
     end
   end
 
