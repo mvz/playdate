@@ -37,8 +37,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_not_routed action: 'destroy', controller: 'availabilities', playdate_id: 1
   end
 
-  # Edit using get: Show edit screen.
-  def test_edit_using_get
+  # Edit: Show edit screen.
+  def test_edit
     get 'edit', {:playdate_id => 1, :id => 1}, adminsession
 
     assert_response :success
@@ -49,16 +49,18 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
     assert_select "h1", "Editing availability"
 
+    # XXX: Rather technical test to check form will do PUT playdate_availability_path(1)
+    assert_select "form[action=?] input[value='put']", playdate_availability_path(1, 1)
+
     # Unknown id combo
     get 'edit', {:playdate_id => 2, :id => 1}, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(2)
   end
 
-  # Edit using post: Edit, then return to list of availabilities for
-  # playdate.
-  def test_edit_using_post
-    post 'edit', {:playdate_id => 1, :id => 1}, adminsession
+  # Update: Edit, then return to list of availabilities for playdate.
+  def test_update
+    put 'update', {:playdate_id => 1, :id => 1}, adminsession
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)

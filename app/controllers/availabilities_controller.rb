@@ -14,8 +14,13 @@ class AvailabilitiesController < ApplicationController
   end
 
   def edit
+    @playdate = Playdate.find(params[:playdate_id])
     @availability = Availability.find(params[:id])
-    if request.post?
+  end
+
+  def update
+    @availability = Availability.find(params[:id])
+    if request.put?
       if @availability.update_attributes(params[:availability])
         flash[:notice] = 'The availability was successfully edited.'
         redirect_to_playdate_view
