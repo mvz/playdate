@@ -93,7 +93,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_redirect_to_playdate_view(1)
   end
 
-  def test_new_using_get
+  def test_new
     get 'new', {:playdate_id => 1}, adminsession
 
     assert_response :success
@@ -104,10 +104,10 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_select "h1", "New availability"
   end
 
-  def test_new_using_post
+  def test_create
     num_availabilities = Availability.count
 
-    post 'new', {:playdate_id => playdates(:friday).id,
+    post 'create', {:playdate_id => playdates(:friday).id,
       :availability => {:player_id => players(:robert).id, :status => 1 }},
       adminsession
 

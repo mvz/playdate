@@ -29,6 +29,10 @@ class AvailabilitiesController < ApplicationController
   end
 
   def new
+    @availability = Availability.new
+  end
+
+  def create
     if request.post?
       @availability = Playdate.find(params[:playdate_id]
                                    ).availabilities.build(params[:availability])
@@ -36,8 +40,6 @@ class AvailabilitiesController < ApplicationController
         flash[:notice] = 'A new availability was successfully added.'
         redirect_to_playdate_view
       end
-    else
-      @availability = Availability.new
     end
   end
 
