@@ -23,7 +23,11 @@ class PlaydatesController < ApplicationController
 
   def edit
     @playdate = Playdate.find(params[:id])
-    if request.post?
+  end
+
+  def update
+    @playdate = Playdate.find(params[:id])
+    if request.put?
       if @playdate.update_attributes(params[:playdate])
         flash[:notice] = 'De speeldag is gewijzigd.'
         redirect_to :action => 'show', :id => @playdate

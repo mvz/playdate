@@ -46,7 +46,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_not_routed action: 'destroy', controller: 'playdates'
   end
 
-  def test_edit_using_get
+  def test_edit
     get 'edit', {:id => 1}, adminsession
 
     assert_response :success
@@ -56,10 +56,13 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert assigns(:playdate).valid?
 
     assert_select "h1", "Editing playdate"
+
+    # XXX: Rather technical test to check form will do PUT playdate_path(1)
+    assert_select "form[action=?] input[value='put']", playdate_path(1)
   end
 
-  def test_edit_using_post
-    post 'edit', {:id => 1}, adminsession
+  def test_update
+    put 'update', {:id => 1}, adminsession
     assert_response :redirect
     assert_redirected_to :controller => 'playdates', :action => 'show', :id => 1
   end
