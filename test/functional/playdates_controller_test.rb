@@ -17,24 +17,14 @@ class PlaydatesControllerTest < ActionController::TestCase
     end
   end
 
-  def test_destroy_using_get
-    assert_not_nil Playdate.find(1)
-
-    get 'destroy', {:id => 1}, adminsession
-    assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'edit', :id => 1
-
-    assert_not_nil Playdate.find(1)
-  end
-
-  def test_destroy_using_post
+  def test_destroy
     pd = Playdate.find(1)
     assert_not_nil pd
     num_avs = Availability.count
     num_pd_avs = pd.availabilities.count
     assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
 
-    post 'destroy', {:id => 1}, adminsession
+    delete 'destroy', {:id => 1}, adminsession
     assert_response :redirect
     assert_redirected_to :controller => 'playdates', :action => 'index'
 
@@ -59,6 +49,9 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     # XXX: Rather technical test to check form will do PUT playdate_path(1)
     assert_select "form[action=?] input[value='put']", playdate_path(1)
+    #
+    # XXX: Rather technical test to check form will do DELETE playdate_path(1)
+    assert_select "form[action=?] input[value='delete']", playdate_path(1)
   end
 
   def test_update
@@ -80,6 +73,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:playdates)
 
     assert_select "h1", "Speeldagen"
+
+    assert_select "a[href=?][data-method=delete]", playdate_path(1), "Verwijderen"
   end
 
   def test_new_using_get

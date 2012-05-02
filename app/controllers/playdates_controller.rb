@@ -8,16 +8,13 @@ class PlaydatesController < ApplicationController
   DAY_SATURDAY = 6 # Date::DAYS["saturday"]
 
   def destroy
-    if request.post?
+    if request.delete?
       pd = Playdate.find(params[:id])
       # FIXME: Can't this be done automatically?
       pd.availabilities.each { |av| av.destroy }
       pd.destroy
       flash[:notice] = 'De speeldag is verwijderd.'
       redirect_to :action => 'index'
-    else
-      flash[:notice] = 'Kies Verwijderen om de speeldag te verwijderen.'
-      redirect_to :action => 'edit', :id => params[:id]
     end
   end
 

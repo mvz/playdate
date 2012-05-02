@@ -14,7 +14,7 @@ Speeldagen
     <td align="center"><%=h playdate.availabilities.length %></td>
     <td><%= link_to 'Tonen', :action => 'show', :id => playdate %></td>
     <td><%= link_to 'Bewerken', :action => 'edit', :id => playdate %></td>
-    <td><%= link_to 'Verwijderen', { :action => 'destroy', :id => playdate }, :method => :post, :confirm => 'Are you sure you want to destroy this playdate?' %></td>
+    <td><%= link_to 'Verwijderen', { :action => 'destroy', :id => playdate }, :method => :delete, :confirm => 'Are you sure you want to destroy this playdate?' %></td>
   </tr>
 <% end %>
 </table>
