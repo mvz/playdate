@@ -77,7 +77,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_select "a[href=?][data-method=delete]", playdate_path(1), "Verwijderen"
   end
 
-  def test_new_using_get
+  def test_new
     get 'new', {}, adminsession
 
     assert_response :success
@@ -86,12 +86,13 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:playdate)
 
     assert_select "h1", "Nieuwe speeldagen"
+    assert_select "form[action=?]", playdates_path
   end
 
-  def test_new_using_post
+  def test_create
     num_playdates = Playdate.count
 
-    post 'new', {:playdate => {:day => "2006-03-11"}}, adminsession
+    post 'create', {:playdate => {:day => "2006-03-11"}}, adminsession
 
     assert_response :redirect
     assert_redirected_to :controller => 'playdates', :action => 'index'
@@ -99,20 +100,28 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_equal num_playdates + 1, Playdate.count
   end
 
-  def test_new_range_using_post
+  def test_create_with_range
     num_playdates = Playdate.count
 
-    post 'new', {:period => 2, :daytype => 6}, adminsession
+    post 'create', {:period => 2, :daytype => 6}, adminsession
 
     assert_response :redirect
     assert_redirected_to :controller => 'playdates', :action => 'index'
 
     assert_operator Playdate.count, :>=, num_playdates + 4
     assert_operator Playdate.count, :<=, num_playdates + 10
+  end
 
-    post 'new', {:period => 3, :daytype => 7}, adminsession
+  def test_create_with_range_invalid_period
+    post 'create', {:period => 3, :daytype => 6}, adminsession
 
-    assert_response :success
+    assert_redirected_to :action => 'edit'
+  end
+
+  def test_create_with_range_invalid_day_type
+    post 'create', {:period => 2, :daytype => 7}, adminsession
+
+    assert_redirected_to :action => 'edit'
   end
 
   def test_show

@@ -13,7 +13,7 @@
 
 <fieldset>
   <legend>Voeg een reeks toe.</legend>
-  <%= form_tag :action => 'new' do %>
+  <%= form_tag :action => 'create' do %>
     <p>
     <label for="daytype">Soort dag:</label>
     <%= select_tag 'daytype', daytype_options(@daytype) %>

@@ -37,6 +37,12 @@ class PlaydatesController < ApplicationController
   end
 
   def new
+    @period = PERIOD_THIS_MONTH
+    @daytype = DAY_SATURDAY
+    @playdate = Playdate.new
+  end
+
+  def create
     @period = (params[:period] || PERIOD_THIS_MONTH).to_i
     @daytype = (params[:daytype] || DAY_SATURDAY).to_i
     @playdate = Playdate.new(params[:playdate])
@@ -75,10 +81,12 @@ class PlaydatesController < ApplicationController
   def save_new_range(period, daytype)
     unless [DAY_SATURDAY, DAY_FRIDAY].include?(daytype)
       flash[:notice] = "Invalid day!"
+      redirect_to :action => 'edit'
       return
     end
     unless [PERIOD_THIS_MONTH, PERIOD_NEXT_MONTH].include?(period)
       flash[:notice] = "Invalid period!"
+      redirect_to :action => 'edit'
       return
     end
 
