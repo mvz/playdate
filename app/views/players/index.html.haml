@@ -1,0 +1,25 @@
+-content_for :page_title do
+  Spelers
+
+%table
+  %tr
+    %th Login
+    %th Volledige naam
+    %th Afkorting
+    %th Admin?
+    %th Standaardbeschikbaarheid
+
+  -for player in @players
+    %tr
+      %td= h player.name
+      %td= h player.full_name
+      %td= h player.abbreviation
+      %td= h player.is_admin
+      %td= h status_display(player.default_status)
+      %td= link_to 'Show', player
+      %td= link_to 'Edit', edit_player_path(player)
+      %td= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete
+
+= will_paginate @players
+
+= link_to 'New player', new_player_path

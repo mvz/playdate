@@ -1,0 +1,11 @@
+- content_for :page_title do
+  Nieuwe speler
+
+= error_messages_for :player
+
+= form_for(@player) do |f|
+  %p
+    = render 'form_fields', :f => f
+    = f.submit "Aanmaken"
+
+= link_to 'Terug', players_path
