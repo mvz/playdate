@@ -188,8 +188,8 @@ class MainControllerTest < ActionController::TestCase
   def test_feed
     get :feed, {:format => 'xml'}, {}
     assert_response :success
-    #assert_template 'feed'
-    assert_template '_feed_table' # FIXME: I want feed to be the template name!
+    assert_template 'feed'
+    assert_template 'feed_table'
     assert_not_nil assigns(:playdates)
     assert_not_nil assigns(:link)
     assert_nil assigns(:updated_at)
