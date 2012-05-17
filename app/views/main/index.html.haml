@@ -1,0 +1,39 @@
+- content_for :page_title do
+  Playdate! The Application
+%table.playdate-overview
+  %tr
+    %th#candy1.candy{:colspan => [@playdates.length, 1].max + 2}
+  %tr
+    %th.player Speler
+    %th.playdate{:colspan => [@playdates.length, 1].max} Datum
+    %th.action
+  %tr
+    %td.player
+    - for playdate in @playdates
+      %td{:class => "playdate #{status_to_class(@stats[playdate])}"}
+        = h nice_date_display(playdate.day)
+    - if @playdates.length == 0
+      %td.playdate{:nowrap => ""} Geen relevante speeldata gedefinieerd.
+    %td.action
+      - if can_dates_be_added? then
+        = link_to 'Meer>>', {:action => 'more'}, :method => :post
+  - for player in @players
+    %tr
+      %td{:class => "player #{class_if_current_user(player)}"}= h player.abbreviation
+      - avs = player.availabilities_by_day
+      - for playdate in @playdates
+        %td{:class => "playdate #{status_to_class(@stats[playdate])} #{class_if_current_user(player)}"}
+          = availability_status_character(avs[playdate.day], player)
+      - if @playdates.length == 0
+        %td{:class => "playdate #{class_if_current_user(player)}"}
+      %td{:class => "action #{class_if_current_user(player)}"}
+        = link_to 'Wijzigen', :action => 'edit' if player == @current_user
+  %tr.summary
+    %th Optie?
+    - for playdate in @playdates
+      %td= status_to_text(@stats[playdate])
+    - if @playdates.length == 0
+      %td
+    %td
+  %tr
+    %th#candy2.candy{:colspan => [@playdates.length, 1].max + 2}

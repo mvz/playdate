@@ -1,0 +1,19 @@
+- width = 100/(@playdates.length + 1)
+%table{:width => "100%"}
+  %tr.head
+    %th Speler
+    %th{:colspan => @playdates.length} Datum
+  %tr
+    %td{:width => "#{width}%"}
+    - for playdate in @playdates
+      %td{:width => "#{width}%"}= h nice_date_display(playdate.day)
+  - for player in @players
+    - avs = player.availabilities_by_day
+    %tr
+      %td= h player.abbreviation
+      - for playdate in @playdates
+        %td= availability_status_character(avs[playdate.day], player)
+  %tr.summary
+    %th Optie?
+    - for playdate in @playdates
+      %td= status_to_text(@stats[playdate])
