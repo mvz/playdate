@@ -1,0 +1,17 @@
+= error_messages_for 'availability'
+
+%p
+  %label{:for => "availability_status"} Status
+  %br
+  = select 'availability', 'status', Availability::VALUES.map { |v| [Availability::LONG_DISPLAY[v], v] }
+
+%p
+  %label{:for => "availability_player"} Speler
+  %br
+  = select 'availability', 'player_id', regular_players.map { |p| [p.name, p.id] }
+
+%p
+  %label{:for => "availability_playdate"} Speeldag
+  %br
+  = select 'availability', 'playdate_id', Playdate.find(:all, :order => 'day').map { |d| [d.day, d.id] }
+

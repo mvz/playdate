@@ -1,0 +1,9 @@
+= content_for :page_title do
+  New availability
+
+.content
+  = form_tag :action => 'new' do
+    = render :partial => 'form'
+    = submit_tag 'Save'
+
+  = link_to 'Back to list', :action => 'index'

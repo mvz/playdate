@@ -1,0 +1,19 @@
+- content_for :page_title do
+  Availability
+
+- for column in Availability.content_columns
+  %p
+    %b #{column.human_name}:
+    = h @availability.send(column.name)
+
+%p
+  %b Player:
+  =h @player.full_name
+
+%p
+  %b Playdate:
+  =h @playdate.day
+
+= link_to 'Edit', :action => 'edit', :id => @availability
+|
+= link_to 'Back to list', :action => 'index'
