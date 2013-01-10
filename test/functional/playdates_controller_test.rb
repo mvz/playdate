@@ -115,13 +115,13 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_create_with_range_invalid_period
     post 'create', {:period => 3, :daytype => 6}, adminsession
 
-    assert_redirected_to :action => 'edit'
+    assert_template :new
   end
 
   def test_create_with_range_invalid_day_type
     post 'create', {:period => 2, :daytype => 7}, adminsession
 
-    assert_redirected_to :action => 'edit'
+    assert_template :new
   end
 
   def test_show

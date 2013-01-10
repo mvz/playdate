@@ -81,12 +81,12 @@ class PlaydatesController < ApplicationController
   def save_new_range(period, daytype)
     unless [DAY_SATURDAY, DAY_FRIDAY].include?(daytype)
       flash[:notice] = "Invalid day!"
-      redirect_to :action => 'edit'
+      render :new
       return
     end
     unless [PERIOD_THIS_MONTH, PERIOD_NEXT_MONTH].include?(period)
       flash[:notice] = "Invalid period!"
-      redirect_to :action => 'edit'
+      render :new
       return
     end
 
@@ -97,6 +97,7 @@ class PlaydatesController < ApplicationController
       redirect_to :action => 'index'
     else
       flash[:notice] = "Er zijn geen nieuwe datums toegevoegd."
+      render :new
     end
   end
 end
