@@ -169,7 +169,7 @@ class MainControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to :controller => 'main', :action => "index"
     assert_operator Playdate.count, :>, oldcount + 1
-    assert_operator Playdate.count, :<, oldcount + 12
+    assert_operator Playdate.count, :<=, oldcount + 12
     startdate = Date.today + 1
     if startdate + 7 < Date.today.end_of_month
       enddate = Date.today.end_of_month
