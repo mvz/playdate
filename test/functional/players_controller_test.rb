@@ -10,12 +10,12 @@ class PlayersControllerTest < ActionController::TestCase
 
   def test_authorization
     playersession = {:user_id => players(:matijs).id }
-    [:create, :destroy, :update].each do |a|
-      [:get, :post].each do |m|
-        [
-          [{}, "login", "login"],
-          [playersession, "main", "index"]
-        ].each do |session,controller,action|
+    [
+      [{}, "login", "login"],
+      [playersession, "main", "index"]
+    ].each do |session,controller,action|
+      [:create, :destroy, :update].each do |a|
+        [:get, :post].each do |m|
           [ lambda { method(m).call(a, {:id => 1}, session) } ].each do |e|
             e.call
             assert_redirected_to :controller => controller,
@@ -48,17 +48,17 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   def test_create
-    player_count = Player.find(:all).length
+    player_count = Player.all.length
     post :create, {:player => NEW_PLAYER}, @adminsession
     player = check_attrs(%w(player))
     assert_response :redirect
     assert_redirected_to REDIRECT_TO_MAIN
-    assert_equal player_count + 1, Player.find(:all).length, "Expected an additional Player"
+    assert_equal player_count + 1, Player.all.length, "Expected an additional Player"
   end
 
   def test_update
-    @first = Player.find(:first)
-    player_count = Player.find(:all).length
+    @first = Player.first
+    player_count = Player.all.length
     post :update,
       {:id => @first.id, :player => NEW_PLAYER},
       @adminsession
@@ -67,13 +67,13 @@ class PlayersControllerTest < ActionController::TestCase
     NEW_PLAYER.each do |attr_name|
       assert_equal NEW_PLAYER[attr_name], player.attributes[attr_name], "@player.#{attr_name.to_s} incorrect"
     end
-    assert_equal player_count, Player.find(:all).length, "Number of Players should be the same"
+    assert_equal player_count, Player.all.length, "Number of Players should be the same"
     assert_response :redirect
     assert_redirected_to REDIRECT_TO_MAIN
   end
 
   def test_destroy
-    player_count = Player.find(:all).length
+    player_count = Player.all.length
 
 
     player = players(:matijs)
@@ -83,7 +83,7 @@ class PlayersControllerTest < ActionController::TestCase
 
     post :destroy, {:id => players(:matijs).id}, @adminsession
     assert_response :redirect
-    assert_equal player_count - 1, Player.find(:all).length, "Number of Players should be one less"
+    assert_equal player_count - 1, Player.all.length, "Number of Players should be one less"
     assert_redirected_to REDIRECT_TO_MAIN
 
     assert_equal num_avs - num_player_avs, Availability.count
@@ -99,9 +99,9 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   def test_cannot_destroy_self
-    player_count = Player.find(:all).length
+    player_count = Player.all.length
     post :destroy, {:id => players(:admin).id}, @adminsession
-    assert_equal player_count, Player.find(:all).length, "Number of Players should stay the same"
+    assert_equal player_count, Player.all.length, "Number of Players should stay the same"
     assert_response :redirect
     assert_redirected_to REDIRECT_TO_MAIN
   end

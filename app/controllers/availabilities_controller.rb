@@ -21,7 +21,7 @@ class AvailabilitiesController < ApplicationController
   def update
     @availability = Availability.find(params[:id])
     if request.put?
-      if @availability.update_attributes(params[:availability])
+      if @availability.update_attributes(availability_params)
         flash[:notice] = 'The availability was successfully edited.'
         redirect_to_playdate_view
       end
@@ -35,7 +35,7 @@ class AvailabilitiesController < ApplicationController
   def create
     if request.post?
       @availability = Playdate.find(params[:playdate_id]
-                                   ).availabilities.build(params[:availability])
+                                   ).availabilities.build(availability_params)
       if @availability.save
         flash[:notice] = 'A new availability was successfully added.'
         redirect_to_playdate_view
@@ -54,6 +54,10 @@ class AvailabilitiesController < ApplicationController
   end
 
   private
+
+  def availability_params
+    params.require(:availability).permit(:player_id, :playdate_id, :status)
+  end
 
   def redirect_to_playdate_view
     redirect_to :controller => "playdates", :action => 'show', :id => params[:playdate_id]

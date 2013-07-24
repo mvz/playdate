@@ -13,5 +13,5 @@
 %p
   %label{:for => "availability_playdate"} Speeldag
   %br
-  = select 'availability', 'playdate_id', Playdate.find(:all, :order => 'day').map { |d| [d.day, d.id] }
+  = select 'availability', 'playdate_id', Playdate.all.order(:day).map { |d| [d.day, d.id] }
 

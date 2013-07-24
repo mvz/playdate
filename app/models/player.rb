@@ -4,8 +4,6 @@ class Player < ActiveRecord::Base
   has_many :availabilities
   has_many :playdates, :through => :availabilities
 
-  attr_accessible :name, :password, :password_confirmation
-
   validates_presence_of :name
   validates_length_of :name, :minimum => 1
   validates_confirmation_of :password
@@ -17,7 +15,7 @@ class Player < ActiveRecord::Base
 
   SALT = 'change this to your own salt'
 
-  default_scope order('abbreviation')
+  default_scope ->{ order('abbreviation') }
 
   def password
     @password

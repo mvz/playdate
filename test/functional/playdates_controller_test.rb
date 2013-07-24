@@ -3,12 +3,12 @@ require File.dirname(__FILE__) + '/../test_helper'
 class PlaydatesControllerTest < ActionController::TestCase
   def test_authorization
     playersession = {:user_id => players(:matijs).id }
-    [:destroy, :edit, :index, :new, :show, :prune].each do |a|
-      [:get, :post].each do |m|
-        [
-          [{}, "login", "login"],
-          [playersession, "main", "index"]
-        ].each do |session,controller,action|
+    [
+      [{}, "login", "login"],
+      [playersession, "main", "index"]
+    ].each do |session,controller,action|
+      [:destroy, :edit, :index, :new, :show, :prune].each do |a|
+        [:get, :post].each do |m|
           method(m).call(a, {:id => 1}, session)
           assert_redirected_to :controller => controller,
             :action => action
@@ -47,15 +47,15 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     assert_select "h1", "Editing playdate"
 
-    # XXX: Rather technical test to check form will do PUT playdate_path(1)
-    assert_select "form[action=?] input[value='put']", playdate_path(1)
+    # XXX: Rather technical test to check form will do PATCH playdate_path(1)
+    assert_select "form[action=?] input[value='patch']", playdate_path(1)
     #
     # XXX: Rather technical test to check form will do DELETE playdate_path(1)
     assert_select "form[action=?] input[value='delete']", playdate_path(1)
   end
 
   def test_update
-    put 'update', {:id => 1}, adminsession
+    put 'update', {:id => 1, playdate: {day: '2008-01-01'} }, adminsession
     assert_response :redirect
     assert_redirected_to :controller => 'playdates', :action => 'show', :id => 1
   end
@@ -170,7 +170,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to :controller => 'playdates', :action => 'index'
     assert Playdate.count == 2
-    assert Playdate.find(:all).map {|pd| pd.id }.sort == [3, 4]
+    assert Playdate.all.map {|pd| pd.id }.sort == [3, 4]
   end
 
   def adminsession

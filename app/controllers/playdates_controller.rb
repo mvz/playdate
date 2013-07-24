@@ -25,7 +25,7 @@ class PlaydatesController < ApplicationController
   def update
     @playdate = Playdate.find(params[:id])
     if request.put?
-      if @playdate.update_attributes(params[:playdate])
+      if @playdate.update_attributes(playdate_params)
         flash[:notice] = 'De speeldag is gewijzigd.'
         redirect_to :action => 'show', :id => @playdate
       end
@@ -33,7 +33,7 @@ class PlaydatesController < ApplicationController
   end
 
   def index
-    @playdates = Playdate.paginate(:page => params[:page], :order => 'day')
+    @playdates = Playdate.order(:day).paginate(:page => params[:page])
   end
 
   def new
@@ -43,13 +43,13 @@ class PlaydatesController < ApplicationController
   end
 
   def create
-    @period = (params[:period] || PERIOD_THIS_MONTH).to_i
-    @daytype = (params[:daytype] || DAY_SATURDAY).to_i
-    @playdate = Playdate.new(params[:playdate])
     if request.post?
       if params[:playdate]
+        @playdate = Playdate.new(playdate_params)
         save_new_playdate(@playdate)
       else
+        @period = (params[:period] || PERIOD_THIS_MONTH).to_i
+        @daytype = (params[:daytype] || DAY_SATURDAY).to_i
         save_new_range(@period, @daytype)
       end
     end
@@ -99,5 +99,11 @@ class PlaydatesController < ApplicationController
       flash[:notice] = "Er zijn geen nieuwe datums toegevoegd."
       render :new
     end
+  end
+
+  private
+
+  def playdate_params
+    params.require(:playdate).permit(:day)
   end
 end

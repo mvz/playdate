@@ -3,7 +3,7 @@ module ApplicationHelper
     'password' => 'Wachtwoord'
   }
   def regular_players
-    Player.find(:all, :order => "abbreviation")
+    Player.all.order(:abbreviation)
   end
   def availability_options
     Availability::VALUES.map do |v|

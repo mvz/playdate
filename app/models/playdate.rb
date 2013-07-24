@@ -2,14 +2,12 @@ class Playdate < ActiveRecord::Base
   has_many :availabilities
   has_many :players, :through => :availabilities
 
-  attr_accessible :day
-
   validates_presence_of :day
   validates_uniqueness_of :day
 
-  default_scope order('day')
-  scope :relevant, where("day >= ?", Date.today)
-  scope :irrelevant, where("day < ?", Date.today)
+  default_scope ->{ order('day') }
+  scope :relevant, ->{ where("day >= ?", Date.today) }
+  scope :irrelevant, ->{ where("day < ?", Date.today) }
 
   def to_s
     self.day.strftime

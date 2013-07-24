@@ -26,7 +26,7 @@ class PlaydateTest < ActiveSupport::TestCase
   end
 
   def test_duplicate
-    current = Playdate.find(:first)
+    current = Playdate.first
     playdate = Playdate.new(:day => current[:day])
     assert !playdate.valid?, "Player should be invalid, as @day is a duplicate"
     assert playdate.errors[:day].any?, "Should be an error message for :day"

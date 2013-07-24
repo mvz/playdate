@@ -33,7 +33,7 @@ class PlayersController < ApplicationController
   end
 
   def create
-    @player = Player.new(params[:player])
+    @player = Player.new(player_params)
 
     respond_to do |format|
       if @player.save
@@ -51,7 +51,7 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     respond_to do |format|
-      if @player.update_attributes(params[:player])
+      if @player.update_attributes(player_params)
         flash[:notice] = 'Player was successfully updated.'
         format.html { redirect_to(players_url) }
         format.xml  { head :ok }
@@ -83,5 +83,11 @@ class PlayersController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def player_params
+    params.require(:player).permit(:name, :password, :password_confirmation)
   end
 end

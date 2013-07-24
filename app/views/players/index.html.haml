@@ -18,7 +18,7 @@
       %td= h status_display(player.default_status)
       %td= link_to 'Show', player
       %td= link_to 'Edit', edit_player_path(player)
-      %td= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Destroy', player, data: { :confirm => 'Are you sure?' }, :method => :delete
 
 = will_paginate @players
 

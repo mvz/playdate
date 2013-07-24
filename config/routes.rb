@@ -1,18 +1,23 @@
 PlayDate::Application.routes.draw do
   root :to => "main#index"
 
-  match "/edit" => "main#edit"
-  match "/more" => "main#more"
+  get "/edit" => "main#edit"
+  post "/edit" => "main#edit"
+  get "/more" => "main#more"
+  post "/more" => "main#more"
 
-  match "/login" => "login#login"
-  match "/logout" => "login#logout"
+  get "/login" => "login#login"
+  post "/login" => "login#login"
+  get "/logout" => "login#logout"
+  post "/logout" => "login#logout"
 
-  match "/feed" => "main#feed", :format => false, :defaults => { :format => 'xml' }
+  get "/feed" => "main#feed", :format => false, :defaults => { :format => 'xml' }
 
   id_requirement     = /\d+/
   action_requirement = /[A-Za-z]\S*/
 
-  match '/login/edit' => "login#edit"
+  get '/login/edit' => "login#edit"
+  post '/login/edit' => "login#edit"
 
   resources :playdates do
     collection do

@@ -23,9 +23,15 @@ class LoginController < ApplicationController
   def edit
     @player = current_user
     if request.post?
-      if @player.update_attributes(params[:player])
+      if @player.update_attributes(player_params)
         redirect_to(:controller => "main", :action => "index")
       end
     end
+  end
+
+  private
+
+  def player_params
+    params.require(:player).permit(:password, :password_confirmation)
   end
 end

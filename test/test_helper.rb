@@ -14,7 +14,7 @@ end
 
 class ActionController::TestCase
   def assert_not_routed options
-    assert_raises ActionController::RoutingError do
+    assert_raises ActionController::UrlGenerationError do
       url = @controller.url_for options
       recognized_request_for url
     end

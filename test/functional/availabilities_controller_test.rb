@@ -7,12 +7,12 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
   def test_authorization
     playersession = {:user_id => players(:matijs).id }
-    [:destroy, :edit, :index, :new, :show].each do |a|
-      [:get, :post].each do |m|
-        [
-          [{}, "login", "login"],
-          [playersession, "main", "index"]
-        ].each do |session,controller,action|
+    [
+      [{}, "login", "login"],
+      [playersession, "main", "index"]
+    ].each do |session,controller,action|
+      [:destroy, :edit, :index, :new, :show].each do |a|
+        [:get, :post].each do |m|
           method(m).call(a, {:playdate_id => 1, :id => 1}, session)
           assert_redirected_to(:controller => controller,
                                :action => action)
@@ -49,8 +49,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
     assert_select "h1", "Editing availability"
 
-    # XXX: Rather technical test to check form will do PUT playdate_availability_path(1)
-    assert_select "form[action=?] input[value='put']", playdate_availability_path(1, 1)
+    # XXX: Rather technical test to check form will do PATCH playdate_availability_path(1)
+    assert_select "form[action=?] input[value='patch']", playdate_availability_path(1, 1)
 
     # Unknown id combo
     get 'edit', {:playdate_id => 2, :id => 1}, adminsession
@@ -60,7 +60,9 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
   # Update: Edit, then return to list of availabilities for playdate.
   def test_update
-    put 'update', {:playdate_id => 1, :id => 1}, adminsession
+    put 'update', { :playdate_id => 1,
+                    :id => 1,
+                    availability: {status: Availability::STATUS_JA} }, adminsession
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)

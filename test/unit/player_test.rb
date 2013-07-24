@@ -66,7 +66,7 @@ class PlayerTest < ActiveSupport::TestCase
   end
 
   def test_duplicate
-    current_player = Player.find(:first)
+    current_player = Player.first
     DUPLICATE_ATTR_NAMES.each do |attr_name|
       player = Player.new(NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name]))
       assert !player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
