@@ -48,3 +48,4 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'simplecov', require: false
+gem 'minitest-rails'
