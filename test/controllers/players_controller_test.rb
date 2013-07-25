@@ -50,7 +50,7 @@ class PlayersControllerTest < ActionController::TestCase
   def test_create
     player_count = Player.all.length
     post :create, {:player => NEW_PLAYER}, @adminsession
-    player = check_attrs(%w(player))
+    check_attrs(%w(player))
     assert_response :redirect
     assert_redirected_to REDIRECT_TO_MAIN
     assert_equal player_count + 1, Player.all.length, "Expected an additional Player"
@@ -75,7 +75,6 @@ class PlayersControllerTest < ActionController::TestCase
   def test_destroy
     player_count = Player.all.length
 
-
     player = players(:matijs)
     num_avs = Availability.count
     num_player_avs = player.availabilities.count
@@ -97,7 +96,8 @@ class PlayersControllerTest < ActionController::TestCase
     assert_redirected_to REDIRECT_TO_MAIN
   end
 
-protected
+  protected
+
   # Could be put in a Helper library and included at top of test class
   def check_attrs(attr_list)
     attrs = []
