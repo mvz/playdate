@@ -110,3 +110,26 @@ class PlayersControllerTest < ActionController::TestCase
     attrs.length > 1 ? attrs : attrs[0]
   end
 end
+
+describe PlayersController do
+  let(:adminsession) { { :user_id => players(:admin).id } }
+
+  before do
+    adminsession
+  end
+
+  describe "#update" do
+    let(:player_params) { { name: 'new',
+                            full_name: 'New Name',
+                            abbreviation: 'nn',
+                            is_admin: true,
+                            default_status: Availability::STATUS_JA.to_s } }
+    it 'updates all desired attributes' do
+      player = MiniTest::Mock.new
+      player.expect(:update_attributes, true, [player_params.with_indifferent_access])
+      Player.stub :find, player do
+        post :update, {id: 1, player: player_params}, adminsession
+      end
+    end
+  end
+end
