@@ -89,15 +89,6 @@ class PlayersControllerTest < ActionController::TestCase
     assert_equal num_avs - num_player_avs, Availability.count
   end
 
-  def test_destroy_using_get
-    id = players(:matijs).id
-    get 'destroy', {:id => id}, @adminsession
-    assert_response :redirect
-    assert_redirected_to :action => 'edit'
-
-    assert_not_nil Playdate.find(id)
-  end
-
   def test_cannot_destroy_self
     player_count = Player.all.length
     post :destroy, {:id => players(:admin).id}, @adminsession
