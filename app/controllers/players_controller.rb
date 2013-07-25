@@ -14,7 +14,6 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
       format.xml  { render :xml => @player }
     end
   end

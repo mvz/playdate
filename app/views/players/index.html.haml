@@ -16,7 +16,6 @@
       %td= h player.abbreviation
       %td= h player.is_admin
       %td= h status_display(player.default_status)
-      %td= link_to 'Show', player
       %td= link_to 'Edit', edit_player_path(player)
       %td= link_to 'Destroy', player, data: { :confirm => 'Are you sure?' }, :method => :delete
 
