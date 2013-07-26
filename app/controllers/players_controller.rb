@@ -36,7 +36,6 @@ class PlayersController < ApplicationController
       flash[:error] = 'Cannot delete yourself'
       redirect_to(players_url)
     else
-      @player.availabilities.each { |av| av.destroy }
       if @player.destroy
         flash[:notice] = 'Player was successfully destroyed.'
       end

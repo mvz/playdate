@@ -1,7 +1,7 @@
 require 'digest/sha2'
 
 class Player < ActiveRecord::Base
-  has_many :availabilities
+  has_many :availabilities, dependent: :destroy
   has_many :playdates, :through => :availabilities
 
   validates_presence_of :name
