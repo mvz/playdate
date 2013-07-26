@@ -1,2 +1,4 @@
-- unless flash[:notice].nil? or flash[:notice] == ""
+- unless flash[:notice].blank?
   %p{:style => "color: green"}= flash[:notice]
+- unless flash[:error].blank?
+  %p{:style => "color: red"}= flash[:error]
