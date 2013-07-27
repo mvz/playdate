@@ -19,13 +19,12 @@ PlayDate::Application.routes.draw do
   get '/login/edit' => "login#edit"
   post '/login/edit' => "login#edit"
 
-  resources :playdates do
+  resources :playdates, only: [:index, :show, :new, :create, :destroy] do
     collection do
-      get :prune
       post :prune
     end
-    resources :availabilities
+    resources :availabilities, only: [:new, :create, :edit, :update, :destroy]
   end
 
-  resources :players
+  resources :players, only: [:index, :new, :create, :edit, :update, :destroy]
 end

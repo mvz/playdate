@@ -2,8 +2,24 @@
   New availability
 
 .content
-  = form_tag :action => 'new' do
-    = render :partial => 'form'
+  = form_for [@playdate, @availability] do
+    = error_messages_for 'availability'
+
+    %p
+      %label Datum
+      %br
+      = @playdate.day
+
+    %p
+      %label{:for => "availability_player"} Speler
+      %br
+      = select 'availability', 'player_id', regular_players.map { |p| [p.name, p.id] }
+
+    %p
+      %label{:for => "availability_status"} Status
+      %br
+      = select 'availability', 'status', Availability::VALUES.map { |v| [Availability::LONG_DISPLAY[v], v] }
+
     = submit_tag 'Save'
 
-  = link_to 'Back to list', :action => 'index'
+  = link_to 'Back to list', playdate_path(@playdate)

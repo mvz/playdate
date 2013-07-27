@@ -38,8 +38,10 @@ class PlayersController < ApplicationController
     else
       if @player.destroy
         flash[:notice] = 'Player was successfully destroyed.'
+      else
+        flash[:error] = 'Destroying the player failed.'
       end
-      respond_with @player
+      respond_with @player, location: players_path
     end
   end
 

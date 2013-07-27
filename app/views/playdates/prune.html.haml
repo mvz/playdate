@@ -1,8 +1,0 @@
-- content_for :page_title do
-  Opruimen
-.playdate-form
-  %fieldset
-    %legend Weet je zeker dat je oude speeldagen wil opruimen?
-    = form_tag do
-      %p= submit_tag "Ja, ruim op"
-      %p= link_to 'Nee, ga terug naar de lijst', :controller => 'playdates', :action => 'index'

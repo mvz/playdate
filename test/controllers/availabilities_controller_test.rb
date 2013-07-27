@@ -11,7 +11,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
       [{}, "login", "login"],
       [playersession, "main", "index"]
     ].each do |session,controller,action|
-      [:destroy, :edit, :index, :new, :show].each do |a|
+      [:destroy, :create, :update, :edit, :new].each do |a|
         [:get, :post].each do |m|
           method(m).call(a, {:playdate_id => 1, :id => 1}, session)
           assert_redirected_to(:controller => controller,
@@ -53,9 +53,9 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_select "form[action=?] input[value='patch']", playdate_availability_path(1, 1)
 
     # Unknown id combo
-    get 'edit', {:playdate_id => 2, :id => 1}, adminsession
-    assert_response :redirect
-    assert_redirect_to_playdate_view(2)
+    proc {
+      get 'edit', {:playdate_id => 2, :id => 1}, adminsession
+    }.must_raise ActiveRecord::RecordNotFound
   end
 
   # Update: Edit, then return to list of availabilities for playdate.
@@ -71,12 +71,6 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   def test_no_route_to_edit_without_id
     assert_not_routed action: 'edit', controller: 'availabilities'
     assert_not_routed action: 'edit', controller: 'availabilities', playdate_id: 1
-  end
-
-  def test_index
-    get 'index', {:playdate_id => 1}, adminsession
-    assert_response :redirect
-    assert_redirect_to_playdate_view(1)
   end
 
   def test_new
@@ -101,23 +95,6 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_redirect_to_playdate_view(1)
 
     assert_equal num_availabilities + 1, Availability.count
-  end
-
-  def test_show
-    get 'show', {:playdate_id => 1, :id => 1}, adminsession
-
-    assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:availability)
-    assert assigns(:availability).valid?
-
-    assert_select "h1", "Availability"
-  end
-
-  def test_no_route_to_show_without_id
-    assert_not_routed action: 'show', controller: 'availabilities'
-    assert_not_routed action: 'show', controller: 'availabilities', playdate_id: 1
   end
 
   def adminsession

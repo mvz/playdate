@@ -1,4 +1,5 @@
 class PlaydatesController < ApplicationController
+  respond_to :html
   before_filter :authorize_admin
 
   PERIOD_THIS_MONTH = 1
@@ -6,34 +7,12 @@ class PlaydatesController < ApplicationController
   # TODO: Use something more robust?
   DAY_FRIDAY = 5 # Date::DAYS["friday"]
   DAY_SATURDAY = 6 # Date::DAYS["saturday"]
-
-  def destroy
-    if request.delete?
-      pd = Playdate.find(params[:id])
-      # FIXME: Can't this be done automatically?
-      pd.availabilities.each { |av| av.destroy }
-      pd.destroy
-      flash[:notice] = 'De speeldag is verwijderd.'
-      redirect_to :action => 'index'
-    end
-  end
-
-  def edit
-    @playdate = Playdate.find(params[:id])
-  end
-
-  def update
-    @playdate = Playdate.find(params[:id])
-    if request.put?
-      if @playdate.update_attributes(playdate_params)
-        flash[:notice] = 'De speeldag is gewijzigd.'
-        redirect_to :action => 'show', :id => @playdate
-      end
-    end
-  end
-
   def index
     @playdates = Playdate.order(:day).paginate(:page => params[:page])
+  end
+
+  def show
+    @playdate = Playdate.find(params[:id])
   end
 
   def new
@@ -43,40 +22,32 @@ class PlaydatesController < ApplicationController
   end
 
   def create
-    if request.post?
-      if params[:playdate]
-        @playdate = Playdate.new(playdate_params)
-        save_new_playdate(@playdate)
-      else
-        @period = (params[:period] || PERIOD_THIS_MONTH).to_i
-        @daytype = (params[:daytype] || DAY_SATURDAY).to_i
-        save_new_range(@period, @daytype)
-      end
+    if params[:playdate]
+      @playdate = Playdate.new(playdate_params)
+      flash[:notice] = 'De nieuwe speeldag is toegevoegd.' if @playdate.save
+      respond_with @playdate, location: playdates_path
+    else
+      @period = (params[:period] || PERIOD_THIS_MONTH).to_i
+      @daytype = (params[:daytype] || DAY_SATURDAY).to_i
+      save_new_range(@period, @daytype)
     end
   end
 
-  def show
+  def destroy
     @playdate = Playdate.find(params[:id])
+    flash[:notice] = 'De speeldag is verwijderd.' if @playdate.destroy
+    respond_with @playdate, location: playdates_path
   end
 
   def prune
-    if request.post?
-      Playdate.irrelevant.each do |pd|
-        pd.availabilities.each { |av| av.destroy }
-        pd.destroy
-      end
-      flash[:notice] = 'Oude speeldagen zijn opgeruimd.'
-      redirect_to :action => 'index'
+    Playdate.irrelevant.each do |pd|
+      pd.destroy
     end
+    flash[:notice] = 'Oude speeldagen zijn opgeruimd.'
+    redirect_to playdates_path
   end
 
   private
-  def save_new_playdate(pd)
-    if pd.save
-      flash[:notice] = 'De nieuwe speeldag is toegevoegd.'
-      redirect_to :action => 'index'
-    end
-  end
 
   def save_new_range(period, daytype)
     unless [DAY_SATURDAY, DAY_FRIDAY].include?(daytype)
@@ -100,8 +71,6 @@ class PlaydatesController < ApplicationController
       render :new
     end
   end
-
-  private
 
   def playdate_params
     params.require(:playdate).permit(:day)

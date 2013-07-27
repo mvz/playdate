@@ -9,7 +9,6 @@
       %td= h playdate.day
       %td{:align => "center"}= h playdate.availabilities.length
       %td= link_to 'Tonen', :action => 'show', :id => playdate
-      %td= link_to 'Bewerken', :action => 'edit', :id => playdate
       %td= link_to 'Verwijderen', { :action => 'destroy', :id => playdate }, :method => :delete, data: { :confirm => 'Are you sure you want to destroy this playdate?' }
 = will_paginate @playdates
 %p

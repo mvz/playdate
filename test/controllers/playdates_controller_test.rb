@@ -7,7 +7,7 @@ class PlaydatesControllerTest < ActionController::TestCase
       [{}, "login", "login"],
       [playersession, "main", "index"]
     ].each do |session,controller,action|
-      [:destroy, :edit, :index, :new, :show, :prune].each do |a|
+      [:destroy, :index, :new, :show, :prune].each do |a|
         [:get, :post].each do |m|
           method(m).call(a, {:id => 1}, session)
           assert_redirected_to :controller => controller,
@@ -34,34 +34,6 @@ class PlaydatesControllerTest < ActionController::TestCase
 
   def test_no_route_to_destroy_without_id
     assert_not_routed action: 'destroy', controller: 'playdates'
-  end
-
-  def test_edit
-    get 'edit', {:id => 1}, adminsession
-
-    assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:playdate)
-    assert assigns(:playdate).valid?
-
-    assert_select "h1", "Editing playdate"
-
-    # XXX: Rather technical test to check form will do PATCH playdate_path(1)
-    assert_select "form[action=?] input[value='patch']", playdate_path(1)
-    #
-    # XXX: Rather technical test to check form will do DELETE playdate_path(1)
-    assert_select "form[action=?] input[value='delete']", playdate_path(1)
-  end
-
-  def test_update
-    put 'update', {:id => 1, playdate: {day: '2008-01-01'} }, adminsession
-    assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'show', :id => 1
-  end
-
-  def test_no_route_to_edit_without_id
-    assert_not_routed action: 'edit', controller: 'playdates'
   end
 
   def test_index
@@ -142,24 +114,6 @@ class PlaydatesControllerTest < ActionController::TestCase
 
   def test_no_route_to_show_without_id
     assert_not_routed action: 'show', controller: 'playdates'
-  end
-
-  def test_prune_using_get
-    get 'prune', adminsession
-
-    assert_response :success
-    assert_template 'prune'
-  end
-
-  def test_prune_using_get
-    num_playdates = Playdate.count
-    get 'prune', {}, adminsession
-
-    assert_response :success
-    assert_template 'prune'
-    assert Playdate.count == num_playdates
-
-    assert_select "h1", "Opruimen"
   end
 
   def test_prune_using_post
