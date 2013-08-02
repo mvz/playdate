@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AvailabilitiesControllerTest < ActionController::TestCase
+  render_views!
+
   def assert_redirect_to_playdate_view(id)
     assert_redirected_to :controller => 'playdates', :action => 'show', :id => "#{id}"
   end

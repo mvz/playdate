@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class MainControllerTest < ActionController::TestCase
+  render_views!
   MainController::MIN_PLAYERS = 2
 
   def test_authorization

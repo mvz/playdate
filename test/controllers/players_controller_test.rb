@@ -28,6 +28,8 @@ describe PlayersController do
   end
 
   describe "#index" do
+    render_views!
+
     before do
       get :index, {}, adminsession
     end
@@ -42,6 +44,8 @@ describe PlayersController do
   end
 
   describe "#edit" do
+    render_views!
+
     before do
       get :edit, {:id => 1}, adminsession
     end
@@ -56,6 +60,8 @@ describe PlayersController do
   end
 
   describe "#new" do
+    render_views!
+
     before do
       get :new, {}, adminsession
     end

@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class LoginControllerTest < ActionController::TestCase
+  render_views!
+
   def test_login_using_get
     get :login
     assert_response :success

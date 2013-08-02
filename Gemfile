@@ -47,5 +47,6 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'simplecov', require: false
-gem 'minitest-rails'
+gem 'simplecov', group: :test, require: false
+gem 'minitest-rails', group: [:development, :test]
+gem 'blind', group: :test

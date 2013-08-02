@@ -23,6 +23,8 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
+  include Blind
+
   def assert_not_routed options
     assert_raises ActionController::UrlGenerationError do
       url = @controller.url_for options

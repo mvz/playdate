@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class PlaydatesControllerTest < ActionController::TestCase
+  render_views!
+
   def test_authorization
     playersession = {:user_id => players(:matijs).id }
     [
