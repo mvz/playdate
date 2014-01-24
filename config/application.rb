@@ -31,5 +31,7 @@ module PlayDate
 
     # Since this is an old application, it uses numbered migrations.
     config.active_record.timestamped_migrations = false
+
+    config.i18n.enforce_available_locales = true
   end
 end
