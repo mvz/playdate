@@ -45,6 +45,6 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'simplecov', group: :test, require: false
-gem 'minitest-rails', group: [:development, :test]
+gem 'minitest-rails', '~> 1.0', group: [:development, :test]
 gem 'minitest-rails-capybara', group: :test
 gem 'blind', group: :test
