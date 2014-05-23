@@ -48,3 +48,5 @@ gem 'simplecov', group: :test, require: false
 gem 'minitest-rails', '~> 2.0', group: [:development, :test]
 gem 'minitest-rails-capybara', '~> 2.0', group: :test
 gem 'blind', group: :test
+
+gem 'pry', group: [:development, :test]
