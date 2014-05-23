@@ -164,6 +164,9 @@ class MainControllerTest < ActionController::TestCase
     assert_select "h1", "Speeldagen toevoegen"
   end
 
+  # FIXME: Use fixed dates rather than relying on logic based on the current
+  # date. Test each case (only this month, also next month) separately, with
+  # seperate checks for the borderline dates.
   def test_more_using_post
     oldcount = Playdate.count
     post :more, {}, {:user_id => players(:matijs).id }
@@ -172,7 +175,7 @@ class MainControllerTest < ActionController::TestCase
     assert_operator Playdate.count, :>, oldcount + 1
     assert_operator Playdate.count, :<=, oldcount + 12
     startdate = Date.today + 1
-    if startdate + 7 < Date.today.end_of_month
+    if startdate + 7 <= Date.today.end_of_month
       enddate = Date.today.end_of_month
     else
       enddate = Date.today.next_month.end_of_month
