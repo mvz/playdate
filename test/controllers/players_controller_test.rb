@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 describe PlayersController do
   let(:adminsession) { { :user_id => players(:admin).id } }
