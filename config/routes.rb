@@ -1,4 +1,4 @@
-PlayDate::Application.routes.draw do
+Rails.application.routes.draw do
   root :to => "main#index"
 
   get "/edit" => "main#edit"
