@@ -15,15 +15,13 @@ class Player < ActiveRecord::Base
 
   SALT = 'change this to your own salt'
 
-  default_scope -> { order('abbreviation') }
+  default_scope { order('abbreviation') }
 
   attr_reader :password
 
   def password=(pass)
     @password = pass
-    if pass.nil? || pass == ''
-      return
-    end
+    return if pass.blank?
     self.password_hash = hash_password(pass, SALT)
     self.password_salt = SALT
   end
@@ -41,9 +39,7 @@ class Player < ActiveRecord::Base
 
   def availabilities_by_day
     # TODO: Deprecated?
-    availabilities.inject({}) { |h, av|
-      h[av.playdate.day] = av; h
-    }
+    availabilities.each_with_object({}) { |av, h| h[av.playdate.day] = av }
   end
 
   def availability_for_playdate(pd)

@@ -10,7 +10,7 @@ require 'minitest/rails'
 # to the test group in the Gemfile and uncomment the following:
 # require "minitest/rails/capybara"
 
-class ActiveSupport::TestCase
+ActiveSupport::TestCase.class_eval do
   ActiveRecord::Migration.check_pending!
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -22,7 +22,7 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
-class ActionController::TestCase
+ActionController::TestCase.class_eval do
   include Blind
 
   def assert_not_routed(options)

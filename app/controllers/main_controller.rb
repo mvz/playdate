@@ -25,15 +25,9 @@ class MainController < ApplicationController
     if request.post?
       last_date = Playdate.last.day
       today = Date.today
-      if last_date < today
-        last_date = today
-      end
-      eom = today.end_of_month
+      last_date = today if last_date < today
 
-      period = 1
-      if last_date + 7 > today.end_of_month
-        period = 2
-      end
+      period = last_date + 7 > today.end_of_month ? 2 : 1
 
       count = Playdate.make_new_range(period, PlaydatesController::DAY_SATURDAY)
       count += Playdate.make_new_range(period, PlaydatesController::DAY_FRIDAY)
@@ -75,13 +69,15 @@ class MainController < ApplicationController
   end
 
   def statistics(dates, players)
-    stats = dates.inject({}) do |h, pd|
+    stats = dates.each_with_object({}) do |pd, h|
       stat = Hash.new(0)
       players.each do |p|
         av = p.availability_for_playdate(pd)
-        s = av.nil? ?
-          p.default_status || Availability::STATUS_MISSCHIEN :
-          av.status
+        s = if av.nil?
+              p.default_status || Availability::STATUS_MISSCHIEN
+            else
+              av.status
+            end
         stat[s] += 1
       end
       yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
@@ -89,7 +85,6 @@ class MainController < ApplicationController
       maybe = stat[Availability::STATUS_MISSCHIEN]
       house = stat[Availability::STATUS_HUIS]
       h[pd] = { yes: yes, no: no, maybe: maybe, house: house }
-      h
     end
 
     max = stats.map { |_d, s| s[:yes] }.max

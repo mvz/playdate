@@ -32,9 +32,7 @@ module MainHelper
     startdate = Date.today + 1
     enddate = Date.today.next_month.end_of_month
     (startdate).upto(enddate) do |day|
-      if [5, 6].include?(day.wday) && (!Playdate.find_by_day(day))
-        return true
-      end
+      return true if [5, 6].include?(day.wday) && !Playdate.find_by_day(day)
     end
     false
   end

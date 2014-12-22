@@ -40,9 +40,8 @@ class MainControllerTest < ActionController::TestCase
     startdate = Date.today + 2
     enddate = Date.today.next_month.end_of_month
     (startdate).upto(enddate) do |day|
-      if [5, 6].include?(day.wday)
-        Playdate.new(day: day).save!
-      end
+      next unless [5, 6].include?(day.wday)
+      Playdate.new(day: day).save!
     end
     get :index, {}, user_id: players(:matijs).id
     assert_select 'a[href=/more]', false
