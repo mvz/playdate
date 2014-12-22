@@ -1,6 +1,6 @@
 class PlaydatesController < ApplicationController
   respond_to :html
-  before_filter :authorize_admin
+  before_action :authorize_admin
 
   PERIOD_THIS_MONTH = 1
   PERIOD_NEXT_MONTH = 2
@@ -8,7 +8,7 @@ class PlaydatesController < ApplicationController
   DAY_FRIDAY = 5 # Date::DAYS["friday"]
   DAY_SATURDAY = 6 # Date::DAYS["saturday"]
   def index
-    @playdates = Playdate.order(:day).paginate(:page => params[:page])
+    @playdates = Playdate.order(:day).paginate(page: params[:page])
   end
 
   def show
@@ -40,9 +40,7 @@ class PlaydatesController < ApplicationController
   end
 
   def prune
-    Playdate.irrelevant.each do |pd|
-      pd.destroy
-    end
+    Playdate.irrelevant.each(&:destroy)
     flash[:notice] = 'Oude speeldagen zijn opgeruimd.'
     redirect_to playdates_path
   end
@@ -51,12 +49,12 @@ class PlaydatesController < ApplicationController
 
   def save_new_range(period, daytype)
     unless [DAY_SATURDAY, DAY_FRIDAY].include?(daytype)
-      flash[:notice] = "Invalid day!"
+      flash[:notice] = 'Invalid day!'
       render :new
       return
     end
     unless [PERIOD_THIS_MONTH, PERIOD_NEXT_MONTH].include?(period)
-      flash[:notice] = "Invalid period!"
+      flash[:notice] = 'Invalid period!'
       render :new
       return
     end
@@ -65,9 +63,9 @@ class PlaydatesController < ApplicationController
 
     if count > 0
       flash[:notice] = "Saved #{count}."
-      redirect_to :action => 'index'
+      redirect_to action: 'index'
     else
-      flash[:notice] = "Er zijn geen nieuwe datums toegevoegd."
+      flash[:notice] = 'Er zijn geen nieuwe datums toegevoegd.'
       render :new
     end
   end

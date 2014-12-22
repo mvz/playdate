@@ -1,9 +1,9 @@
 class PlayersController < ApplicationController
   respond_to :html
-  before_filter :authorize_admin
+  before_action :authorize_admin
 
   def index
-    @players = Player.paginate(:page => params[:page])
+    @players = Player.paginate(page: params[:page])
   end
 
   def new

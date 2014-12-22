@@ -1,14 +1,14 @@
 class LoginController < ApplicationController
-  before_filter :authorize, :except => :login
+  before_action :authorize, except: :login
 
   def login
     if request.post?
       player = Player.authenticate(params[:name], params[:password])
       if player
         session[:user_id] = player.id
-        redirect_to(:controller => "main", :action => "index")
+        redirect_to(controller: 'main', action: 'index')
       else
-        flash.now[:notice] = "Inloggen mislukt"
+        flash.now[:notice] = 'Inloggen mislukt'
       end
     end
   end
@@ -16,7 +16,7 @@ class LoginController < ApplicationController
   def logout
     if request.post?
       session[:user_id] = nil
-      redirect_to(:action => "login")
+      redirect_to(action: 'login')
     end
   end
 
@@ -24,7 +24,7 @@ class LoginController < ApplicationController
     @player = current_user
     if request.post?
       if @player.update_attributes(player_params)
-        redirect_to(:controller => "main", :action => "index")
+        redirect_to(controller: 'main', action: 'index')
       end
     end
   end

@@ -4,16 +4,16 @@ class PlaydatesControllerTest < ActionController::TestCase
   render_views!
 
   def test_authorization
-    playersession = {:user_id => players(:matijs).id }
+    playersession = { user_id: players(:matijs).id }
     [
-      [{}, "login", "login"],
-      [playersession, "main", "index"]
-    ].each do |session,controller,action|
+      [{}, 'login', 'login'],
+      [playersession, 'main', 'index']
+    ].each do |session, controller, action|
       [:destroy, :index, :new, :show, :prune].each do |a|
         [:get, :post].each do |m|
-          method(m).call(a, {:id => 1}, session)
-          assert_redirected_to :controller => controller,
-            :action => action
+          method(m).call(a, { id: 1 }, session)
+          assert_redirected_to controller: controller,
+                               action: action
         end
       end
     end
@@ -26,9 +26,9 @@ class PlaydatesControllerTest < ActionController::TestCase
     num_pd_avs = pd.availabilities.count
     assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
 
-    delete 'destroy', {:id => 1}, adminsession
+    delete 'destroy', { id: 1 }, adminsession
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'index'
+    assert_redirected_to controller: 'playdates', action: 'index'
 
     assert_raise(ActiveRecord::RecordNotFound) { Playdate.find(1) }
     assert_equal num_avs - num_pd_avs, Availability.count
@@ -46,9 +46,9 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:playdates)
 
-    assert_select "h1", "Speeldagen"
+    assert_select 'h1', 'Speeldagen'
 
-    assert_select "a[href=?][data-method=delete]", playdate_path(1), "Verwijderen"
+    assert_select 'a[href=?][data-method=delete]', playdate_path(1), 'Verwijderen'
   end
 
   def test_new
@@ -59,17 +59,17 @@ class PlaydatesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:playdate)
 
-    assert_select "h1", "Nieuwe speeldagen"
-    assert_select "form[action=?]", playdates_path
+    assert_select 'h1', 'Nieuwe speeldagen'
+    assert_select 'form[action=?]', playdates_path
   end
 
   def test_create
     num_playdates = Playdate.count
 
-    post 'create', {:playdate => {:day => "2006-03-11"}}, adminsession
+    post 'create', { playdate: { day: '2006-03-11' } }, adminsession
 
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'index'
+    assert_redirected_to controller: 'playdates', action: 'index'
 
     assert_equal num_playdates + 1, Playdate.count
   end
@@ -77,29 +77,29 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_create_with_range
     num_playdates = Playdate.count
 
-    post 'create', {:period => 2, :daytype => 6}, adminsession
+    post 'create', { period: 2, daytype: 6 }, adminsession
 
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'index'
+    assert_redirected_to controller: 'playdates', action: 'index'
 
     assert_operator Playdate.count, :>=, num_playdates + 4
     assert_operator Playdate.count, :<=, num_playdates + 10
   end
 
   def test_create_with_range_invalid_period
-    post 'create', {:period => 3, :daytype => 6}, adminsession
+    post 'create', { period: 3, daytype: 6 }, adminsession
 
     assert_template :new
   end
 
   def test_create_with_range_invalid_day_type
-    post 'create', {:period => 2, :daytype => 7}, adminsession
+    post 'create', { period: 2, daytype: 7 }, adminsession
 
     assert_template :new
   end
 
   def test_show
-    get 'show', {:id => 1}, adminsession
+    get 'show', { id: 1 }, adminsession
 
     assert_response :success
     assert_template 'show'
@@ -107,11 +107,11 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:playdate)
     assert assigns(:playdate).valid?
 
-    assert_select "h1", "Speeldag: 2006-02-10"
+    assert_select 'h1', 'Speeldag: 2006-02-10'
 
-    assert_select "a[href=?]", edit_playdate_availability_path(1, 1)
+    assert_select 'a[href=?]', edit_playdate_availability_path(1, 1)
     # XXX: Rather technical test.
-    assert_select "a[href=?][data-method=delete]", playdate_availability_path(1, 1)
+    assert_select 'a[href=?][data-method=delete]', playdate_availability_path(1, 1)
   end
 
   def test_no_route_to_show_without_id
@@ -124,12 +124,12 @@ class PlaydatesControllerTest < ActionController::TestCase
     post 'prune', {}, adminsession
 
     assert_response :redirect
-    assert_redirected_to :controller => 'playdates', :action => 'index'
+    assert_redirected_to controller: 'playdates', action: 'index'
     assert Playdate.count == 2
-    assert Playdate.all.map {|pd| pd.id }.sort == [3, 4]
+    assert Playdate.all.map(&:id).sort == [3, 4]
   end
 
   def adminsession
-    {:user_id => players(:admin).id }
+    { user_id: players(:admin).id }
   end
 end

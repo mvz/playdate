@@ -3,7 +3,7 @@ require 'test_helper'
 class PlayerTest < ActiveSupport::TestCase
   # TODO: More tests!!
 
-  NEW_PLAYER = {:name => 'Testy', :password => 'test123', :password_confirmation => 'test123'}
+  NEW_PLAYER = { name: 'Testy', password: 'test123', password_confirmation: 'test123' }
   REQ_ATTR_NAMES = %w(name)
   DUPLICATE_ATTR_NAMES = %w(name)
 
@@ -17,7 +17,7 @@ class PlayerTest < ActiveSupport::TestCase
 
   def test_raw_validation
     player = Player.new
-    assert !player.valid?, "Player should not be valid without initialisation parameters"
+    assert !player.valid?, 'Player should not be valid without initialisation parameters'
     REQ_ATTR_NAMES.each {
       |attr_name| assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     }
@@ -31,9 +31,9 @@ class PlayerTest < ActiveSupport::TestCase
 
   def test_new
     player = Player.new(NEW_PLAYER)
-    assert player.valid?, "Player should be valid"
-    assert_equal NEW_PLAYER[:name], player[:name], "Player.@name incorrect"
-    assert player.check_password(NEW_PLAYER[:password]), "Password set incorrectly"
+    assert player.valid?, 'Player should be valid'
+    assert_equal NEW_PLAYER[:name], player[:name], 'Player.@name incorrect'
+    assert player.check_password(NEW_PLAYER[:password]), 'Password set incorrectly'
   end
 
   def test_validates_presence_of
@@ -47,22 +47,22 @@ class PlayerTest < ActiveSupport::TestCase
   end
 
   def test_validates_length_of
-    @matijs.password = "zop"
-    assert !@matijs.valid?, "Too short password should be invalid"
+    @matijs.password = 'zop'
+    assert !@matijs.valid?, 'Too short password should be invalid'
     # TODO: Do we need to make this test pass?
-    #@matijs.password = ""
-    #assert !@matijs.valid?, "Empty password should be invalid before setting"
-    @matijs.password = "zoppa"
-    assert @matijs.valid?, "Five char password should be valid"
-    @matijs.password = ""
-    assert @matijs.valid?, "Empty password should be valid after setting once"
+    # @matijs.password = ""
+    # assert !@matijs.valid?, "Empty password should be invalid before setting"
+    @matijs.password = 'zoppa'
+    assert @matijs.valid?, 'Five char password should be valid'
+    @matijs.password = ''
+    assert @matijs.valid?, 'Empty password should be valid after setting once'
   end
 
   def test_password_and_authenticate
-    @matijs.password = "zoppa"
-    assert @matijs.check_password("zoppa")
+    @matijs.password = 'zoppa'
+    assert @matijs.check_password('zoppa')
     @matijs.save!
-    assert_equal @matijs, Player.authenticate("matijs", "zoppa")
+    assert_equal @matijs, Player.authenticate('matijs', 'zoppa')
   end
 
   def test_duplicate
@@ -76,18 +76,17 @@ class PlayerTest < ActiveSupport::TestCase
 
   def test_availabilities_by_day
     avs = @matijs.availabilities_by_day
-    assert avs.length == 2, "Expected 2 availabilities"
+    assert avs.length == 2, 'Expected 2 availabilities'
     assert_equal({ @friday.day => @onfriday, @saturday.day => @onsaturday },
-                 avs, "Wrong contents for avs" )
+                 avs, 'Wrong contents for avs')
   end
 
   def test_associations
-    avs = @matijs.availabilities.sort {|a,b| a.id <=> b.id }
-    assert avs.length == 2, "Expected 2 availabilities"
-    assert_equal( [ @onfriday, @onsaturday ], avs, "Did not get right availabilities for matijs" )
-    pds = @matijs.playdates.sort {|a,b| a.id <=> b.id }
-    assert pds.length == 2, "Expected 2 playdates"
-    assert_equal( [ @friday, @saturday ], pds, "Did not get right playdates for matijs" )
+    avs = @matijs.availabilities.sort { |a, b| a.id <=> b.id }
+    assert avs.length == 2, 'Expected 2 availabilities'
+    assert_equal([@onfriday, @onsaturday], avs, 'Did not get right availabilities for matijs')
+    pds = @matijs.playdates.sort { |a, b| a.id <=> b.id }
+    assert pds.length == 2, 'Expected 2 playdates'
+    assert_equal([@friday, @saturday], pds, 'Did not get right playdates for matijs')
   end
 end
-

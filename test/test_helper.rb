@@ -1,7 +1,7 @@
 require 'simplecov'
 SimpleCov.start 'rails'
 
-ENV["RAILS_ENV"] ||= "test"
+ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/rails'
@@ -25,7 +25,7 @@ end
 class ActionController::TestCase
   include Blind
 
-  def assert_not_routed options
+  def assert_not_routed(options)
     assert_raises ActionController::UrlGenerationError do
       url = @controller.url_for options
       recognized_request_for url

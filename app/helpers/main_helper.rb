@@ -1,18 +1,17 @@
 module MainHelper
-  STATUS_CLASSES = ["bad", "neutral", "option", "best"]
-  STATUS_TEXTS = ["Nee", "", "Ja", "Beste"] # "Misschien" for "" ?
+  STATUS_CLASSES = %w(bad neutral option best)
+  STATUS_TEXTS = ['Nee', '', 'Ja', 'Beste'] # "Misschien" for "" ?
 
   def status_to_class(status)
-    return STATUS_CLASSES[status[:code]]
+    STATUS_CLASSES[status[:code]]
   end
 
   def status_to_text(status)
-    return STATUS_TEXTS[status[:code]]
+    STATUS_TEXTS[status[:code]]
   end
 
-
   def class_if_current_user(player)
-    player == @current_user ? "current" : ""
+    player == @current_user ? 'current' : ''
   end
 
   def nice_date_display(date)
@@ -22,8 +21,8 @@ module MainHelper
   def availability_status_character(av, pl)
     if av.nil?
       s = pl.default_status || Availability::STATUS_MISSCHIEN
-      return "" if s == Availability::STATUS_MISSCHIEN
-      return "(" + Availability::SHORT_DISPLAY[s] + ")"
+      return '' if s == Availability::STATUS_MISSCHIEN
+      return '(' + Availability::SHORT_DISPLAY[s] + ')'
     else
       return Availability::SHORT_DISPLAY[av.status]
     end
@@ -33,10 +32,10 @@ module MainHelper
     startdate = Date.today + 1
     enddate = Date.today.next_month.end_of_month
     (startdate).upto(enddate) do |day|
-      if [5, 6].include?(day.wday) and (not Playdate.find_by_day(day)) then
+      if [5, 6].include?(day.wday) && (!Playdate.find_by_day(day))
         return true
       end
     end
-    return false
+    false
   end
 end
