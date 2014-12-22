@@ -1,0 +1,33 @@
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+    - 'db/schema.rb'
+    - 'bin/**/*'
+  RunRailsCops: true
+
+Metrics/LineLength:
+  Max: 92
+
+# Support use of and and or for control flow.
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/Blocks:
+  Enabled: false
+
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+# Not common in Rails projects
+Style/Documentation:
+  Enabled: false
+
+# RuboCop has no setting to accept how vim aligns parameters.
+Style/AlignParameters:
+  Enabled: false
