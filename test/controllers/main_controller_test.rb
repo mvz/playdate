@@ -20,8 +20,8 @@ class MainControllerTest < ActionController::TestCase
     assert_not_nil assigns(:playdates)
     assert_equal [playdates(:today), playdates(:tomorrow)], assigns(:playdates)
     assert_not_nil assigns(:stats)
-    assert_select 'a[href=/more]'
-    assert_select 'a[href=/playdates]', false
+    assert_select 'a[href="/more"]'
+    assert_select 'a[href="/playdates"]', false
 
     assert_select 'h1', 'Playdate! The Application'
   end
@@ -32,7 +32,7 @@ class MainControllerTest < ActionController::TestCase
     assert_template 'index'
     assert_not_nil assigns(:playdates)
     assert_not_nil assigns(:stats)
-    assert_select 'a[href=/playdates]'
+    assert_select 'a[href="/playdates"]'
   end
 
   def test_index_all_dates_present
@@ -44,7 +44,7 @@ class MainControllerTest < ActionController::TestCase
       Playdate.new(day: day).save!
     end
     get :index, {}, user_id: players(:matijs).id
-    assert_select 'a[href=/more]', false
+    assert_select 'a[href="/more"]', false
   end
 
   def test_index_shows_no_for_bad_day
@@ -158,7 +158,7 @@ class MainControllerTest < ActionController::TestCase
     get :more, {}, user_id: players(:matijs).id
     assert_response :success
     assert_template 'more'
-    assert_tag(tag: 'form')
+    assert_select 'form'
     assert_equal Playdate.count, oldcount
     assert_select 'h1', 'Speeldagen toevoegen'
   end
