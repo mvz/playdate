@@ -1,9 +1,9 @@
 # Administrative controller for editing availabilities.
 class AvailabilitiesController < ApplicationController
   respond_to :html
-  before_filter :authorize_admin
-  before_filter :load_resource, only: [:edit, :update, :destroy]
-  before_filter :load_playdate, only: [:new, :create]
+  before_action :authorize_admin
+  before_action :load_resource, only: [:edit, :update, :destroy]
+  before_action :load_playdate, only: [:new, :create]
 
   def new
     @availability = Availability.new

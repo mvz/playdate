@@ -1,0 +1,99 @@
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+    - 'db/schema.rb'
+    - 'bin/**/*'
+  RunRailsCops: true
+
+Metrics/LineLength:
+  Max: 92
+  Exclude:
+    # TODO: Fix offenses in these files
+    - app/models/player.rb
+    - config/application.rb
+    - config/environments/production.rb
+    - config/initializers/assets.rb
+    - config/initializers/backtrace_silencers.rb
+    - config/initializers/wrap_parameters.rb
+    - db/seeds.rb
+    - test/controllers/login_controller_test.rb
+    - test/controllers/main_controller_test.rb
+    - test/models/availability_test.rb
+    - test/models/playdate_test.rb
+    - test/models/player_test.rb
+
+Metrics/AbcSize:
+  Exclude:
+    # TODO: Fix offenses in these files
+    - app/controllers/main_controller.rb
+    - app/controllers/playdates_controller.rb
+    - app/controllers/players_controller.rb
+    - app/models/playdate.rb
+    - test/controllers/availabilities_controller_test.rb
+    - test/controllers/main_controller_test.rb
+    - test/controllers/playdates_controller_test.rb
+    - test/models/availability_test.rb
+    - test/models/player_test.rb
+
+Metrics/ClassLength:
+  Exclude:
+    # TODO: Fix offenses in this file
+    - test/controllers/main_controller_test.rb
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    # TODO: Fix offenses in this file
+    - app/controllers/main_controller.rb
+
+Metrics/MethodLength:
+  Exclude:
+    # TODO: Fix offenses in these files
+    - app/controllers/main_controller.rb
+    - app/controllers/playdates_controller.rb
+    - app/controllers/players_controller.rb
+    - app/models/playdate.rb
+    - test/controllers/availabilities_controller_test.rb
+    - test/controllers/main_controller_test.rb
+    - test/controllers/playdates_controller_test.rb
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    # TODO: Fix offenses in this file
+    - app/controllers/main_controller.rb
+
+Rails/Validation:
+  Exclude:
+    # TODO: Fix offenses in these files
+    - app/models/availability.rb
+    - app/models/playdate.rb
+    - app/models/player.rb
+
+# Support use of and and or for control flow.
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/Blocks:
+  Enabled: false
+
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/GuardClause:
+  Exclude:
+    # TODO: Fix offenses in these files
+    - app/controllers/login_controller.rb
+    - app/controllers/main_controller.rb
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+# Not common in Rails projects
+Style/Documentation:
+  Enabled: false
+
+# RuboCop has no setting to accept how vim aligns parameters.
+Style/AlignParameters:
+  Enabled: false

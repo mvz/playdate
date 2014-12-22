@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-admin = Player.create(:name => 'admin',
-                      :password => 'trundle',
-                      :password_confirmation => 'trundle',
-                      :is_admin => true)
-admin.valid? or raise "No user created?"
+admin = Player.create(name: 'admin',
+                      password: 'trundle',
+                      password_confirmation: 'trundle',
+                      is_admin: true)
+admin.valid? or raise 'No user created?'

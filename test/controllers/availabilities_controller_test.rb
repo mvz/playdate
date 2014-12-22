@@ -4,20 +4,20 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   render_views!
 
   def assert_redirect_to_playdate_view(id)
-    assert_redirected_to :controller => 'playdates', :action => 'show', :id => "#{id}"
+    assert_redirected_to controller: 'playdates', action: 'show', id: "#{id}"
   end
 
   def test_authorization
-    playersession = {:user_id => players(:matijs).id }
+    playersession = { user_id: players(:matijs).id }
     [
-      [{}, "login", "login"],
-      [playersession, "main", "index"]
-    ].each do |session,controller,action|
+      [{}, 'login', 'login'],
+      [playersession, 'main', 'index']
+    ].each do |session, controller, action|
       [:destroy, :create, :update, :edit, :new].each do |a|
         [:get, :post].each do |m|
-          method(m).call(a, {:playdate_id => 1, :id => 1}, session)
-          assert_redirected_to(:controller => controller,
-                               :action => action)
+          method(m).call(a, { playdate_id: 1, id: 1 }, session)
+          assert_redirected_to(controller: controller,
+                               action: action)
         end
       end
     end
@@ -27,7 +27,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   def test_destroy
     assert_not_nil Availability.find(1)
 
-    delete 'destroy', {:playdate_id => 1, :id => 1}, adminsession
+    delete 'destroy', { playdate_id: 1, id: 1 }, adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
 
@@ -41,7 +41,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
   # Edit: Show edit screen.
   def test_edit
-    get 'edit', {:playdate_id => 1, :id => 1}, adminsession
+    get 'edit', { playdate_id: 1, id: 1 }, adminsession
 
     assert_response :success
     assert_template 'edit'
@@ -49,22 +49,22 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:availability)
     assert assigns(:availability).valid?
 
-    assert_select "h1", "Editing availability"
+    assert_select 'h1', 'Editing availability'
 
     # XXX: Rather technical test to check form will do PATCH playdate_availability_path(1)
     assert_select "form[action=?] input[value='patch']", playdate_availability_path(1, 1)
 
     # Unknown id combo
     proc {
-      get 'edit', {:playdate_id => 2, :id => 1}, adminsession
+      get 'edit', { playdate_id: 2, id: 1 }, adminsession
     }.must_raise ActiveRecord::RecordNotFound
   end
 
   # Update: Edit, then return to list of availabilities for playdate.
   def test_update
-    put 'update', { :playdate_id => 1,
-                    :id => 1,
-                    availability: {status: Availability::STATUS_JA} }, adminsession
+    put 'update', { playdate_id: 1,
+                    id: 1,
+                    availability: { status: Availability::STATUS_JA } }, adminsession
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
@@ -76,21 +76,21 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   end
 
   def test_new
-    get 'new', {:playdate_id => 1}, adminsession
+    get 'new', { playdate_id: 1 }, adminsession
 
     assert_response :success
     assert_template 'new'
 
     assert_not_nil assigns(:availability)
 
-    assert_select "h1", "New availability"
+    assert_select 'h1', 'New availability'
   end
 
   def test_create
     num_availabilities = Availability.count
 
-    post 'create', {:playdate_id => playdates(:friday).id,
-      :availability => {:player_id => players(:robert).id, :status => 1 }},
+    post 'create', { playdate_id: playdates(:friday).id,
+                     availability: { player_id: players(:robert).id, status: 1 } },
       adminsession
 
     assert_response :redirect
@@ -100,6 +100,6 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   end
 
   def adminsession
-    {:user_id => players(:admin).id }
+    { user_id: players(:admin).id }
   end
 end
