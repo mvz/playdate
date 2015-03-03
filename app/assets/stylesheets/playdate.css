@@ -34,8 +34,13 @@ h1 {
 }
 
 table.playdate-overview {
-  border-collapse: collapse;
   margin-bottom: 0.5em;
+  border-collapse: separate;
+  border-spacing: 0px;
+  border-color: #05b;
+  border-style: solid;
+  border-width: 5px 0px;
+  border-radius: 5px;
 }
 
 .playdate-overview td.playdate,
@@ -93,12 +98,6 @@ table.playdate-overview {
   background-color: #05b;
   color: #fff;
   border-top: 1px solid #008;
-}
-
-th.candy {
-  height: 5px;
-  padding: 0px;
-  background-color: #05b;
 }
 
 /* Below is from trestle */
@@ -178,12 +177,4 @@ label {
 /* Rounded Corners */
 div#box {
   border-radius: 5px;
-}
-th#candy1 {
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-}
-th#candy2 {
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
 }
