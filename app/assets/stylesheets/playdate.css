@@ -38,7 +38,6 @@ table.playdate-overview {
   margin-bottom: 0.5em;
 }
 
-/*.playdate-overview td.playdate.neutral,*/
 .playdate-overview td.playdate,
 .playdate-overview td.player,
 .playdate-overview td.action {
@@ -78,7 +77,6 @@ table.playdate-overview {
   background-color: #444;
   color: #fff;
   padding: 0.2em;
-  /* border-bottom: 1px solid #999;*/
 }
 .playdate-overview td.playdate {
   width: 5em;
