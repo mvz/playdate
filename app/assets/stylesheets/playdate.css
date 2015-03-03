@@ -33,7 +33,7 @@ h1 {
   margin-right: 0.5em;
 }
 
-table.playdate-overview {
+table {
   margin-bottom: 0.5em;
   border-collapse: separate;
   border-spacing: 0px;
@@ -42,55 +42,62 @@ table.playdate-overview {
   border-width: 5px 0px;
   border-radius: 5px;
 }
-
-.playdate-overview td {
-  background-color: #ddd;
+th, td {
+  white-space: nowrap;
 }
-.playdate-overview td.best {
+
+td {
+  background-color: #ddd;
+  padding: 2px 5px;
+}
+td.best {
   background-color: #0e5;
 }
-.playdate-overview td.option {
+td.option {
   background-color: #ae5;
 }
-.playdate-overview td.bad {
+td.bad {
   background-color: #f88;
 }
 
-.playdate-overview td.current {
+td.current {
   background-color: #ccc;
 }
-.playdate-overview td.best.current {
+td.best.current {
   background-color: #0d4;
 }
-.playdate-overview td.option.current {
+td.option.current {
   background-color: #9d4;
 }
-.playdate-overview td.bad.current {
+td.bad.current {
   background-color: #e77;
 }
 
-.playdate-overview td.player {
-  width: 8em;
-  border-right: 1px solid #999;
+td.player, td.action {
   font-weight: bold;
 }
-.playdate-overview th {
+td.player {
+  width: 8em;
+  border-right: 1px solid #999;
+}
+th {
   background-color: #444;
   color: #fff;
   padding: 0.2em;
 }
-.playdate-overview td.playdate {
+td.playdate {
   width: 5em;
   text-align: center;
 }
-.playdate-overview td.action a {
-  font-weight: bold;
+td.action a {
   text-decoration: none;
   display: block;
+  margin: -2px -5px;
+  padding: 2px 5px;
 }
 
-.playdate-overview tr.summary th,
-.playdate-overview tr.summary td {
+tr.summary th,
+tr.summary td {
   background-color: #05b;
   color: #fff;
   border-top: 1px solid #008;
