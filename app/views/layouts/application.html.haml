@@ -5,7 +5,7 @@
       Playdate! The Application - #{controller.controller_name}: #{controller.action_name}
     %link{:href => url_for(:controller => 'main', :action => 'feed', :format => 'xml'), :rel => "alternate", :title => "Atom", :type => "application/atom+xml"}/
     = stylesheet_link_tag 'application'
-    = javascript_include_tag "application"
+    = javascript_include_tag "application", defer: true, async: true
     = csrf_meta_tags
   %body
     #box.wrapper
