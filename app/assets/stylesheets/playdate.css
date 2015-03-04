@@ -33,95 +33,89 @@ h1 {
   margin-right: 0.5em;
 }
 
-table.playdate-overview {
-  border-collapse: collapse;
+table {
   margin-bottom: 0.5em;
+  border-collapse: separate;
+  border-spacing: 0px;
+  border-color: #05b;
+  border-style: solid;
+  border-width: 5px 0px;
+  border-radius: 5px;
+}
+th, td {
+  white-space: nowrap;
 }
 
-/*.playdate-overview td.playdate.neutral,*/
-.playdate-overview td.playdate,
-.playdate-overview td.player,
-.playdate-overview td.action {
+td {
   background-color: #ddd;
+  padding: 2px 5px;
 }
-.playdate-overview td.playdate.best {
+td.best {
   background-color: #0e5;
 }
-.playdate-overview td.playdate.option {
+td.option {
   background-color: #ae5;
 }
-.playdate-overview td.playdate.bad {
+td.bad {
   background-color: #f88;
 }
 
-.playdate-overview td.player.current,
-.playdate-overview td.action.current,
-.playdate-overview td.playdate.current {
+td.current {
   background-color: #ccc;
 }
-.playdate-overview td.best.current {
+td.best.current {
   background-color: #0d4;
 }
-.playdate-overview td.option.current {
+td.option.current {
   background-color: #9d4;
 }
-.playdate-overview td.bad.current {
+td.bad.current {
   background-color: #e77;
 }
 
-.playdate-overview td.player {
-  width: 8em;
-  border-right: 1px solid #999;
+td.player, td.action {
   font-weight: bold;
 }
-.playdate-overview th {
+td.player {
+  width: 8em;
+  border-right: 1px solid #999;
+}
+th {
   background-color: #444;
   color: #fff;
   padding: 0.2em;
-  /* border-bottom: 1px solid #999;*/
 }
-.playdate-overview td.playdate {
+td.playdate {
   width: 5em;
   text-align: center;
 }
-.playdate-overview td.action a {
-  font-weight: bold;
+td.action a {
   text-decoration: none;
   display: block;
+  margin: -2px -5px;
+  padding: 2px 5px;
 }
 
-.playdate-overview tr.summary th,
-.playdate-overview tr.summary td {
+tr.summary th,
+tr.summary td {
   background-color: #05b;
   color: #fff;
   border-top: 1px solid #008;
 }
 
-th.candy {
-  height: 5px;
-  padding: 0px;
-  background-color: #05b;
-}
-
 /* Below is from trestle */
-
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
-}
 
 a { color: #000; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
 
-.fieldWithErrors {
+.field_with_errors {
   padding: 2px;
   background-color: red;
   display: table;
 }
 
-#ErrorExplanation {
+#errorExplanation {
   width: 400px;
   border: 2px solid red;
   padding: 7px;
@@ -130,7 +124,7 @@ a:hover { color: #fff; background-color:#000; }
   background-color: #f0f0f0;
 }
 
-#ErrorExplanation h2 {
+#errorExplanation h2 {
   text-align: left;
   font-weight: bold;
   padding: 5px 5px 5px 15px;
@@ -140,35 +134,15 @@ a:hover { color: #fff; background-color:#000; }
   color: #fff;
 }
 
-#ErrorExplanation p {
+#errorExplanation p {
   color: #333;
   margin-bottom: 0;
   padding: 5px;
 }
 
-#ErrorExplanation ul li {
+#errorExplanation ul li {
   font-size: 12px;
   list-style: square;
-}
-
-div.uploadStatus {
-  margin: 5px;
-}
-
-div.progressBar {
-  margin: 5px;
-}
-
-div.progressBar div.border {
-  background-color: #fff;
-  border: 1px solid grey;
-  width: 100%;
-}
-
-div.progressBar div.background {
-  background-color: #333;
-  height: 18px;
-  width: 0%;
 }
 
 label {
@@ -179,28 +153,5 @@ label {
 }
 /* Rounded Corners */
 div#box {
-  -khtml-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
   border-radius: 5px;
-}
-th#candy1 {
-  -khtml-border-top-right-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -moz-border-radius-topright: 5px;
-  border-top-right-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
-  -webkit-border-top-left-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  border-top-left-radius: 5px;
-}
-th#candy2 {
-  -khtml-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  border-bottom-right-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-bottom-left-radius: 5px;
 }

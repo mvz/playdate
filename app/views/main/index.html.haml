@@ -2,8 +2,6 @@
   Playdate! The Application
 %table.playdate-overview
   %tr
-    %th#candy1.candy{:colspan => [@playdates.length, 1].max + 2}
-  %tr
     %th.player Speler
     %th.playdate{:colspan => [@playdates.length, 1].max} Datum
     %th.action
@@ -35,5 +33,3 @@
     - if @playdates.length == 0
       %td
     %td
-  %tr
-    %th#candy2.candy{:colspan => [@playdates.length, 1].max + 2}

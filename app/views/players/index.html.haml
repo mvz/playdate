@@ -8,6 +8,8 @@
     %th Afkorting
     %th Admin?
     %th Standaardbeschikbaarheid
+    %th
+    %th
 
   -for player in @players
     %tr
@@ -16,8 +18,9 @@
       %td= h player.abbreviation
       %td= h player.is_admin
       %td= h status_display(player.default_status)
-      %td= link_to 'Edit', edit_player_path(player)
-      %td
+      %td.action
+        = link_to 'Edit', edit_player_path(player)
+      %td.action
         - unless player == @current_user
           = link_to 'Destroy', player, data: { :confirm => 'Are you sure?' }, :method => :delete
 
