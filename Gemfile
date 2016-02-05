@@ -6,12 +6,12 @@ gem 'rails', '~> 4.2.2'
 gem 'sqlite3'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 4.0.4'
+gem 'jquery-rails', '~> 4.1.0'
 
 gem 'dynamic_form'
 gem 'haml'
 gem 'responders', '~> 2.0'
-gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate', '~> 3.1.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
