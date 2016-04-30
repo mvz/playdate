@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe PlayersController do
+class PlayersControllerTest < ActionController::TestCase
   let(:adminsession) { { user_id: players(:admin).id } }
 
   describe 'when not logged in' do
