@@ -43,7 +43,6 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'minitest-rails', '~> 2.0'
-  gem 'minitest-rails-capybara', '~> 2.0'
+  gem 'minitest-spec-rails', '~> 5.3'
   gem 'blind'
 end
