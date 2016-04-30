@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'minitest/mock'
 
 class PlayersControllerTest < ActionController::TestCase
   let(:adminsession) { { user_id: players(:admin).id } }
