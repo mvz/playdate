@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AvailabilityTest < ActiveSupport::TestCase
-  REQ_ATTR_NAMES = %w(player playdate)
+  REQ_ATTR_NAMES = %w(player playdate).freeze
 
   def test_raw_validation
     availability = Availability.new

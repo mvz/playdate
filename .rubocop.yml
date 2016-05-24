@@ -3,7 +3,9 @@ AllCops:
     - 'tmp/**/*'
     - 'db/schema.rb'
     - 'bin/**/*'
-  RunRailsCops: true
+
+Rails:
+  Enabled: true
 
 Metrics/LineLength:
   Max: 92
@@ -39,6 +41,7 @@ Metrics/ClassLength:
   Exclude:
     # TODO: Fix offenses in this file
     - test/controllers/main_controller_test.rb
+    - test/controllers/players_controller_test.rb
 
 Metrics/CyclomaticComplexity:
   Exclude:
@@ -72,7 +75,7 @@ Rails/Validation:
 Style/AndOr:
   EnforcedStyle: conditionals
 
-Style/Blocks:
+Style/BlockDelimiters:
   Enabled: false
 
 Style/DotPosition:

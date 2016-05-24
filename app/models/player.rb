@@ -10,10 +10,10 @@ class Player < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_length_of :password, minimum: 5,
                                  if: proc { |user|
-                                       user.password_hash.nil? or user.password.to_s.length > 0
+                                       user.password_hash.nil? or !user.password.to_s.empty?
                                      }
 
-  SALT = 'change this to your own salt'
+  SALT = 'change this to your own salt'.freeze
 
   default_scope { order('abbreviation') }
 

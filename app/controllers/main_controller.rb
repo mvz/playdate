@@ -24,18 +24,18 @@ class MainController < ApplicationController
   def more
     if request.post?
       last_date = Playdate.last.day
-      today = Date.today
+      today = Time.zone.today
       last_date = today if last_date < today
 
       period = last_date + 7 > today.end_of_month ? 2 : 1
 
       count = Playdate.make_new_range(period, PlaydatesController::DAY_SATURDAY)
       count += Playdate.make_new_range(period, PlaydatesController::DAY_FRIDAY)
-      if count > 0
-        flash[:notice] = 'Data toegevoegd'
-      else
-        flash[:notice] = 'Geen data toegevoegd'
-      end
+      flash[:notice] = if count > 0
+                         'Data toegevoegd'
+                       else
+                         'Geen data toegevoegd'
+                       end
       redirect_to action: 'index'
     end
   end
@@ -88,9 +88,9 @@ class MainController < ApplicationController
     end
 
     max = stats.map { |_d, s| s[:yes] }.max
-    max_has_house = (!stats.find {
-      |_d, s| s[:yes] == max && s[:house] > 0
-    }.nil?)
+    max_has_house = !stats.find { |_d, s|
+      s[:yes] == max && s[:house] > 0
+    }.nil?
     numplayers = players.length
     min = [numplayers, MainController::MIN_PLAYERS].min
 

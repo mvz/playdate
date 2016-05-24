@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class PlaydateTest < ActiveSupport::TestCase
-  REQ_ATTR_NAMES = %w(day)
-  DUPLICATE_ATTR_NAMES = %w(day)
-  NEW_PARAMS = { day: '2006-01-10' }
+  REQ_ATTR_NAMES = %w(day).freeze
+  DUPLICATE_ATTR_NAMES = %w(day).freeze
+  NEW_PARAMS = { day: '2006-01-10' }.freeze
 
   def test_raw_validation
     dt = Playdate.new

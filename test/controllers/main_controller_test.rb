@@ -37,9 +37,9 @@ class MainControllerTest < ActionController::TestCase
 
   def test_index_all_dates_present
     # today and tomorrow are already there
-    startdate = Date.today + 2
-    enddate = Date.today.next_month.end_of_month
-    (startdate).upto(enddate) do |day|
+    startdate = Time.zone.today + 2
+    enddate = Time.zone.today.next_month.end_of_month
+    startdate.upto(enddate) do |day|
       next unless [5, 6].include?(day.wday)
       Playdate.new(day: day).save!
     end
@@ -173,12 +173,12 @@ class MainControllerTest < ActionController::TestCase
     assert_redirected_to controller: 'main', action: 'index'
     assert_operator Playdate.count, :>, oldcount + 1
     assert_operator Playdate.count, :<=, oldcount + 12
-    startdate = Date.today + 1
-    if startdate + 7 <= Date.today.end_of_month
-      enddate = Date.today.end_of_month
-    else
-      enddate = Date.today.next_month.end_of_month
-    end
+    startdate = Time.zone.today + 1
+    enddate = if startdate + 7 <= Time.zone.today.end_of_month
+                Time.zone.today.end_of_month
+              else
+                Time.zone.today.next_month.end_of_month
+              end
     (startdate + 1).upto(enddate) do |day|
       if [5, 6].include?(day.wday)
         assert_not_nil Playdate.find_by_day(day)
