@@ -41,6 +41,7 @@ Metrics/ClassLength:
   Exclude:
     # TODO: Fix offenses in this file
     - test/controllers/main_controller_test.rb
+    - test/controllers/players_controller_test.rb
 
 Metrics/CyclomaticComplexity:
   Exclude:
