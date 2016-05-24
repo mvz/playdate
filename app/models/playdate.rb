@@ -6,15 +6,15 @@ class Playdate < ActiveRecord::Base
   validates_uniqueness_of :day
 
   default_scope { order('day') }
-  scope :relevant, -> { where('day >= ?', Date.today) }
-  scope :irrelevant, -> { where('day < ?', Date.today) }
+  scope :relevant, -> { where('day >= ?', Time.zone.today) }
+  scope :irrelevant, -> { where('day < ?', Time.zone.today) }
 
   def to_s
     day.strftime
   end
 
   def self.make_new_range(months, daytype)
-    today = Date.today
+    today = Time.zone.today
     start = (daytype - today.wday) % 7
 
     finish = 31 * months

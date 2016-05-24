@@ -29,8 +29,8 @@ module MainHelper
   end
 
   def can_dates_be_added?
-    startdate = Date.today + 1
-    enddate = Date.today.next_month.end_of_month
+    startdate = Time.zone.today + 1
+    enddate = Time.zone.today.next_month.end_of_month
     startdate.upto(enddate) do |day|
       return true if [5, 6].include?(day.wday) && !Playdate.find_by_day(day)
     end
