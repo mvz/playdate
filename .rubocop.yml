@@ -3,7 +3,9 @@ AllCops:
     - 'tmp/**/*'
     - 'db/schema.rb'
     - 'bin/**/*'
-  RunRailsCops: true
+
+Rails:
+  Enabled: true
 
 Metrics/LineLength:
   Max: 92
@@ -72,7 +74,7 @@ Rails/Validation:
 Style/AndOr:
   EnforcedStyle: conditionals
 
-Style/Blocks:
+Style/BlockDelimiters:
   Enabled: false
 
 Style/DotPosition:
