@@ -19,13 +19,10 @@ module MainHelper
   end
 
   def availability_status_character(av, pl)
-    if av.nil?
-      s = pl.default_status || Availability::STATUS_MISSCHIEN
-      return '' if s == Availability::STATUS_MISSCHIEN
-      return '(' + Availability::SHORT_DISPLAY[s] + ')'
-    else
-      return Availability::SHORT_DISPLAY[av.status]
-    end
+    return Availability::SHORT_DISPLAY[av.status] unless av.nil?
+    s = pl.default_status || Availability::STATUS_MISSCHIEN
+    return '' if s == Availability::STATUS_MISSCHIEN
+    '(' + Availability::SHORT_DISPLAY[s] + ')'
   end
 
   def can_dates_be_added?
