@@ -1,7 +1,7 @@
 module ApplicationHelper
   MODEL_TRANSLATIONS = {
     'password' => 'Wachtwoord'
-  }
+  }.freeze
   def regular_players
     Player.all.order(:abbreviation)
   end

@@ -3,9 +3,9 @@ require 'test_helper'
 class PlayerTest < ActiveSupport::TestCase
   # TODO: More tests!!
 
-  NEW_PLAYER = { name: 'Testy', password: 'test123', password_confirmation: 'test123' }
-  REQ_ATTR_NAMES = %w(name)
-  DUPLICATE_ATTR_NAMES = %w(name)
+  NEW_PLAYER = { name: 'Testy', password: 'test123', password_confirmation: 'test123' }.freeze
+  REQ_ATTR_NAMES = %w(name).freeze
+  DUPLICATE_ATTR_NAMES = %w(name).freeze
 
   def setup
     @matijs = players(:matijs)
@@ -18,8 +18,8 @@ class PlayerTest < ActiveSupport::TestCase
   def test_raw_validation
     player = Player.new
     assert !player.valid?, 'Player should not be valid without initialisation parameters'
-    REQ_ATTR_NAMES.each {
-      |attr_name| assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
+    REQ_ATTR_NAMES.each { |attr_name|
+      assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
     }
   end
 
@@ -38,7 +38,7 @@ class PlayerTest < ActiveSupport::TestCase
 
   def test_validates_presence_of
     REQ_ATTR_NAMES.each do |attr_name|
-      tmp_player = NEW_PLAYER.clone
+      tmp_player = NEW_PLAYER.dup
       tmp_player.delete attr_name.to_sym
       player = Player.new(tmp_player)
       assert !player.valid?, "Player should be invalid, as @#{attr_name} is invalid"

@@ -1,6 +1,6 @@
 module MainHelper
-  STATUS_CLASSES = %w(bad neutral option best)
-  STATUS_TEXTS = ['Nee', '', 'Ja', 'Beste'] # "Misschien" for "" ?
+  STATUS_CLASSES = %w(bad neutral option best).freeze
+  STATUS_TEXTS = ['Nee', '', 'Ja', 'Beste'].freeze # "Misschien" for "" ?
 
   def status_to_class(status)
     STATUS_CLASSES[status[:code]]
@@ -31,7 +31,7 @@ module MainHelper
   def can_dates_be_added?
     startdate = Date.today + 1
     enddate = Date.today.next_month.end_of_month
-    (startdate).upto(enddate) do |day|
+    startdate.upto(enddate) do |day|
       return true if [5, 6].include?(day.wday) && !Playdate.find_by_day(day)
     end
     false

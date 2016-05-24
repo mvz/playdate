@@ -39,7 +39,7 @@ class MainControllerTest < ActionController::TestCase
     # today and tomorrow are already there
     startdate = Date.today + 2
     enddate = Date.today.next_month.end_of_month
-    (startdate).upto(enddate) do |day|
+    startdate.upto(enddate) do |day|
       next unless [5, 6].include?(day.wday)
       Playdate.new(day: day).save!
     end
@@ -174,11 +174,11 @@ class MainControllerTest < ActionController::TestCase
     assert_operator Playdate.count, :>, oldcount + 1
     assert_operator Playdate.count, :<=, oldcount + 12
     startdate = Date.today + 1
-    if startdate + 7 <= Date.today.end_of_month
-      enddate = Date.today.end_of_month
-    else
-      enddate = Date.today.next_month.end_of_month
-    end
+    enddate = if startdate + 7 <= Date.today.end_of_month
+                Date.today.end_of_month
+              else
+                Date.today.next_month.end_of_month
+              end
     (startdate + 1).upto(enddate) do |day|
       if [5, 6].include?(day.wday)
         assert_not_nil Playdate.find_by_day(day)
