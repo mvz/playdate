@@ -41,7 +41,7 @@ group :development do
   # Use puma for rails server
   gem 'puma'
 
-  gem 'rubocop', '~> 0.40.0'
+  gem 'rubocop', '~> 0.41.0'
 end
 
 group :test do
