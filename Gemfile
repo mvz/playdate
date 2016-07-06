@@ -49,3 +49,5 @@ group :test do
   gem 'minitest-spec-rails', '~> 5.3'
   gem 'blind'
 end
+
+gem 'rails-controller-testing', '~> 0.1.1', group: :test
