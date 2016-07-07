@@ -2,8 +2,8 @@ class Playdate < ActiveRecord::Base
   has_many :availabilities, dependent: :destroy
   has_many :players, through: :availabilities
 
-  validates_presence_of :day
-  validates_uniqueness_of :day
+  validates :day, presence: true
+  validates :day, uniqueness: true
 
   default_scope { order('day') }
   scope :relevant, -> { where('day >= ?', Time.zone.today) }

@@ -4,14 +4,14 @@ class Player < ActiveRecord::Base
   has_many :availabilities, dependent: :destroy
   has_many :playdates, through: :availabilities
 
-  validates_presence_of :name
-  validates_length_of :name, minimum: 1
-  validates_confirmation_of :password
-  validates_uniqueness_of :name
-  validates_length_of :password, minimum: 5,
+  validates :name, presence: true
+  validates :name, length: { minimum: 1 }
+  validates :password, confirmation: true
+  validates :name, uniqueness: true
+  validates :password, length: { minimum: 5,
                                  if: proc { |user|
                                        user.password_hash.nil? or !user.password.to_s.empty?
-                                     }
+                                     } }
 
   SALT = 'change this to your own salt'.freeze
 

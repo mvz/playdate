@@ -51,13 +51,6 @@ Metrics/PerceivedComplexity:
     # TODO: Fix offenses in this file
     - app/controllers/main_controller.rb
 
-Rails/Validation:
-  Exclude:
-    # TODO: Fix offenses in these files
-    - app/models/availability.rb
-    - app/models/playdate.rb
-    - app/models/player.rb
-
 # Support use of and and or for control flow.
 Style/AndOr:
   EnforcedStyle: conditionals
