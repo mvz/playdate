@@ -11,7 +11,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     ].each do |session, controller, action|
       [:destroy, :index, :new, :show, :prune].each do |a|
         [:get, :post].each do |m|
-          method(m).call(a, { id: 1 }, session)
+          method(m).call(a, params: { id: 1 }, session: session)
           assert_redirected_to controller: controller,
                                action: action
         end
@@ -26,7 +26,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     num_pd_avs = pd.availabilities.count
     assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
 
-    delete 'destroy', { id: 1 }, adminsession
+    delete 'destroy', params: { id: 1 }, session: adminsession
     assert_response :redirect
     assert_redirected_to controller: 'playdates', action: 'index'
 
@@ -39,7 +39,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   end
 
   def test_index
-    get 'index', {}, adminsession
+    get 'index', params: {}, session: adminsession
 
     assert_response :success
     assert_template 'index'
@@ -52,7 +52,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   end
 
   def test_new
-    get 'new', {}, adminsession
+    get 'new', params: {}, session: adminsession
 
     assert_response :success
     assert_template 'new'
@@ -66,7 +66,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_create
     num_playdates = Playdate.count
 
-    post 'create', { playdate: { day: '2006-03-11' } }, adminsession
+    post 'create', params: { playdate: { day: '2006-03-11' } }, session: adminsession
 
     assert_response :redirect
     assert_redirected_to controller: 'playdates', action: 'index'
@@ -77,7 +77,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_create_with_range
     num_playdates = Playdate.count
 
-    post 'create', { period: 2, daytype: 6 }, adminsession
+    post 'create', params: { period: 2, daytype: 6 }, session: adminsession
 
     assert_response :redirect
     assert_redirected_to controller: 'playdates', action: 'index'
@@ -87,19 +87,19 @@ class PlaydatesControllerTest < ActionController::TestCase
   end
 
   def test_create_with_range_invalid_period
-    post 'create', { period: 3, daytype: 6 }, adminsession
+    post 'create', params: { period: 3, daytype: 6 }, session: adminsession
 
     assert_template :new
   end
 
   def test_create_with_range_invalid_day_type
-    post 'create', { period: 2, daytype: 7 }, adminsession
+    post 'create', params: { period: 2, daytype: 7 }, session: adminsession
 
     assert_template :new
   end
 
   def test_show
-    get 'show', { id: 1 }, adminsession
+    get 'show', params: { id: 1 }, session: adminsession
 
     assert_response :success
     assert_template 'show'
@@ -121,7 +121,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_prune_using_post
     num_playdates = Playdate.count
     assert num_playdates == 4
-    post 'prune', {}, adminsession
+    post 'prune', params: {}, session: adminsession
 
     assert_response :redirect
     assert_redirected_to controller: 'playdates', action: 'index'

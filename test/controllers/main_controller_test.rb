@@ -7,14 +7,14 @@ class MainControllerTest < ActionController::TestCase
   def test_authorization
     [:index, :edit, :more].each do |a|
       [:get, :post].each do |m|
-        method(m).call(a, {}, {})
+        method(m).call(a, params: {}, session: {})
         assert_redirected_to controller: 'login', action: 'login'
       end
     end
   end
 
   def test_index_as_user
-    get :index, {}, user_id: players(:matijs).id
+    get :index, params: {}, session: playersession
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
@@ -27,7 +27,7 @@ class MainControllerTest < ActionController::TestCase
   end
 
   def test_index_as_admin
-    get :index, {}, user_id: players(:admin).id
+    get :index, params: {}, session: adminsession
     assert_response :success
     assert_template 'index'
     assert_not_nil assigns(:playdates)
@@ -43,7 +43,7 @@ class MainControllerTest < ActionController::TestCase
       next unless [5, 6].include?(day.wday)
       Playdate.new(day: day).save!
     end
-    get :index, {}, user_id: players(:matijs).id
+    get :index, params: {}, session: playersession
     assert_select 'a[href="/more"]', false
   end
 
@@ -55,13 +55,13 @@ class MainControllerTest < ActionController::TestCase
       end.save!
     end
 
-    get :index, {}, user_id: players(:matijs).id
+    get :index, params: {}, session: playersession
 
     assert_select 'tr.summary td:first-of-type', 'Nee'
   end
 
   def test_index_shows_empty_for_neutral_day
-    get :index, {}, user_id: players(:matijs).id
+    get :index, params: {}, session: playersession
 
     assert_select 'tr.summary td:first-of-type', ''
   end
@@ -74,7 +74,7 @@ class MainControllerTest < ActionController::TestCase
       end.save!
     end
 
-    get :index, {}, user_id: players(:matijs).id
+    get :index, params: {}, session: playersession
 
     assert_select 'tr.summary td:first-of-type', 'Beste'
   end
@@ -95,7 +95,7 @@ class MainControllerTest < ActionController::TestCase
       av.status = Availability::STATUS_JA
     end.save!
 
-    get :index, {}, user_id: players(:matijs).id
+    get :index, params: {}, session: playersession
 
     assert_select 'tr.summary td:nth-of-type(1)', 'Beste'
     assert_select 'tr.summary td:nth-of-type(2)', 'Ja'
@@ -120,14 +120,14 @@ class MainControllerTest < ActionController::TestCase
       av.status = Availability::STATUS_HUIS
     end.save!
 
-    get :index, {}, user_id: players(:matijs).id
+    get :index, params: {}, session: playersession
 
     assert_select 'tr.summary td:nth-of-type(1)', 'Ja'
     assert_select 'tr.summary td:nth-of-type(2)', 'Beste'
   end
 
   def test_edit_using_get
-    get :edit, {}, user_id: players(:matijs).id
+    get :edit, params: {}, session: playersession
     assert_response :success
     assert_template 'edit'
     assert_not_nil assigns(:playdates)
@@ -145,7 +145,9 @@ class MainControllerTest < ActionController::TestCase
   end
 
   def test_edit_using_post
-    post :edit, { availability: { 1 => { status: 2 }, 2 => { status: 3 } } }, user_id: players(:robert).id
+    post :edit,
+      params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
+      session: { user_id: players(:robert).id }
     assert_response :redirect
     assert_redirected_to controller: 'main', action: 'index'
     assert Availability.count == 4
@@ -155,7 +157,7 @@ class MainControllerTest < ActionController::TestCase
 
   def test_more_using_get
     oldcount = Playdate.count
-    get :more, {}, user_id: players(:matijs).id
+    get :more, params: {}, session: playersession
     assert_response :success
     assert_template 'more'
     assert_select 'form'
@@ -168,7 +170,7 @@ class MainControllerTest < ActionController::TestCase
   # seperate checks for the borderline dates.
   def test_more_using_post
     oldcount = Playdate.count
-    post :more, {}, user_id: players(:matijs).id
+    post :more, params: {}, session: playersession
     assert_response :redirect
     assert_redirected_to controller: 'main', action: 'index'
     assert_operator Playdate.count, :>, oldcount + 1
@@ -189,7 +191,7 @@ class MainControllerTest < ActionController::TestCase
   end
 
   def test_feed
-    get :feed, { format: 'xml' }, {}
+    get :feed, params: { format: 'xml' }, session: {}
     assert_response :success
     assert_template 'feed'
     assert_template 'feed_table'
@@ -201,9 +203,17 @@ class MainControllerTest < ActionController::TestCase
     av = playdates(:tomorrow).availabilities.build(player_id: players(:robert).id, status: 1)
     av.save!
 
-    get :feed, { format: 'xml' }, {}
+    get :feed, params: { format: 'xml' }, session: {}
     assert_response :success
     assert_equal assigns(:updated_at).to_s, av.updated_at.to_s
     assert_not_nil assigns(:stats)
+  end
+
+  def playersession
+    { user_id: players(:matijs).id }
+  end
+
+  def adminsession
+    { user_id: players(:admin).id }
   end
 end
