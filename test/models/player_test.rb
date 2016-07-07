@@ -3,7 +3,8 @@ require 'test_helper'
 class PlayerTest < ActiveSupport::TestCase
   # TODO: More tests!!
 
-  NEW_PLAYER = { name: 'Testy', password: 'test123', password_confirmation: 'test123' }.freeze
+  NEW_PLAYER = { name: 'Testy', password: 'test123', password_confirmation:
+                 'test123' }.freeze
   REQ_ATTR_NAMES = %w(name).freeze
   DUPLICATE_ATTR_NAMES = %w(name).freeze
 
@@ -19,7 +20,8 @@ class PlayerTest < ActiveSupport::TestCase
     player = Player.new
     assert !player.valid?, 'Player should not be valid without initialisation parameters'
     REQ_ATTR_NAMES.each { |attr_name|
-      assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
+      assert player.errors[attr_name.to_sym].any?,
+        "Should be an error message for :#{attr_name}"
     }
   end
 
@@ -42,7 +44,8 @@ class PlayerTest < ActiveSupport::TestCase
       tmp_player.delete attr_name.to_sym
       player = Player.new(tmp_player)
       assert !player.valid?, "Player should be invalid, as @#{attr_name} is invalid"
-      assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
+      assert player.errors[attr_name.to_sym].any?,
+        "Should be an error message for :#{attr_name}"
     end
   end
 
@@ -70,7 +73,8 @@ class PlayerTest < ActiveSupport::TestCase
     DUPLICATE_ATTR_NAMES.each do |attr_name|
       player = Player.new(NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name]))
       assert !player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
-      assert player.errors[attr_name.to_sym].any?, "Should be an error message for :#{attr_name}"
+      assert player.errors[attr_name.to_sym].any?,
+        "Should be an error message for :#{attr_name}"
     end
   end
 
@@ -84,9 +88,11 @@ class PlayerTest < ActiveSupport::TestCase
   def test_associations
     avs = @matijs.availabilities.sort { |a, b| a.id <=> b.id }
     assert avs.length == 2, 'Expected 2 availabilities'
-    assert_equal([@onfriday, @onsaturday], avs, 'Did not get right availabilities for matijs')
+    assert_equal([@onfriday, @onsaturday], avs,
+                 'Did not get right availabilities for matijs')
     pds = @matijs.playdates.sort { |a, b| a.id <=> b.id }
     assert pds.length == 2, 'Expected 2 playdates'
-    assert_equal([@friday, @saturday], pds, 'Did not get right playdates for matijs')
+    assert_equal([@friday, @saturday], pds,
+                 'Did not get right playdates for matijs')
   end
 end

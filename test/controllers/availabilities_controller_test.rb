@@ -63,7 +63,12 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   # Update: Edit, then return to list of availabilities for playdate.
   def test_update
     put('update',
-        params: { playdate_id: 1, id: 1, availability: { status: Availability::STATUS_JA } },
+        params:
+        {
+          playdate_id: 1,
+          id: 1,
+          availability: { status: Availability::STATUS_JA }
+        },
         session: adminsession)
 
     assert_response :redirect
