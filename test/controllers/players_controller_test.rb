@@ -139,14 +139,17 @@ class PlayersControllerTest < ActionController::TestCase
       { name: 'new',
         full_name: 'New Name',
         abbreviation: 'nn',
-        is_admin: true,
+        is_admin: 'true',
         default_status: Availability::STATUS_JA.to_s }
     }
+    let(:expected_params) do
+      ActionController::Parameters.new(player_params).permit!
+    end
 
     it 'updates all desired attributes' do
       adminsession
       player = MiniTest::Mock.new
-      player.expect(:update_attributes, true, [player_params.with_indifferent_access])
+      player.expect(:update_attributes, true, [expected_params])
       Player.stub :find, player do
         post :update, params: { id: 1, player: player_params }, session: adminsession
       end
