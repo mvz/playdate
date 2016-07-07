@@ -13,9 +13,15 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
+/tmp/*
 !/log/.keep
-/tmp
-Gemfile.lock
+!/tmp/.keep
+
+# Ignore Byebug command history file.
+.byebug_history
 
 # Ignore coverage data
 /coverage
+
+# Ignore Bunlde lock file
+Gemfile.lock

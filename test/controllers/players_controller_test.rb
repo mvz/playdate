@@ -7,7 +7,7 @@ class PlayersControllerTest < ActionController::TestCase
     [:create, :destroy, :update].each do |a|
       [:get, :post].each do |m|
         it "requires login for #{m} #{a}" do
-          send m, a, id: 1
+          send m, a, params: { id: 1 }
           assert_redirected_to login_path
         end
       end
@@ -20,7 +20,7 @@ class PlayersControllerTest < ActionController::TestCase
     [:create, :destroy, :update].each do |a|
       [:get, :post].each do |m|
         it "denies access for #{m} #{a}" do
-          send m, a, { id: 1 }, playersession
+          send m, a, params: { id: 1 }, session: playersession
           assert_redirected_to root_path
         end
       end
@@ -31,7 +31,7 @@ class PlayersControllerTest < ActionController::TestCase
     render_views!
 
     before do
-      get :index, {}, adminsession
+      get :index, params: {}, session: adminsession
     end
 
     it 'renders index' do
@@ -47,7 +47,7 @@ class PlayersControllerTest < ActionController::TestCase
     render_views!
 
     before do
-      get :edit, { id: 1 }, adminsession
+      get :edit, params: { id: 1 }, session: adminsession
     end
 
     it 'renders edit' do
@@ -63,7 +63,7 @@ class PlayersControllerTest < ActionController::TestCase
     render_views!
 
     before do
-      get :new, {}, adminsession
+      get :new, params: {}, session: adminsession
     end
 
     it 'renders new' do
@@ -86,7 +86,7 @@ class PlayersControllerTest < ActionController::TestCase
 
     before do
       @player_count = Player.all.length
-      post :create, { player: player_params }, adminsession
+      post :create, params: { player: player_params }, session: adminsession
     end
 
     it 'assigns to @player' do
@@ -109,7 +109,7 @@ class PlayersControllerTest < ActionController::TestCase
       @player_count = Player.all.length
       @num_avs = Availability.count
       @num_player_avs = player.availabilities.count
-      post :destroy, { id: player.id }, adminsession
+      post :destroy, params: { id: player.id }, session: adminsession
     end
 
     it 'redirects to the player list' do
@@ -139,22 +139,25 @@ class PlayersControllerTest < ActionController::TestCase
       { name: 'new',
         full_name: 'New Name',
         abbreviation: 'nn',
-        is_admin: true,
+        is_admin: 'true',
         default_status: Availability::STATUS_JA.to_s }
     }
+    let(:expected_params) do
+      ActionController::Parameters.new(player_params).permit!
+    end
 
     it 'updates all desired attributes' do
       adminsession
       player = MiniTest::Mock.new
-      player.expect(:update_attributes, true, [player_params.with_indifferent_access])
+      player.expect(:update_attributes, true, [expected_params])
       Player.stub :find, player do
-        post :update, { id: 1, player: player_params }, adminsession
+        post :update, params: { id: 1, player: player_params }, session: adminsession
       end
       player.verify
     end
 
     it 'redirects to the player list' do
-      post :update, { id: 1, player: player_params }, adminsession
+      post :update, params: { id: 1, player: player_params }, session: adminsession
       assert_redirected_to players_path
     end
   end

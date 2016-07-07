@@ -15,7 +15,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     ].each do |session, controller, action|
       [:destroy, :create, :update, :edit, :new].each do |a|
         [:get, :post].each do |m|
-          method(m).call(a, { playdate_id: 1, id: 1 }, session)
+          method(m).call(a, params: { playdate_id: 1, id: 1 }, session: session)
           assert_redirected_to(controller: controller,
                                action: action)
         end
@@ -27,7 +27,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   def test_destroy
     assert_not_nil Availability.find(1)
 
-    delete 'destroy', { playdate_id: 1, id: 1 }, adminsession
+    delete 'destroy', params: { playdate_id: 1, id: 1 }, session: adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
 
@@ -41,7 +41,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
   # Edit: Show edit screen.
   def test_edit
-    get 'edit', { playdate_id: 1, id: 1 }, adminsession
+    get 'edit', params: { playdate_id: 1, id: 1 }, session: adminsession
 
     assert_response :success
     assert_template 'edit'
@@ -56,15 +56,15 @@ class AvailabilitiesControllerTest < ActionController::TestCase
 
     # Unknown id combo
     proc {
-      get 'edit', { playdate_id: 2, id: 1 }, adminsession
+      get 'edit', params: { playdate_id: 2, id: 1 }, session: adminsession
     }.must_raise ActiveRecord::RecordNotFound
   end
 
   # Update: Edit, then return to list of availabilities for playdate.
   def test_update
-    put 'update', { playdate_id: 1,
-                    id: 1,
-                    availability: { status: Availability::STATUS_JA } }, adminsession
+    put('update',
+        params: { playdate_id: 1, id: 1, availability: { status: Availability::STATUS_JA } },
+        session: adminsession)
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
@@ -76,7 +76,7 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   end
 
   def test_new
-    get 'new', { playdate_id: 1 }, adminsession
+    get 'new', params: { playdate_id: 1 }, session: adminsession
 
     assert_response :success
     assert_template 'new'
@@ -89,9 +89,12 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   def test_create
     num_availabilities = Availability.count
 
-    post 'create', { playdate_id: playdates(:friday).id,
-                     availability: { player_id: players(:robert).id, status: 1 } },
-      adminsession
+    post('create',
+         params: {
+           playdate_id: playdates(:friday).id,
+           availability: { player_id: players(:robert).id, status: 1 }
+         },
+         session: adminsession)
 
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
