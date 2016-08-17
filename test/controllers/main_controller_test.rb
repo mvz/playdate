@@ -200,7 +200,8 @@ class MainControllerTest < ActionController::TestCase
     assert_nil assigns(:updated_at)
     assert_nil assigns(:date)
 
-    av = playdates(:tomorrow).availabilities.build(player_id: players(:robert).id, status: 1)
+    av = playdates(:tomorrow).availabilities.
+      build(player_id: players(:robert).id, status: 1)
     av.save!
 
     get :feed, params: { format: 'xml' }, session: {}
