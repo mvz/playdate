@@ -49,4 +49,4 @@ gem 'blind', group: :test
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'rails-controller-testing', '~> 0.1.1', group: :test
+gem 'rails-controller-testing', '~> 1.0', group: :test
