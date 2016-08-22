@@ -73,11 +73,7 @@ class MainController < ApplicationController
       stat = Hash.new(0)
       players.each do |p|
         av = p.availability_for_playdate(pd)
-        s = if av.nil?
-              p.default_status || Availability::STATUS_MISSCHIEN
-            else
-              av.status
-            end
+        s = av.status
         stat[s] += 1
       end
       yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
