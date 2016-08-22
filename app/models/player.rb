@@ -39,7 +39,7 @@ class Player < ActiveRecord::Base
 
   def availabilities_by_day
     # TODO: Deprecated?
-    availabilities.each_with_object({}) { |av, h| h[av.playdate.day] = av }
+    availabilities.includes(:playdate).each_with_object({}) { |av, h| h[av.playdate.day] = av }
   end
 
   def availability_for_playdate(pd)
