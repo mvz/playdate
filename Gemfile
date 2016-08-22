@@ -8,7 +8,7 @@ gem 'sqlite3'
 gem 'puma', '~> 3.0'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 4.1.0'
+gem 'jquery-rails', '~> 4.1'
 
 gem 'dynamic_form'
 gem 'haml'
