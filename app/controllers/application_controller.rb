@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    Player.find_by_id(session[:user_id])
+    Player.find_by(id: session[:user_id])
   end
 
   def access_denied_not_logged_in

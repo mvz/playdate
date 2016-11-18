@@ -183,9 +183,9 @@ class MainControllerTest < ActionController::TestCase
               end
     (startdate + 1).upto(enddate) do |day|
       if [5, 6].include?(day.wday)
-        assert_not_nil Playdate.find_by_day(day)
+        assert_not_nil Playdate.find_by(day: day)
       else
-        assert_nil Playdate.find_by_day(day)
+        assert_nil Playdate.find_by(day: day)
       end
     end
   end

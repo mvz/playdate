@@ -27,7 +27,7 @@ class Player < ActiveRecord::Base
   end
 
   def self.authenticate(nm, pass)
-    u = find_by_name(nm)
+    u = find_by(name: nm)
     u.nil? and return nil
     u.check_password(pass) or return nil
     u
@@ -45,7 +45,7 @@ class Player < ActiveRecord::Base
   end
 
   def availability_for_playdate(pd)
-    availabilities.find_by_playdate_id(pd.id) ||
+    availabilities.find_by(playdate_id: pd.id) ||
       default_availability_for_playdate(pd)
   end
 

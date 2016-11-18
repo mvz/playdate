@@ -25,7 +25,7 @@ class Playdate < ActiveRecord::Base
     (start..finish).step(7) do |d|
       nw = today + d
       break if nw >= enddate
-      unless Playdate.find_by_day(nw)
+      unless Playdate.find_by(day: nw)
         Playdate.new(day: nw).save
         count += 1
       end
