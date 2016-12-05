@@ -27,10 +27,10 @@ group :development, :test do
 end
 
 group :development do
+  gem 'listen', '~> 3.1.5'
   # Access an IRB console on exception pages or by using <%= console %>
   # anywhere in the code.
   gem 'web-console', '~> 3.1'
-  gem 'listen', '~> 3.1.5'
   # Spring speeds up development by keeping your application running in the
   # background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -39,12 +39,12 @@ group :development do
   # Use pry for rails console
   gem 'pry-rails'
 
-  gem 'rubocop', '~> 0.45.0'
+  gem 'rubocop', '~> 0.46.0'
 end
 
-gem 'simplecov', group: :test, require: false
-gem 'minitest-spec-rails', '~> 5.3', group: :test
 gem 'blind', group: :test
+gem 'minitest-spec-rails', '~> 5.3', group: :test
+gem 'simplecov', group: :test, require: false
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
