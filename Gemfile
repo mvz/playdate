@@ -39,7 +39,7 @@ group :development do
   # Use pry for rails console
   gem 'pry-rails'
 
-  gem 'rubocop', '~> 0.46.0'
+  gem 'rubocop', '~> 0.47.1'
 end
 
 gem 'blind', group: :test
