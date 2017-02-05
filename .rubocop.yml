@@ -10,47 +10,6 @@ Rails:
 Metrics/LineLength:
   Max: 92
 
-Metrics/AbcSize:
-  Exclude:
-    # TODO: Fix offenses in these files
-    - app/controllers/main_controller.rb
-    - app/controllers/playdates_controller.rb
-    - app/controllers/players_controller.rb
-    - app/models/playdate.rb
-    - test/controllers/availabilities_controller_test.rb
-    - test/controllers/main_controller_test.rb
-    - test/controllers/playdates_controller_test.rb
-    - test/models/availability_test.rb
-    - test/models/player_test.rb
-
-Metrics/ClassLength:
-  Exclude:
-    # TODO: Fix offenses in this file
-    - test/controllers/main_controller_test.rb
-    - test/controllers/players_controller_test.rb
-
-Metrics/CyclomaticComplexity:
-  Exclude:
-    # TODO: Fix offenses in this file
-    - app/controllers/main_controller.rb
-
-Metrics/MethodLength:
-  Exclude:
-    # TODO: Fix offenses in these files
-    - app/controllers/main_controller.rb
-    - app/controllers/playdates_controller.rb
-    - app/controllers/players_controller.rb
-    - app/models/playdate.rb
-    - test/controllers/availabilities_controller_test.rb
-    - test/controllers/login_controller_test.rb
-    - test/controllers/main_controller_test.rb
-    - test/controllers/playdates_controller_test.rb
-
-Metrics/PerceivedComplexity:
-  Exclude:
-    # TODO: Fix offenses in this file
-    - app/controllers/main_controller.rb
-
 # Support use of and and or for control flow.
 Style/AndOr:
   EnforcedStyle: conditionals
@@ -60,12 +19,6 @@ Style/BlockDelimiters:
 
 Style/DotPosition:
   EnforcedStyle: trailing
-
-Style/GuardClause:
-  Exclude:
-    # TODO: Fix offenses in these files
-    - app/controllers/login_controller.rb
-    - app/controllers/main_controller.rb
 
 Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented
@@ -83,3 +36,5 @@ Style/Documentation:
 # RuboCop has no setting to accept how vim aligns parameters.
 Style/AlignParameters:
   Enabled: false
+
+inherit_from: .rubocop_todo.yml
