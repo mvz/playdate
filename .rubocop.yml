@@ -7,6 +7,10 @@ AllCops:
 Rails:
   Enabled: true
 
+# Assume the programmer knows how bracketed block syntax works
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 92
 
@@ -23,8 +27,17 @@ Style/DotPosition:
 Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%W': ()
+    '%w': ()
+
 Style/SignalException:
   EnforcedStyle: only_raise
+
+# Prefer symbols to look like symbols
+Style/SymbolArray:
+  EnforcedStyle: brackets
 
 Style/RedundantReturn:
   AllowMultipleReturnValues: true
