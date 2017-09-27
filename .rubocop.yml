@@ -7,6 +7,16 @@ AllCops:
 Rails:
   Enabled: true
 
+# RuboCop has no setting to accept how vim aligns parameters.
+Layout/AlignParameters:
+  Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 # Assume the programmer knows how bracketed block syntax works
 Lint/AmbiguousBlockAssociation:
   Enabled: false
@@ -20,12 +30,6 @@ Style/AndOr:
 
 Style/BlockDelimiters:
   Enabled: false
-
-Style/DotPosition:
-  EnforcedStyle: trailing
-
-Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
@@ -44,10 +48,6 @@ Style/RedundantReturn:
 
 # Not common in Rails projects
 Style/Documentation:
-  Enabled: false
-
-# RuboCop has no setting to accept how vim aligns parameters.
-Style/AlignParameters:
   Enabled: false
 
 inherit_from: .rubocop_todo.yml
