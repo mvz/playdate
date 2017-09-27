@@ -1,4 +1,4 @@
-class Availability < ActiveRecord::Base
+class Availability < ApplicationRecord
   belongs_to :player
   belongs_to :playdate
 

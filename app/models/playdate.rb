@@ -1,4 +1,4 @@
-class Playdate < ActiveRecord::Base
+class Playdate < ApplicationRecord
   has_many :availabilities, dependent: :destroy
   has_many :players, through: :availabilities
 
