@@ -11,7 +11,10 @@ xml.feed 'xml:lang' => 'en-US', 'xmlns' => 'http://www.w3.org/2005/Atom' do
     xml.updated @updated_at.xmlschema
 
     xml.entry do
-      xml.author { xml.name 'Playdate!'; xml.email 'playdate@matijs.net' }
+      xml.author do
+        xml.name 'Playdate!'
+        xml.email 'playdate@matijs.net'
+      end
       xml.id "tag:www.matijs.org,#{@updated_at.strftime('%Y-%m-%d')}:/apps/playdate"
 
       xml.updated @updated_at.xmlschema
