@@ -11,14 +11,15 @@
       = @playdate.day
 
     %p
-      %label{:for => "availability_player"} Speler
+      %label{ for: 'availability_player' } Speler
       %br
       = select 'availability', 'player_id', regular_players.map { |p| [p.name, p.id] }
 
     %p
-      %label{:for => "availability_status"} Status
+      %label{ for: 'availability_status' } Status
       %br
-      = select 'availability', 'status', Availability::VALUES.map { |v| [Availability::LONG_DISPLAY[v], v] }
+      = select 'availability', 'status',
+        Availability::VALUES.map { |v| [Availability::LONG_DISPLAY[v], v] }
 
     = submit_tag 'Save'
 
