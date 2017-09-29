@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def access_denied_not_logged_in
     flash[:notice] = 'Log eerst in om Playdate te gebruiken.'
-    redirect_to(controller: 'login', action: 'login')
+    redirect_to(controller: 'session', action: 'new')
     false
   end
 

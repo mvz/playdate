@@ -3,64 +3,28 @@ require 'test_helper'
 class LoginControllerTest < ActionController::TestCase
   render_views!
 
-  def test_login_using_get
-    get :login
-    assert_response :success
-    assert_template 'login'
-    assert_select 'h1', 'Inloggen in Playdate'
-  end
-
-  def test_login_using_post
-    matijs = players(:matijs)
-    matijs.password = 'gnoef!'
-    matijs.password_confirmation = 'gnoef!'
-    matijs.save!
-    post :login, params: { name: 'matijs', password: 'gnoef!' }
-    assert_redirected_to controller: 'main', action: 'index'
-    post :login, params: { name: 'matijs', password: 'zonk' }
-    assert_response :success
-    assert_template 'login'
-  end
-
-  def test_change_password_using_get
+  def test_edit_password
     get :edit
     assert_response :redirect
-    assert_redirected_to controller: 'login', action: 'login'
+    assert_redirected_to controller: 'session', action: 'new'
     get :edit, params: {}, session: playersession
     assert_response :success
     assert_select 'h1', 'Wachtwoord wijzigen'
   end
 
-  def test_change_password_using_post
-    post :edit, params: { player: { password: 'slurp', password_confirmation: 'slurp' } }
+  def test_update_password
+    post :update, params: { player: { password: 'slurp', password_confirmation: 'slurp' } }
     assert_response :redirect
-    assert_redirected_to controller: 'login', action: 'login'
-    post :edit,
+    assert_redirected_to controller: 'session', action: 'new'
+    post :update,
       params: { player: { password: 'slurp', password_confirmation: 'slurp' } },
       session: playersession
     assert_response :redirect
     assert_redirected_to controller: 'main', action: 'index'
-    post :edit,
+    post :update,
       params: { player: { password: 'slu', password_confirmation: 'slurp' } },
       session: playersession
     assert_response :success
-  end
-
-  def test_logout_using_get
-    get :logout
-    assert_response :redirect
-    get :logout, params: {}, session: playersession
-    assert_response :success
-    assert_not_nil session[:user_id]
-    assert_template 'logout'
-    assert_select 'h1', 'Uitloggen'
-  end
-
-  def test_logout_using_post
-    post :logout, params: {}, session: playersession
-    assert_response :redirect
-    assert_redirected_to controller: 'login', action: 'login'
-    assert_nil session[:user_id]
   end
 
   def playersession

@@ -6,7 +6,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_authorization
     playersession = { user_id: players(:matijs).id }
     [
-      [{}, 'login', 'login'],
+      [{}, 'session', 'new'],
       [playersession, 'main', 'index']
     ].each do |session, controller, action|
       [:destroy, :index, :new, :show, :prune].each do |a|

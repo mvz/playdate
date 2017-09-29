@@ -9,35 +9,17 @@ class MainController < ApplicationController
 
   def edit
     @playdates = relevant_playdates
-    if request.post?
-      params[:availability].each do |p_id, av_param|
-        d = Playdate.find(p_id) or next
-        av = @current_user.availability_for_playdate(d)
-        av.status = av_param[:status]
-        av.save!
-      end
-      flash[:notice] = 'Wijzigingen opgeslagen.'
-      redirect_to action: 'index'
-    end
   end
 
-  def more
-    if request.post?
-      last_date = Playdate.last.day
-      today = Time.zone.today
-      last_date = today if last_date < today
-
-      period = last_date + 7 > today.end_of_month ? 2 : 1
-
-      count = Playdate.make_new_range(period, PlaydatesController::DAY_SATURDAY)
-      count += Playdate.make_new_range(period, PlaydatesController::DAY_FRIDAY)
-      flash[:notice] = if count > 0
-                         'Data toegevoegd'
-                       else
-                         'Geen data toegevoegd'
-                       end
-      redirect_to action: 'index'
+  def update
+    params[:availability].each do |p_id, av_param|
+      d = Playdate.find(p_id) or next
+      av = @current_user.availability_for_playdate(d)
+      av.status = av_param[:status]
+      av.save!
     end
+    flash[:notice] = 'Wijzigingen opgeslagen.'
+    redirect_to action: 'index'
   end
 
   def feed
@@ -97,12 +79,9 @@ class MainController < ApplicationController
 
   def status_code(status, min, max, max_has_house, numplayers)
     if max >= min && status[:yes] == max
-      if max_has_house
-        return 3 if status[:house] > 0
-        return 2
-      else
-        return 3
-      end
+      return 3 unless max_has_house
+      return 3 if status[:house] > 0
+      return 2
     end
     return 2 if status[:yes] >= min
     return 0 if status[:no] > (numplayers - min)

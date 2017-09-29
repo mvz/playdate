@@ -14,7 +14,7 @@
       %td.playdate{:nowrap => ""} Geen relevante speeldata gedefinieerd.
     %td.action
       - if can_dates_be_added? then
-        = link_to 'Meer>>', {:action => 'more'}, :method => :post
+        = link_to 'Meer>>', {controller: 'range', :action => 'create'}, :method => :post
   - for player in @players
     %tr
       %td{:class => "player #{class_if_current_user(player)}"}= h player.abbreviation

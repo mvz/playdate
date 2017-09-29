@@ -2,19 +2,19 @@ Rails.application.routes.draw do
   root to: 'main#index'
 
   get '/edit' => 'main#edit'
-  post '/edit' => 'main#edit'
-  get '/more' => 'main#more'
-  post '/more' => 'main#more'
+  post '/edit' => 'main#update'
+  get '/more' => 'range#new'
+  post '/more' => 'range#create'
 
-  get '/login' => 'login#login'
-  post '/login' => 'login#login'
-  get '/logout' => 'login#logout'
-  post '/logout' => 'login#logout'
+  get '/login' => 'session#new'
+  post '/login' => 'session#create'
+  get '/logout' => 'session#edit'
+  post '/logout' => 'session#destroy'
 
   get '/feed' => 'main#feed', :format => false, :defaults => { format: 'xml' }
 
   get '/login/edit' => 'login#edit'
-  post '/login/edit' => 'login#edit'
+  post '/login/edit' => 'login#update'
 
   resources :playdates, only: [:index, :show, :new, :create, :destroy] do
     collection do

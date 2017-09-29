@@ -1,6 +1,6 @@
 require 'digest/sha2'
 
-class Player < ActiveRecord::Base
+class Player < ApplicationRecord
   has_many :availabilities, dependent: :destroy
   has_many :playdates, through: :availabilities
 
