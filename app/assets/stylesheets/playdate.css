@@ -151,6 +151,15 @@ label {
   padding-bottom: 0.2em;
   padding-top: 0.2em;
 }
+
+.flash-notice {
+  color: green;
+}
+
+.flash-error {
+  color: red;
+}
+
 /* Rounded Corners */
 div#box {
   border-radius: 5px;
