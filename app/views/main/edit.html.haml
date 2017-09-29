@@ -3,17 +3,17 @@
 .playdate-form
   %fieldset
     %legend Vul hieronder in wanneer je beschikbaar bent.
-    = form_tag :action => 'edit' do
+    = form_tag action: 'edit' do
       %table
         %tr
           %th Datum
           %th Beschikbaarheid
         - avs = @current_user.availabilities_by_day
-        - for playdate in @playdates
+        - @playdates.each do |playdate|
           %tr
             %td= h nice_date_display(playdate.day)
             %td
               = fields_for :availability, avs[playdate.day] do |av_fields|
-                = av_fields.select 'status', availability_options, {}, { "index" => playdate.id }
+                = av_fields.select 'status', availability_options, {}, index: playdate.id
       %p= submit_tag 'Opslaan'
-      %p= link_to 'Terug naar overzicht', :action => 'index'
+      %p= link_to 'Terug naar overzicht', action: 'index'
