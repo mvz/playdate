@@ -6,10 +6,10 @@
     %legend Vul hier je nieuwe wachtwoord in.
     = form_tag do
       %p
-        %label{:for => "player_password"} Wachtwoord:
+        %label{ for: 'player_password' } Wachtwoord:
         = password_field :player, :password
       %p
-        %label{:for => "player_password_confirmation"} Wachtwoord (bevestigen):
+        %label{ for: 'player_password_confirmation' } Wachtwoord (bevestigen):
         = password_field :player, :password_confirmation
-      %p= submit_tag "Wachtwoord wijzigen"
-      %p= link_to 'Terug naar overzicht', :controller => 'main', :action => 'index'
+      %p= submit_tag 'Wachtwoord wijzigen'
+      %p= link_to 'Terug naar overzicht', controller: 'main', action: 'index'
