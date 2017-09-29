@@ -9,16 +9,17 @@ class MainController < ApplicationController
 
   def edit
     @playdates = relevant_playdates
-    if request.post?
-      params[:availability].each do |p_id, av_param|
-        d = Playdate.find(p_id) or next
-        av = @current_user.availability_for_playdate(d)
-        av.status = av_param[:status]
-        av.save!
-      end
-      flash[:notice] = 'Wijzigingen opgeslagen.'
-      redirect_to action: 'index'
+  end
+
+  def update
+    params[:availability].each do |p_id, av_param|
+      d = Playdate.find(p_id) or next
+      av = @current_user.availability_for_playdate(d)
+      av.status = av_param[:status]
+      av.save!
     end
+    flash[:notice] = 'Wijzigingen opgeslagen.'
+    redirect_to action: 'index'
   end
 
   def more

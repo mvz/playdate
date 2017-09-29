@@ -5,7 +5,7 @@ class MainControllerTest < ActionController::TestCase
   MainController::MIN_PLAYERS = 2
 
   def test_authorization
-    [:index, :edit, :more].each do |a|
+    [:index, :edit, :update, :more].each do |a|
       [:get, :post].each do |m|
         method(m).call(a, params: {}, session: {})
         assert_redirected_to controller: 'session', action: 'new'
@@ -126,7 +126,7 @@ class MainControllerTest < ActionController::TestCase
     assert_select 'tr.summary td:nth-of-type(2)', 'Beste'
   end
 
-  def test_edit_using_get
+  def test_edit
     get :edit, params: {}, session: playersession
     assert_response :success
     assert_template 'edit'
@@ -144,8 +144,8 @@ class MainControllerTest < ActionController::TestCase
     assert_select 'h1', 'Beschikbaarheid bewerken'
   end
 
-  def test_edit_using_post
-    post :edit,
+  def test_update
+    post :update,
       params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
       session: { user_id: players(:robert).id }
     assert_response :redirect

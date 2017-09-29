@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'main#index'
 
   get '/edit' => 'main#edit'
-  post '/edit' => 'main#edit'
+  post '/edit' => 'main#update'
   get '/more' => 'main#more'
   post '/more' => 'main#more'
 
