@@ -23,7 +23,7 @@ class Availability < ApplicationRecord
   SHORT_DISPLAY = {
     STATUS_MISSCHIEN  => '?',
     STATUS_JA         => '+',
-    STATUS_NEE        => '&minus;',
+    STATUS_NEE        => '−',
     STATUS_HUIS       => 'h'
   }.freeze
   def status_character
