@@ -5,8 +5,8 @@
 
 = form_for(@player) do |f|
   %p
-    = render 'form_fields', :f => f
-    = f.submit "Update"
+    = render 'form_fields', f: f
+    = f.submit 'Update'
 
 = link_to 'Tonen', @player
 |
