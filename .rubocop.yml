@@ -24,6 +24,13 @@ Lint/AmbiguousBlockAssociation:
 Metrics/LineLength:
   Max: 92
 
+# FIXME: Exclude these for now.
+# See https://github.com/bbatsov/rubocop/issues/4751
+Rails/HasManyOrHasOneDependent:
+  Exclude:
+    - 'app/models/playdate.rb'
+    - 'app/models/player.rb'
+
 # Support use of and and or for control flow.
 Style/AndOr:
   EnforcedStyle: conditionals
