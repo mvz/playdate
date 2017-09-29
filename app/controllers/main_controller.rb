@@ -79,12 +79,9 @@ class MainController < ApplicationController
 
   def status_code(status, min, max, max_has_house, numplayers)
     if max >= min && status[:yes] == max
-      if max_has_house
-        return 3 if status[:house] > 0
-        return 2
-      else
-        return 3
-      end
+      return 3 unless max_has_house
+      return 3 if status[:house] > 0
+      return 2
     end
     return 2 if status[:yes] >= min
     return 0 if status[:no] > (numplayers - min)
