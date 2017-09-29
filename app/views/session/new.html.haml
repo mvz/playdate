@@ -5,9 +5,9 @@
     %legend Vul hier je gebruikersnaam en wachtwoord in.
     = form_tag do
       %p
-        %label{:for => "name"} Naam:
+        %label{ for: 'name' } Naam:
         = text_field_tag :name, params[:name]
       %p
-        %label{:for => "password"} Wachtwoord:
+        %label{ for: 'password' } Wachtwoord:
         = password_field_tag :password, params[:password]
-      %p= submit_tag "Inloggen"
+      %p= submit_tag 'Inloggen'
