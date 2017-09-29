@@ -22,25 +22,6 @@ class MainController < ApplicationController
     redirect_to action: 'index'
   end
 
-  def more
-    if request.post?
-      last_date = Playdate.last.day
-      today = Time.zone.today
-      last_date = today if last_date < today
-
-      period = last_date + 7 > today.end_of_month ? 2 : 1
-
-      count = Playdate.make_new_range(period, PlaydatesController::DAY_SATURDAY)
-      count += Playdate.make_new_range(period, PlaydatesController::DAY_FRIDAY)
-      flash[:notice] = if count > 0
-                         'Data toegevoegd'
-                       else
-                         'Geen data toegevoegd'
-                       end
-      redirect_to action: 'index'
-    end
-  end
-
   def feed
     set_overview_fields
 

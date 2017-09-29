@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   get '/edit' => 'main#edit'
   post '/edit' => 'main#update'
-  get '/more' => 'main#more'
-  post '/more' => 'main#more'
+  get '/more' => 'range#new'
+  post '/more' => 'range#create'
 
   get '/login' => 'session#new'
   post '/login' => 'session#create'

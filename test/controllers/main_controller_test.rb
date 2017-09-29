@@ -5,7 +5,7 @@ class MainControllerTest < ActionController::TestCase
   MainController::MIN_PLAYERS = 2
 
   def test_authorization
-    [:index, :edit, :update, :more].each do |a|
+    [:index, :edit, :update].each do |a|
       [:get, :post].each do |m|
         method(m).call(a, params: {}, session: {})
         assert_redirected_to controller: 'session', action: 'new'
@@ -153,41 +153,6 @@ class MainControllerTest < ActionController::TestCase
     assert Availability.count == 4
     newavs = players(:robert).availabilities.sort_by(&:playdate_id)
     assert newavs.map { |a| [a.playdate_id, a.status] }.flatten == [1, 2, 2, 3]
-  end
-
-  def test_more_using_get
-    oldcount = Playdate.count
-    get :more, params: {}, session: playersession
-    assert_response :success
-    assert_template 'more'
-    assert_select 'form'
-    assert_equal Playdate.count, oldcount
-    assert_select 'h1', 'Speeldagen toevoegen'
-  end
-
-  # FIXME: Use fixed dates rather than relying on logic based on the current
-  # date. Test each case (only this month, also next month) separately, with
-  # seperate checks for the borderline dates.
-  def test_more_using_post
-    oldcount = Playdate.count
-    post :more, params: {}, session: playersession
-    assert_response :redirect
-    assert_redirected_to controller: 'main', action: 'index'
-    assert_operator Playdate.count, :>, oldcount + 1
-    assert_operator Playdate.count, :<=, oldcount + 12
-    startdate = Time.zone.today + 1
-    enddate = if startdate + 7 <= Time.zone.today.end_of_month
-                Time.zone.today.end_of_month
-              else
-                Time.zone.today.next_month.end_of_month
-              end
-    (startdate + 1).upto(enddate) do |day|
-      if [5, 6].include?(day.wday)
-        assert_not_nil Playdate.find_by(day: day)
-      else
-        assert_nil Playdate.find_by(day: day)
-      end
-    end
   end
 
   def test_feed

@@ -3,6 +3,6 @@
 .playdate-form
   %fieldset
     %legend Speeldagen toevoegen?
-    = form_tag :action => 'more' do
+    = form_tag action: 'create' do
       %p= submit_tag 'Jazeker!'
-      %p= link_to 'Terug naar overzicht', :action => 'index'
+      %p= link_to 'Terug naar overzicht', root_path
