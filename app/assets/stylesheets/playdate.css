@@ -60,16 +60,16 @@ td.bad {
   background-color: #f88;
 }
 
-td.current {
+tr.current td {
   background-color: #ccc;
 }
-td.best.current {
+tr.current td.best {
   background-color: #0d4;
 }
-td.option.current {
+tr.current td.option {
   background-color: #9d4;
 }
-td.bad.current {
+tr.current td.bad {
   background-color: #e77;
 }
 
@@ -151,6 +151,15 @@ label {
   padding-bottom: 0.2em;
   padding-top: 0.2em;
 }
+
+.flash-notice {
+  color: green;
+}
+
+.flash-error {
+  color: red;
+}
+
 /* Rounded Corners */
 div#box {
   border-radius: 5px;

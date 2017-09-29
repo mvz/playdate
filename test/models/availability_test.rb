@@ -40,7 +40,7 @@ class AvailabilityTest < ActiveSupport::TestCase
     @onsaturday = availabilities(:onsaturday)
     assert_equal 'h', @onsaturday.status_character
     @onsaturday.status = Availability::STATUS_NEE
-    assert_equal '&minus;', @onsaturday.status_character
+    assert_equal '−', @onsaturday.status_character
     @onsaturday.status = Availability::STATUS_MISSCHIEN
     assert_equal '?', @onsaturday.status_character
   end

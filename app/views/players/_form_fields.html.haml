@@ -1,28 +1,28 @@
-%label{:for => "player[name]"} Naam:
+%label{ for: 'player[name]' } Naam:
 = f.text_field :name
 %br
 
-%label{:for => "player[full_name]"} Volledige naam:
+%label{ for: 'player[full_name]' } Volledige naam:
 = f.text_field :full_name
 %br
 
-%label{:for => "player[abbreviation]"} Afkorting:
+%label{ for: 'player[abbreviation]' } Afkorting:
 = f.text_field :abbreviation
 %br
 
-%label{:for => "player[password]"} Password:
+%label{ for: 'player[password]' } Password:
 = f.text_field :password
 %br
 
-%label{:for => "player[password_confirmation]"} Password (nogmaals):
+%label{ for: 'player[password_confirmation]' } Password (nogmaals):
 = f.text_field :password_confirmation
 %br
 
-%label{:for => "player[is_admin]"} Is Administrator:
-= select :player, :is_admin, [["Nee",false],["Ja", true]]
+%label{ for: 'player[is_admin]' } Is Administrator:
+= select :player, :is_admin, [['Nee', false], ['Ja', true]]
 %br
 
-%label{:for => "player[default_status]"} Standaardstatus:
+%label{ for: 'player[default_status]' } Standaardstatus:
 = select :player, :default_status, availability_options
 %br
 

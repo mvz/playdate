@@ -5,7 +5,7 @@
 
 = form_for(@player) do |f|
   %p
-    = render 'form_fields', :f => f
-    = f.submit "Aanmaken"
+    = render 'form_fields', f: f
+    = f.submit 'Aanmaken'
 
 = link_to 'Terug', players_path

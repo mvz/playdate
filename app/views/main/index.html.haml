@@ -3,33 +3,33 @@
 %table.playdate-overview
   %tr
     %th.player Speler
-    %th.playdate{:colspan => [@playdates.length, 1].max} Datum
+    %th.playdate{ colspan: [@playdates.length, 1].max } Datum
     %th.action
   %tr
     %td.player
-    - for playdate in @playdates
-      %td{:class => "playdate #{status_to_class(@stats[playdate])}"}
+    - @playdates.each do |playdate|
+      %td{ class: "playdate #{status_to_class(@stats[playdate])}" }
         = h nice_date_display(playdate.day)
-    - if @playdates.length == 0
-      %td.playdate{:nowrap => ""} Geen relevante speeldata gedefinieerd.
+    - if @playdates.empty?
+      %td.playdate{ nowrap: true } Geen relevante speeldata gedefinieerd.
     %td.action
-      - if can_dates_be_added? then
-        = link_to 'Meer>>', {controller: 'range', :action => 'create'}, :method => :post
-  - for player in @players
-    %tr
-      %td{:class => "player #{class_if_current_user(player)}"}= h player.abbreviation
+      - if can_dates_be_added?
+        = link_to 'Meer>>', { controller: 'range', action: 'create' }, method: :post
+  - @players.each do |player|
+    %tr{ class: class_if_current_user(player) }
+      %td.player= h player.abbreviation
       - avs = player.availabilities_by_day
-      - for playdate in @playdates
-        %td{:class => "playdate #{status_to_class(@stats[playdate])} #{class_if_current_user(player)}"}
+      - @playdates.each do |playdate|
+        %td{ class: "playdate #{status_to_class(@stats[playdate])}" }
           = availability_status_character(avs[playdate.day], player)
-      - if @playdates.length == 0
-        %td{:class => "playdate #{class_if_current_user(player)}"}
-      %td{:class => "action #{class_if_current_user(player)}"}
-        = link_to 'Wijzigen', :action => 'edit' if player == @current_user
+      - if @playdates.empty?
+        %td
+      %td{ class: "action #{class_if_current_user(player)}" }
+        = link_to 'Wijzigen', action: 'edit' if player == @current_user
   %tr.summary
     %th Optie?
-    - for playdate in @playdates
+    - @playdates.each do |playdate|
       %td= status_to_text(@stats[playdate])
-    - if @playdates.length == 0
+    - if @playdates.empty?
       %td
     %td

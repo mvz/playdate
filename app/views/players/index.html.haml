@@ -1,4 +1,4 @@
--content_for :page_title do
+- content_for :page_title do
   Spelers
 
 %table
@@ -11,7 +11,7 @@
     %th
     %th
 
-  -for player in @players
+  - @players.each do |player|
     %tr
       %td= h player.name
       %td= h player.full_name
@@ -22,7 +22,7 @@
         = link_to 'Edit', edit_player_path(player)
       %td.action
         - unless player == @current_user
-          = link_to 'Destroy', player, data: { :confirm => 'Are you sure?' }, :method => :delete
+          = link_to 'Destroy', player, data: { confirm: 'Are you sure?' }, method: :delete
 
 = will_paginate @players
 
