@@ -8,7 +8,7 @@ class MainControllerTest < ActionController::TestCase
     [:index, :edit, :more].each do |a|
       [:get, :post].each do |m|
         method(m).call(a, params: {}, session: {})
-        assert_redirected_to controller: 'login', action: 'login'
+        assert_redirected_to controller: 'session', action: 'new'
       end
     end
   end

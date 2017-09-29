@@ -12,7 +12,7 @@
       - if @current_user
         %p.logout
           Ingelogd als #{h @current_user.full_name}.
-          = link_to 'Uitloggen', {:controller => 'login', :action => 'logout'}, :method => :post
+          = link_to 'Uitloggen', {:controller => 'session', :action => 'destroy'}, :method => :post
       %h1= yield :page_title
       .content
         = render :partial => 'shared/showflash'

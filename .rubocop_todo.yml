@@ -32,5 +32,4 @@ Metrics/PerceivedComplexity:
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'app/controllers/login_controller.rb'
     - 'app/controllers/main_controller.rb'
