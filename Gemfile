@@ -35,9 +35,6 @@ group :development do
   # background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-
-  # Use pry for rails console
-  gem 'pry-rails'
 end
 
 gem 'blind', group: :test
