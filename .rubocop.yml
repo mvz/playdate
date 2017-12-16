@@ -3,6 +3,7 @@ AllCops:
     - 'tmp/**/*'
     - 'db/schema.rb'
     - 'bin/**/*'
+  TargetRailsVersion: 5.1
 
 Rails:
   Enabled: true

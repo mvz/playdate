@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-  before_action :authorize, except: :login
+  before_action :authorize
 
   def edit
     @player = current_user
