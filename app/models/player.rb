@@ -2,7 +2,7 @@ require 'digest/sha2'
 
 class Player < ApplicationRecord
   has_many :availabilities, dependent: :destroy
-  has_many :playdates, through: :availabilities
+  has_many :playdates, through: :availabilities, inverse_of: :players
 
   validates :name, presence: true
   validates :name, length: { minimum: 1 }

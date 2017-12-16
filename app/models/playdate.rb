@@ -1,6 +1,6 @@
 class Playdate < ApplicationRecord
   has_many :availabilities, dependent: :destroy
-  has_many :players, through: :availabilities
+  has_many :players, through: :availabilities, inverse_of: :playdates
 
   validates :day, presence: true
   validates :day, uniqueness: true
