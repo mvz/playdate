@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTimestamps < ActiveRecord::Migration[5.1]
   def change
     add_column :availabilities, :created_at, :timestamp

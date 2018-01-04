@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'digest/sha2'
 
 class Player < ApplicationRecord
@@ -13,7 +15,7 @@ class Player < ApplicationRecord
                                        user.password_hash.nil? or !user.password.to_s.empty?
                                      } }
 
-  SALT = 'change this to your own salt'.freeze
+  SALT = 'change this to your own salt'
 
   default_scope { order('abbreviation') }
 

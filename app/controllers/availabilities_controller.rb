@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Administrative controller for editing availabilities.
 class AvailabilitiesController < ApplicationController
   respond_to :html

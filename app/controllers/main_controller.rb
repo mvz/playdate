@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MainController < ApplicationController
   before_action :authorize, except: :feed
 
