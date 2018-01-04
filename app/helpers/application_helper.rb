@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   MODEL_TRANSLATIONS = {
     'password' => 'Wachtwoord'
@@ -16,7 +18,7 @@ module ApplicationHelper
     return '' if obj.nil? || obj.errors.empty?
     result = content_tag('h3', 'Fout')
     result << content_tag('p', 'Controleer de invoer en probeer het opnieuw')
-    list = ''
+    list = +''
     obj.errors.each do |at, ms|
       list << content_tag('li', "#{MODEL_TRANSLATIONS[at]} #{ms}.")
     end

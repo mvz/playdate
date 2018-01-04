@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDefaultPlayerStatus < ActiveRecord::Migration
   def self.up
     add_column :players, :default_status, :integer

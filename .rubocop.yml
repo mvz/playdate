@@ -3,6 +3,7 @@ AllCops:
     - 'tmp/**/*'
     - 'db/schema.rb'
     - 'bin/**/*'
+  TargetRailsVersion: 5.1
 
 Rails:
   Enabled: true
@@ -24,11 +25,27 @@ Lint/AmbiguousBlockAssociation:
 Metrics/LineLength:
   Max: 92
 
+# Timestamps are added in migration 007 and we can't change these migrations
+# after the fact.
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - 'db/migrate/001_create_players.rb'
+    - 'db/migrate/002_create_playdates.rb'
+    - 'db/migrate/003_create_availabilities.rb'
+
 # Support use of and and or for control flow.
 Style/AndOr:
   EnforcedStyle: conditionals
 
 Style/BlockDelimiters:
+  Enabled: false
+
+# Disable for strftime/strptime
+Style/FormatStringToken:
+  Enabled: false
+
+# Prefer maths
+Style/NumericPredicate:
   Enabled: false
 
 Style/PercentLiteralDelimiters:

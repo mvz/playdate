@@ -8,32 +8,36 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 6) do
+ActiveRecord::Schema.define(version: 7) do
 
-  create_table "availabilities", :force => true do |t|
-    t.integer  "player_id"
-    t.integer  "playdate_id"
-    t.integer  "status"
+  create_table "availabilities", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "playdate_id"
+    t.integer "status"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+    t.index ["playdate_id"], name: "index_availabilities_on_playdate_id"
+    t.index ["player_id"], name: "index_availabilities_on_player_id"
+  end
+
+  create_table "playdates", force: :cascade do |t|
+    t.date "day"
+    t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "availabilities", ["playdate_id"], :name => "index_availabilities_on_playdate_id"
-  add_index "availabilities", ["player_id"], :name => "index_availabilities_on_player_id"
-
-  create_table "playdates", :force => true do |t|
-    t.date "day"
-  end
-
-  create_table "players", :force => true do |t|
-    t.string  "name"
-    t.string  "full_name"
-    t.string  "abbreviation"
-    t.string  "password_hash"
-    t.string  "password_salt"
+  create_table "players", force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "full_name", limit: 255
+    t.string "abbreviation", limit: 255
+    t.string "password_hash", limit: 255
+    t.string "password_salt", limit: 255
     t.boolean "is_admin"
     t.integer "default_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

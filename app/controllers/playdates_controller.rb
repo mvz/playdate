@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlaydatesController < ApplicationController
   respond_to :html
   before_action :authorize_admin

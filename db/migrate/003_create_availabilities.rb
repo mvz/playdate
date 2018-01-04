@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAvailabilities < ActiveRecord::Migration
   def self.up
     create_table :availabilities do |t|

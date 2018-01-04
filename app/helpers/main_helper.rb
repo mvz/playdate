@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MainHelper
   STATUS_CLASSES = %w(bad neutral option best).freeze
   STATUS_TEXTS = ['Nee', '', 'Ja', 'Beste'].freeze # "Misschien" for "" ?

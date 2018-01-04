@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PlaydatesHelper
   def daytype_options(selected)
     options_for_select({ 'Vrijdag' => PlaydatesController::DAY_FRIDAY,

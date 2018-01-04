@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'digest/sha2'
 
 class Player < ApplicationRecord
   has_many :availabilities, dependent: :destroy
-  has_many :playdates, through: :availabilities
+  has_many :playdates, through: :availabilities, inverse_of: :players
 
   validates :name, presence: true
   validates :name, length: { minimum: 1 }
@@ -13,7 +15,7 @@ class Player < ApplicationRecord
                                        user.password_hash.nil? or !user.password.to_s.empty?
                                      } }
 
-  SALT = 'change this to your own salt'.freeze
+  SALT = 'change this to your own salt'
 
   default_scope { order('abbreviation') }
 

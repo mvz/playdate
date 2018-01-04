@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddForeignKeyIndexes < ActiveRecord::Migration
   def self.up
     add_index :availabilities, :player_id
