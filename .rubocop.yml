@@ -44,6 +44,10 @@ Style/BlockDelimiters:
 Style/FormatStringToken:
   Enabled: false
 
+# Prefer maths
+Style/NumericPredicate:
+  Enabled: false
+
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%W': ()
