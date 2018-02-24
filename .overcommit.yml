@@ -20,6 +20,10 @@ PreCommit:
     enabled: true
     on_warn: fail # Treat all warnings as failures
 
+CommitMsg:
+  EmptyMessage:
+    enabled: false # Git already uses this as a signal to abort
+
 #  TrailingWhitespace:
 #    enabled: true
 #    exclude:
