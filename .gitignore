@@ -22,6 +22,3 @@
 
 # Ignore coverage data
 /coverage
-
-# Ignore Bunlde lock file
-Gemfile.lock
