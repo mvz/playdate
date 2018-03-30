@@ -9,7 +9,7 @@ class LoginController < ApplicationController
 
   def update
     @player = current_user
-    if @player.update_attributes(player_params)
+    if @player.update(player_params)
       redirect_to(controller: 'main', action: 'index')
     else
       render 'edit'

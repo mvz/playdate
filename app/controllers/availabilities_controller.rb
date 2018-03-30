@@ -22,7 +22,7 @@ class AvailabilitiesController < ApplicationController
   end
 
   def update
-    if @availability.update_attributes(edit_availability_params)
+    if @availability.update(edit_availability_params)
       flash[:notice] = 'The availability was successfully edited.'
     end
     respond_with @availability, location: playdate_path(@playdate)
