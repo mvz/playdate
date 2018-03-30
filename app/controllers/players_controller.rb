@@ -25,9 +25,7 @@ class PlayersController < ApplicationController
   def update
     @player = Player.find(params[:id])
 
-    if @player.update_attributes player_params
-      flash[:notice] = 'Player was successfully updated.'
-    end
+    flash[:notice] = 'Player was successfully updated.' if @player.update player_params
     respond_with @player, location: players_path
   end
 

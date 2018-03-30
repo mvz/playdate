@@ -28,8 +28,8 @@ class Player < ApplicationRecord
     self.password_salt = SALT
   end
 
-  def self.authenticate(nm, pass)
-    u = find_by(name: nm)
+  def self.authenticate(name, pass)
+    u = find_by(name: name)
     u.nil? and return nil
     u.check_password(pass) or return nil
     u
@@ -46,14 +46,14 @@ class Player < ApplicationRecord
       each_with_object({}) { |av, h| h[av.playdate.day] = av }
   end
 
-  def availability_for_playdate(pd)
-    availabilities.find_by(playdate_id: pd.id) ||
-      default_availability_for_playdate(pd)
+  def availability_for_playdate(playdate)
+    availabilities.find_by(playdate_id: playdate.id) ||
+      default_availability_for_playdate(playdate)
   end
 
-  def default_availability_for_playdate(pd)
+  def default_availability_for_playdate(playdate)
     availabilities.build.tap do |av|
-      av.playdate = pd
+      av.playdate = playdate
       av.status = default_status || Availability::STATUS_MISSCHIEN
     end
   end

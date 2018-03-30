@@ -151,7 +151,7 @@ class PlayersControllerTest < ActionController::TestCase
     it 'updates all desired attributes' do
       adminsession
       player = MiniTest::Mock.new
-      player.expect(:update_attributes, true, [expected_params])
+      player.expect(:update, true, [expected_params])
       Player.stub :find, player do
         post :update, params: { id: 1, player: player_params }, session: adminsession
       end

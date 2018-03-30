@@ -20,9 +20,9 @@ module MainHelper
     "#{date.mday}/#{date.mon}"
   end
 
-  def availability_status_character(av, pl)
-    return Availability::SHORT_DISPLAY[av.status] unless av.nil?
-    s = pl.default_status || Availability::STATUS_MISSCHIEN
+  def availability_status_character(availability, player)
+    return Availability::SHORT_DISPLAY[availability.status] unless availability.nil?
+    s = player.default_status || Availability::STATUS_MISSCHIEN
     return '' if s == Availability::STATUS_MISSCHIEN
     '(' + Availability::SHORT_DISPLAY[s] + ')'
   end
