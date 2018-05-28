@@ -7,7 +7,7 @@ class AvailabilityTest < ActiveSupport::TestCase
 
   def test_raw_validation
     availability = Availability.new
-    assert !availability.valid?
+    assert_not availability.valid?
     REQ_ATTR_NAMES.each { |attr_name|
       assert availability.errors[attr_name.to_sym].any?,
         "Should be an error message for :#{attr_name}"
