@@ -20,7 +20,7 @@ class PlayerTest < ActiveSupport::TestCase
 
   def test_raw_validation
     player = Player.new
-    assert !player.valid?, 'Player should not be valid without initialisation parameters'
+    assert_not player.valid?, 'Player should not be valid without initialisation parameters'
     REQ_ATTR_NAMES.each { |attr_name|
       assert player.errors[attr_name.to_sym].any?,
         "Should be an error message for :#{attr_name}"
@@ -45,7 +45,7 @@ class PlayerTest < ActiveSupport::TestCase
       tmp_player = NEW_PLAYER.dup
       tmp_player.delete attr_name.to_sym
       player = Player.new(tmp_player)
-      assert !player.valid?, "Player should be invalid, as @#{attr_name} is invalid"
+      assert_not player.valid?, "Player should be invalid, as @#{attr_name} is invalid"
       assert player.errors[attr_name.to_sym].any?,
         "Should be an error message for :#{attr_name}"
     end
@@ -53,7 +53,7 @@ class PlayerTest < ActiveSupport::TestCase
 
   def test_validates_length_of
     @matijs.password = 'zop'
-    assert !@matijs.valid?, 'Too short password should be invalid'
+    assert_not @matijs.valid?, 'Too short password should be invalid'
     # TODO: Do we need to make this test pass?
     # @matijs.password = ""
     # assert !@matijs.valid?, "Empty password should be invalid before setting"
@@ -74,7 +74,7 @@ class PlayerTest < ActiveSupport::TestCase
     current_player = Player.first
     DUPLICATE_ATTR_NAMES.each do |attr_name|
       player = Player.new(NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name]))
-      assert !player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
+      assert_not player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
       assert player.errors[attr_name.to_sym].any?,
         "Should be an error message for :#{attr_name}"
     end
