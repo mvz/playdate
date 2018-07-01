@@ -30,9 +30,7 @@ module MainHelper
   def can_dates_be_added?
     startdate = Time.zone.today + 1
     enddate = Time.zone.today.next_month.end_of_month
-    startdate.upto(enddate) do |day|
-      return true if [5, 6].include?(day.wday) && !Playdate.find_by(day: day)
-    end
-    false
+    candidates = startdate.upto(enddate).select { |day| [5, 6].include?(day.wday) }
+    Playdate.where(day: candidates).count < candidates.count
   end
 end
