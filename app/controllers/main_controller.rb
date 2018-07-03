@@ -52,11 +52,16 @@ class MainController < ApplicationController
     @max = @stats.map { |_d, s| s[:yes] }.max
   end
 
-  def statistics(dates, players)
-    stats = dates.each_with_object({}) do |pd, h|
+  def statistics(playdates, players)
+    availabilities = Availability.where(playdate_id: playdates, player_id: players)
+
+    stats = playdates.each_with_object({}) do |pd, h|
+      date_avs = availabilities.select { |it| it.playdate_id == pd.id }
+
       stat = Hash.new(0)
       players.each do |p|
-        av = p.availability_for_playdate(pd)
+        av = date_avs.find { |it| it.player_id == p.id } ||
+          p.default_availability_for_playdate(pd)
         s = av.status
         stat[s] += 1
       end
