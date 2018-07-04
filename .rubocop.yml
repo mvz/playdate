@@ -18,6 +18,9 @@ Layout/DotPosition:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
 # Assume the programmer knows how bracketed block syntax works
 Lint/AmbiguousBlockAssociation:
   Enabled: false
