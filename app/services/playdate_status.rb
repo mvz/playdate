@@ -14,7 +14,7 @@ class PlaydateStatus
 
   def statistics
     stats = playdates.each_with_object({}) do |pd, h|
-      date_avs = relevant_availabilities.select { |it| it.playdate_id == pd.id }
+      date_avs = availabilities_for_date(pd)
 
       stat = Hash.new(0)
       players.each do |p|
@@ -23,11 +23,7 @@ class PlaydateStatus
         s = av.status
         stat[s] += 1
       end
-      yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
-      no = stat[Availability::STATUS_NEE]
-      maybe = stat[Availability::STATUS_MISSCHIEN]
-      house = stat[Availability::STATUS_HUIS]
-      h[pd] = { yes: yes, no: no, maybe: maybe, house: house }
+      h[pd] = status_count_to_hash stat
     end
 
     max = stats.map { |_d, s| s[:yes] }.max
@@ -42,9 +38,25 @@ class PlaydateStatus
 
   private
 
+  def availabilities_for_date(playdate)
+    grouped_availabilities[playdate.id] || []
+  end
+
+  def grouped_availabilities
+    @grouped_availabilities = relevant_availabilities.group_by(&:playdate_id)
+  end
+
   def relevant_availabilities
     @relevant_availabilities ||=
       Availability.where(playdate_id: playdates, player_id: players)
+  end
+
+  def status_count_to_hash(stat)
+    yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
+    no = stat[Availability::STATUS_NEE]
+    maybe = stat[Availability::STATUS_MISSCHIEN]
+    house = stat[Availability::STATUS_HUIS]
+    { yes: yes, no: no, maybe: maybe, house: house }
   end
 
   def status_code(status, max, max_has_house, numplayers)
