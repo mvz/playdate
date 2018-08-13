@@ -31,9 +31,12 @@ class MainController < ApplicationController
     headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
     @link = url_for action: 'index'
 
-    @updated_at = @playdates.map { |d|
-      d.availabilities.map(&:updated_at)
-    }.flatten.reject(&:nil?).max
+    playdate_ids = @playdates.map(&:id)
+
+    @updated_at = @players.
+      flat_map(&:availabilities).
+      select { |it| playdate_ids.include? it.playdate_id }.
+      map(&:updated_at).compact.max
 
     @content = render_to_string 'feed_table', layout: false, formats: 'html'
     render layout: false, formats: 'xml'
