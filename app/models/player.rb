@@ -46,8 +46,12 @@ class Player < ApplicationRecord
       each_with_object({}) { |av, h| h[av.playdate.day] = av }
   end
 
+  def availability_for_playdate(playdate)
+    all_availabilities.find { |it| it.playdate_id == playdate.id }
+  end
+
   def current_or_new_availability_for_playdate(playdate)
-    availabilities.find_by(playdate_id: playdate.id) ||
+    availability_for_playdate(playdate) ||
       default_availability_for_playdate(playdate)
   end
 
@@ -59,6 +63,10 @@ class Player < ApplicationRecord
   end
 
   private
+
+  def all_availabilities
+    @all_availabilities = availabilities
+  end
 
   def hash_password(pass, salt)
     Digest::SHA256.hexdigest(pass + salt)
