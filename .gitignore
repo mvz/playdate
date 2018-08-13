@@ -22,3 +22,6 @@
 
 # Ignore coverage data
 /coverage
+
+# Ignore env
+/.env
