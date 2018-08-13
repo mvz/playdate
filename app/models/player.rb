@@ -46,7 +46,7 @@ class Player < ApplicationRecord
       each_with_object({}) { |av, h| h[av.playdate.day] = av }
   end
 
-  def availability_for_playdate(playdate)
+  def current_or_new_availability_for_playdate(playdate)
     availabilities.find_by(playdate_id: playdate.id) ||
       default_availability_for_playdate(playdate)
   end
