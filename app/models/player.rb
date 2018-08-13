@@ -39,13 +39,6 @@ class Player < ApplicationRecord
     password_hash == hash_password(pass, password_salt) or return nil
   end
 
-  def availabilities_by_day
-    # TODO: Deprecated?
-    availabilities.
-      includes(:playdate).
-      each_with_object({}) { |av, h| h[av.playdate.day] = av }
-  end
-
   def availability_for_playdate(playdate)
     all_availabilities.find { |it| it.playdate_id == playdate.id }
   end

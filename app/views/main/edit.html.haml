@@ -8,12 +8,11 @@
         %tr
           %th Datum
           %th Beschikbaarheid
-        - avs = @current_user.availabilities_by_day
         - @playdates.each do |playdate|
           %tr
             %td= h nice_date_display(playdate.day)
             %td
-              = fields_for :availability, avs[playdate.day] do |av_fields|
+              = fields_for :availability, @current_user.availability_for_playdate(playdate) do |av_fields|
                 = av_fields.select 'status', availability_options, {}, index: playdate.id
       %p= submit_tag 'Opslaan'
       %p= link_to 'Terug naar overzicht', action: 'index'
