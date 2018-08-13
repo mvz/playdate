@@ -16,7 +16,7 @@ class MainController < ApplicationController
   def update
     params[:availability].each do |p_id, av_param|
       d = Playdate.find(p_id) or next
-      av = @current_user.availability_for_playdate(d)
+      av = @current_user.current_or_default_availability_for_playdate(d)
       av.status = av_param[:status]
       av.save!
     end
@@ -31,9 +31,12 @@ class MainController < ApplicationController
     headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
     @link = url_for action: 'index'
 
-    @updated_at = @playdates.map { |d|
-      d.availabilities.map(&:updated_at)
-    }.flatten.reject(&:nil?).max
+    playdate_ids = @playdates.map(&:id)
+
+    @updated_at = @players.
+      flat_map(&:availabilities).
+      select { |it| playdate_ids.include? it.playdate_id }.
+      map(&:updated_at).compact.max
 
     @content = render_to_string 'feed_table', layout: false, formats: 'html'
     render layout: false, formats: 'xml'
@@ -46,7 +49,7 @@ class MainController < ApplicationController
   end
 
   def set_overview_fields
-    @players = Player.all
+    @players = Player.all.includes(:availabilities)
     @playdates = relevant_playdates
     @stats = PlaydateStatus.calculate(@playdates, @players)
     @max = @stats.map { |_d, s| s[:yes] }.max

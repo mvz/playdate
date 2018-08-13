@@ -18,10 +18,9 @@
   - @players.each do |player|
     %tr{ class: class_if_current_user(player) }
       %td.player= h player.abbreviation
-      - avs = player.availabilities_by_day
       - @playdates.each do |playdate|
         %td{ class: "playdate #{status_to_class(@stats[playdate])}" }
-          = availability_status_character(avs[playdate.day], player)
+          = availability_status_character(player.availability_for_playdate(playdate), player)
       - if @playdates.empty?
         %td
       %td{ class: "action #{class_if_current_user(player)}" }

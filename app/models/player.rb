@@ -39,15 +39,12 @@ class Player < ApplicationRecord
     password_hash == hash_password(pass, password_salt) or return nil
   end
 
-  def availabilities_by_day
-    # TODO: Deprecated?
-    availabilities.
-      includes(:playdate).
-      each_with_object({}) { |av, h| h[av.playdate.day] = av }
+  def availability_for_playdate(playdate)
+    all_availabilities.find { |it| it.playdate_id == playdate.id }
   end
 
-  def availability_for_playdate(playdate)
-    availabilities.find_by(playdate_id: playdate.id) ||
+  def current_or_default_availability_for_playdate(playdate)
+    availability_for_playdate(playdate) ||
       default_availability_for_playdate(playdate)
   end
 
@@ -59,6 +56,10 @@ class Player < ApplicationRecord
   end
 
   private
+
+  def all_availabilities
+    @all_availabilities = availabilities
+  end
 
   def hash_password(pass, salt)
     Digest::SHA256.hexdigest(pass + salt)

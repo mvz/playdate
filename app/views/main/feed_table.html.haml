@@ -8,11 +8,10 @@
     - @playdates.each do |playdate|
       %td{ width: "#{width}%" }= h nice_date_display(playdate.day)
   - @players.each do |player|
-    - avs = player.availabilities_by_day
     %tr
       %td= h player.abbreviation
       - @playdates.each do |playdate|
-        %td= availability_status_character(avs[playdate.day], player)
+        %td= availability_status_character(player.availability_for_playdate(playdate), player)
   %tr.summary
     %th Optie?
     - @playdates.each do |playdate|
