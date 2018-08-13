@@ -16,7 +16,7 @@ class MainController < ApplicationController
   def update
     params[:availability].each do |p_id, av_param|
       d = Playdate.find(p_id) or next
-      av = @current_user.current_or_new_availability_for_playdate(d)
+      av = @current_user.current_or_default_availability_for_playdate(d)
       av.status = av_param[:status]
       av.save!
     end
