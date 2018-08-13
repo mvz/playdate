@@ -14,12 +14,9 @@ class PlaydateStatus
 
   def statistics
     stats = playdates.each_with_object({}) do |pd, h|
-      date_avs = availabilities_for_date(pd)
-
       stat = Hash.new(0)
       players.each do |p|
-        av = date_avs.find { |it| it.player_id == p.id } ||
-          p.default_availability_for_playdate(pd)
+        av = p.current_or_default_availability_for_playdate(pd)
         s = av.status
         stat[s] += 1
       end
@@ -37,19 +34,6 @@ class PlaydateStatus
   end
 
   private
-
-  def availabilities_for_date(playdate)
-    grouped_availabilities[playdate.id] || []
-  end
-
-  def grouped_availabilities
-    @grouped_availabilities = relevant_availabilities.group_by(&:playdate_id)
-  end
-
-  def relevant_availabilities
-    @relevant_availabilities ||=
-      Availability.where(playdate_id: playdates, player_id: players)
-  end
 
   def status_count_to_hash(stat)
     yes = stat[Availability::STATUS_JA] + stat[Availability::STATUS_HUIS]
