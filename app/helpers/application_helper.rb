@@ -16,6 +16,7 @@ module ApplicationHelper
 
   def errors_for(obj)
     return '' if obj.nil? || obj.errors.empty?
+
     result = content_tag('h3', 'Fout')
     result << content_tag('p', 'Controleer de invoer en probeer het opnieuw')
     list = +''

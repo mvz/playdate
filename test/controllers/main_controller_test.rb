@@ -43,6 +43,7 @@ class MainControllerTest < ActionController::TestCase
     enddate = Time.zone.today.next_month.end_of_month
     startdate.upto(enddate) do |day|
       next unless [5, 6].include?(day.wday)
+
       Playdate.new(day: day).save!
     end
     get :index, params: {}, session: playersession

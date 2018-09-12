@@ -48,10 +48,12 @@ class PlaydateStatus
     if max >= min && status[:yes] == max
       return 3 unless max_has_house
       return 3 if status[:house] > 0
+
       return 2
     end
     return 2 if status[:yes] >= min
     return 0 if status[:no] > (numplayers - min)
+
     1
   end
 

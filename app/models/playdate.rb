@@ -27,6 +27,7 @@ class Playdate < ApplicationRecord
     (start..finish).step(7) do |d|
       nw = today + d
       break if nw >= enddate
+
       unless Playdate.find_by(day: nw)
         Playdate.new(day: nw).save
         count += 1

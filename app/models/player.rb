@@ -24,6 +24,7 @@ class Player < ApplicationRecord
   def password=(pass)
     @password = pass
     return if pass.blank?
+
     self.password_hash = hash_password(pass, SALT)
     self.password_salt = SALT
   end
