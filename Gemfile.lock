@@ -87,7 +87,7 @@ GEM
       minitest (~> 5.0)
       rails (>= 4.1)
     nio4r (2.3.1)
-    nokogiri (1.8.4)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     puma (3.12.0)
     rack (2.0.5)
@@ -187,4 +187,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
-   1.16.4
+   1.16.5
