@@ -25,3 +25,6 @@
 
 # Ignore env
 /.env
+
+# Ignore Bundle lock file
+Gemfile.lock
