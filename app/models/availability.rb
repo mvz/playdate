@@ -17,16 +17,16 @@ class Availability < ApplicationRecord
   # TODO: Encapsulate these into methods
   VALUES = [STATUS_MISSCHIEN, STATUS_NEE, STATUS_JA, STATUS_HUIS].freeze
   LONG_DISPLAY = {
-    STATUS_MISSCHIEN  => 'Misschien',
-    STATUS_JA         => 'Ja',
-    STATUS_NEE        => 'Nee',
-    STATUS_HUIS       => 'Huis'
+    STATUS_MISSCHIEN => 'Misschien',
+    STATUS_JA        => 'Ja',
+    STATUS_NEE       => 'Nee',
+    STATUS_HUIS      => 'Huis'
   }.freeze
   SHORT_DISPLAY = {
-    STATUS_MISSCHIEN  => '?',
-    STATUS_JA         => '+',
-    STATUS_NEE        => '−',
-    STATUS_HUIS       => 'h'
+    STATUS_MISSCHIEN => '?',
+    STATUS_JA        => '+',
+    STATUS_NEE       => '−',
+    STATUS_HUIS      => 'h'
   }.freeze
   def status_character
     # TODO: Deprecate?

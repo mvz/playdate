@@ -8,6 +8,9 @@ AllCops:
 Rails:
   Enabled: true
 
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+
 # RuboCop has no setting to accept how vim aligns parameters.
 Layout/AlignParameters:
   Enabled: false
