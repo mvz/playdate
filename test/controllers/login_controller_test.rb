@@ -19,13 +19,13 @@ class LoginControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to controller: 'session', action: 'new'
     post :update,
-      params: { player: { password: 'slurp', password_confirmation: 'slurp' } },
-      session: playersession
+         params: { player: { password: 'slurp', password_confirmation: 'slurp' } },
+         session: playersession
     assert_response :redirect
     assert_redirected_to controller: 'main', action: 'index'
     post :update,
-      params: { player: { password: 'slu', password_confirmation: 'slurp' } },
-      session: playersession
+         params: { player: { password: 'slu', password_confirmation: 'slurp' } },
+         session: playersession
     assert_response :success
   end
 

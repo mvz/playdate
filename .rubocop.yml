@@ -1,3 +1,5 @@
+require: rubocop-performance
+
 AllCops:
   Exclude:
     - 'tmp/**/*'
@@ -10,10 +12,6 @@ Rails:
 
 Layout/AlignHash:
   EnforcedHashRocketStyle: table
-
-# RuboCop has no setting to accept how vim aligns parameters.
-Layout/AlignParameters:
-  Enabled: false
 
 Layout/DotPosition:
   EnforcedStyle: trailing
