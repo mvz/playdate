@@ -149,8 +149,8 @@ class MainControllerTest < ActionController::TestCase
 
   def test_update
     post :update,
-      params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
-      session: { user_id: players(:robert).id }
+         params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
+         session: { user_id: players(:robert).id }
     assert_response :redirect
     assert_redirected_to controller: 'main', action: 'index'
     assert Availability.count == 4
