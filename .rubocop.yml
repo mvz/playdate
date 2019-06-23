@@ -5,6 +5,7 @@ AllCops:
     - 'tmp/**/*'
     - 'db/schema.rb'
     - 'bin/**/*'
+  TargetRubyVersion: 2.4
   TargetRailsVersion: 5.1
 
 Rails:
