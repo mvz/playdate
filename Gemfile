@@ -14,7 +14,7 @@ gem 'jquery-rails', '~> 4.1'
 
 gem 'dynamic_form'
 gem 'haml'
-gem 'responders', '~> 2.0'
+gem 'responders', '~> 3.0'
 gem 'will_paginate', '~> 3.1.0'
 
 # Use ActiveModel has_secure_password
