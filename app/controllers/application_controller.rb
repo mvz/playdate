@@ -4,21 +4,26 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :load_current_user
+
+  helper_method :current_user
+
   private
 
   def authorize
-    @current_user = current_user
-    @current_user or access_denied_not_logged_in
+    current_user or access_denied_not_logged_in
   end
 
   def authorize_admin
     authorize or return false
-    @current_user.is_admin or access_denied_no_admin
+    current_user.is_admin or access_denied_no_admin
   end
 
-  def current_user
-    Player.find_by(id: session[:user_id])
+  def load_current_user
+    @current_user = Player.find_by(id: session[:user_id])
   end
+
+  attr_reader :current_user
 
   def access_denied_not_logged_in
     flash[:notice] = 'Log eerst in om Playdate te gebruiken.'

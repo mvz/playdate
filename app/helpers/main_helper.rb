@@ -13,7 +13,7 @@ module MainHelper
   end
 
   def class_if_current_user(player)
-    player == @current_user ? 'current' : ''
+    player == current_user ? 'current' : ''
   end
 
   def nice_date_display(date)
