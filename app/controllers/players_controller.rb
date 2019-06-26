@@ -32,7 +32,7 @@ class PlayersController < ApplicationController
   def destroy
     @player = Player.find(params[:id])
 
-    if @player == @current_user
+    if @player == current_user
       flash[:error] = 'Cannot delete yourself'
       redirect_to(players_url)
     else

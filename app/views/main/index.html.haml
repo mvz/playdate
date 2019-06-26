@@ -24,7 +24,7 @@
       - if @playdates.empty?
         %td
       %td{ class: "action #{class_if_current_user(player)}" }
-        = link_to 'Wijzigen', action: 'edit' if player == @current_user
+        = link_to 'Wijzigen', action: 'edit' if player == current_user
   %tr.summary
     %th Optie?
     - @playdates.each do |playdate|
