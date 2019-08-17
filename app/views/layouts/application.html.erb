@@ -3,10 +3,13 @@
   <head>
     <title>Playdate! The Application - <%= controller_name %>: <%= action_name %></title>
     <link href="<%= url_for controller: 'main', action: 'feed', format: 'xml' %>" rel="alternate" title="Atom" type="application/atom+xml">
-    <%= stylesheet_link_tag 'application' %>
-    <%= javascript_include_tag "application", defer: true, async: true %>
     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+
   <body>
     <div id="box" class="wrapper">
       <% if current_user %>

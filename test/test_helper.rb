@@ -3,18 +3,16 @@
 require 'simplecov'
 SimpleCov.start 'rails'
 
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
-require 'rails/test_help'
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
+require "rails/test_help"
 require 'minitest/mock'
 
 ActiveSupport::TestCase.class_eval do
-  ActiveRecord::Migration.check_pending!
+  # Run tests in parallel with specified workers
+  parallelize(workers: :number_of_processors)
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
