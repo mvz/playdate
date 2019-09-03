@@ -38,8 +38,8 @@ class MainController < ApplicationController
       select { |it| playdate_ids.include? it.playdate_id }.
       map(&:updated_at).compact.max
 
-    @content = render_to_string 'feed_table', layout: false, formats: 'html'
-    render layout: false, formats: 'xml'
+    @content = render_to_string 'feed_table', layout: false, formats: [:html]
+    render layout: false
   end
 
   private
