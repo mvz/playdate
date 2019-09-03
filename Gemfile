@@ -13,7 +13,6 @@ gem 'puma', '~> 4.0'
 gem 'jquery-rails', '~> 4.1'
 
 gem 'dynamic_form'
-gem 'haml'
 gem 'responders', '~> 3.0'
 gem 'will_paginate', '~> 3.1.0'
 
