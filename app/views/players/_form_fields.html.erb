@@ -1,0 +1,20 @@
+<label for="player[name]">Naam:</label>
+<%= f.text_field :name %><br/>
+
+<label for="player[full_name]">Volledige naam:</label>
+<%= f.text_field :full_name %><br/>
+
+<label for="player[abbreviation]">Afkorting:</label>
+<%= f.text_field :abbreviation %><br/>
+
+<label for="player[password]">Password:</label>
+<%= f.text_field :password %><br/>
+
+<label for="player[password_confirmation]">Password (nogmaals):</label>
+<%= f.text_field :password_confirmation %><br/>
+
+<label for="player[is_admin]">Is Administrator:</label>
+<%= select :player, :is_admin, [["Nee", false], ["Ja", true]] %><br/>
+
+<label for="player[default_status]">Standaardstatus:</label>
+<%= select :player, :default_status, availability_options %><br/>
