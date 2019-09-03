@@ -1,0 +1,12 @@
+<% content_for :page_title do %>
+  Uitloggen
+<% end %>
+<div class="playdate-form">
+  <fieldset>
+    <legend>Weet je zeker dat je wilt uitloggen?</legend>
+    <%= form_tag do %>
+      <p><%= submit_tag "Ja, log uit" %></p>
+      <p><%= link_to 'Nee, ga terug naar de lijst', controller: 'main', action: 'index' %></p>
+    <% end %>
+  </fieldset>
+</div>
