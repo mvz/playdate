@@ -13,7 +13,7 @@
         </tr>
         <% @playdates.each do |playdate| %>
           <tr>
-            <td><%=h nice_date_display(playdate.day) %></td>
+            <td><%= h nice_date_display(playdate.day) %></td>
             <td>
               <%= fields_for :availability, current_user.availability_for_playdate(playdate) do |av_fields| %>
                 <%= av_fields.select 'status', availability_options, {}, { index: playdate.id } %>

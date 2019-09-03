@@ -7,13 +7,13 @@
   <tr>
     <td width="<%= width %>%"></td>
     <% @playdates.each do |playdate| %>
-      <td width="<%= width %>%"><%=h nice_date_display(playdate.day) %></td>
+      <td width="<%= width %>%"><%= h nice_date_display(playdate.day) %></td>
     <% end %>
   </tr>
 
   <% @players.each do |player| %>
     <tr>
-      <td><%=h player.abbreviation %></td>
+      <td><%= h player.abbreviation %></td>
       <% @playdates.each do |playdate| %>
         <td><%= availability_status_character(player.availability_for_playdate(playdate), player) %></td>
       <% end %>

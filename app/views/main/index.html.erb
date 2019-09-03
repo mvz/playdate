@@ -13,7 +13,7 @@
     <td class="player"></td>
     <% @playdates.each do |playdate| %>
       <td class="playdate <%= status_to_class(@stats[playdate]) %>">
-        <%=h nice_date_display(playdate.day) %>
+        <%= h nice_date_display(playdate.day) %>
       </td>
     <% end %>
     <% if @playdates.empty? %>
@@ -27,7 +27,7 @@
   </tr>
 
   <% @players.each do |player| %>
-    <tr class="<%= class_if_current_user(player)%>">
+    <tr class="<%= class_if_current_user(player) %>">
       <td class="player"><%= h player.abbreviation %></td>
       <% @playdates.each do |playdate| %>
         <td class="playdate <%= status_to_class(@stats[playdate]) %>">
@@ -37,7 +37,7 @@
       <% if @playdates.empty? %>
         <td></td>
       <% end -%>
-      <td class="action <%= class_if_current_user(player)%>">
+      <td class="action <%= class_if_current_user(player) %>">
         <%= link_to 'Wijzigen', action: 'edit' if player == current_user %>
       </td>
     </tr>
