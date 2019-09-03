@@ -1,0 +1,19 @@
+<% content_for :page_title do %>
+  Inloggen in Playdate
+<% end %>
+<div class="playdate-form">
+  <fieldset>
+    <legend>Vul hier je gebruikersnaam en wachtwoord in.</legend>
+    <%= form_tag do %>
+      <p>
+      <label for="name">Naam:</label>
+      <%= text_field_tag :name, params[:name] %>
+      </p>
+      <p>
+      <label for="password">Wachtwoord:</label>
+      <%= password_field_tag :password, params[:password] %>
+      </p>
+      <p><%= submit_tag "Inloggen" %></p>
+    <% end %>
+  </fieldset>
+</div>
