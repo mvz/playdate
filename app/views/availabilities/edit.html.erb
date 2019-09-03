@@ -3,11 +3,11 @@
 <% end -%>
 
 <%= form_for [@playdate, @availability] do %>
-  <p><label>Speler</label><br/>
+  <p><label>Speler</label><br>
   <%= @player.full_name %></p>
-  <p><label>Datum</label><br/>
+  <p><label>Datum</label><br>
   <%= @playdate.day %></p>
-  <p><label for="availability_status">Status</label><br/>
+  <p><label for="availability_status">Status</label><br>
   <%= select('availability', 'status',
              Availability::VALUES.map { |v| [Availability::LONG_DISPLAY[v], v] }) %></p>
 
