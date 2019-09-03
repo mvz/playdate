@@ -1,0 +1,29 @@
+<% width = 100 / (@playdates.length + 1) %>
+<table width="100%">
+  <tr class="head">
+    <th>Speler</th>
+    <th colspan="<%= @playdates.length %>">Datum</th>
+  </tr>
+  <tr>
+    <td width="<%= width %>%"></td>
+    <% @playdates.each do |playdate| %>
+      <td width="<%= width %>%"><%=h nice_date_display(playdate.day) %></td>
+    <% end %>
+  </tr>
+
+  <% @players.each do |player| %>
+    <tr>
+      <td><%=h player.abbreviation %></td>
+      <% @playdates.each do |playdate| %>
+        <td><%= availability_status_character(player.availability_for_playdate(playdate), player) %></td>
+      <% end %>
+    </tr>
+  <% end %>
+
+  <tr class="summary">
+    <th>Optie?</th>
+    <% @playdates.each do |playdate| %>
+      <td><%= status_to_text(@stats[playdate]) %></td>
+    <% end %>
+  </tr>
+</table>
