@@ -1,0 +1,14 @@
+<% content_for :page_title do %>
+  Speler bewerken
+<% end %>
+
+<%= error_messages_for :player %>
+
+<% form_for(@player) do |f| %>
+  <p>
+  <%= render 'form_fields', f: f %>
+  <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Tonen', @player %> | <%= link_to 'Terug', players_path %>

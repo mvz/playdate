@@ -1,0 +1,19 @@
+<% content_for :page_title do -%>
+  Editing availability
+<% end -%>
+
+<%= form_for [@playdate, @availability] do %>
+  <p><label>Speler</label><br>
+  <%= @player.full_name %></p>
+  <p><label>Datum</label><br>
+  <%= @playdate.day %></p>
+  <p><label for="availability_status">Status</label><br>
+  <%= select('availability', 'status',
+             Availability::VALUES.map { |v| [Availability::LONG_DISPLAY[v], v] }) %></p>
+
+  <%= submit_tag 'Save' %>
+<% end %>
+
+<%= button_to('Destroy', { action: 'destroy', id: @availability },
+              data: { confirm: 'Are you sure you want to destroy this availability?' }) %>
+<%= link_to 'Back to list', playdate_path(@playdate) %>

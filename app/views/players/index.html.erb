@@ -1,0 +1,37 @@
+<% content_for :page_title do %>
+  Spelers
+<% end %>
+
+<table>
+  <tr>
+    <th>Login</th>
+    <th>Volledige naam</th>
+    <th>Afkorting</th>
+    <th>Admin?</th>
+    <th>Standaardbeschikbaarheid</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @players.each do |player| %>
+    <tr>
+      <td><%= h player.name %></td>
+      <td><%= h player.full_name %></td>
+      <td><%= h player.abbreviation %></td>
+      <td><%= h player.is_admin %></td>
+      <td><%= h status_display(player.default_status) %></td>
+      <td class="action">
+        <%= link_to 'Show', player %>
+      </td>
+      <td class="action">
+        <% unless player == current_user %>
+          <%= link_to 'Destroy', player, data: { confirm: 'Are you sure?' }, method: :delete %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @players %>
+
+<%= link_to 'New player', new_player_path %>

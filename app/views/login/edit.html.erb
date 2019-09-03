@@ -1,0 +1,17 @@
+<% content_for :page_title do -%>
+  Wachtwoord wijzigen
+<% end -%>
+<%= errors_for(@player) %>
+<div class="playdate-form">
+  <fieldset>
+    <legend>Vul hier je nieuwe wachtwoord in.</legend>
+    <%= form_tag do -%>
+      <p><label for="player_password">Wachtwoord:</label>
+      <%= password_field :player, :password %></p>
+      <p><label for="player_password_confirmation">Wachtwoord (bevestigen):</label>
+      <%= password_field :player, :password_confirmation %></p>
+      <p><%= submit_tag "Wachtwoord wijzigen" %></p>
+      <p><%= link_to 'Terug naar overzicht', controller: 'main', action: 'index' %></p>
+    <% end -%>
+  </fieldset>
+</div>

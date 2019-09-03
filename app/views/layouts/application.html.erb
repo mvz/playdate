@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Playdate! The Application - <%= controller_name %>: <%= action_name %></title>
+    <link href="<%= url_for controller: 'main', action: 'feed', format: 'xml' %>" rel="alternate" title="Atom" type="application/atom+xml">
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag "application", defer: true, async: true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="box" class="wrapper">
+      <% if current_user %>
+        <p class="logout">Ingelogd als <%= h current_user.full_name %>.
+        <%= link_to 'Uitloggen', { controller: 'session', action: 'destroy' }, method: :post %></p>
+      <% end %>
+
+      <h1><%= yield :page_title %></h1>
+
+      <div class="content">
+        <%= render partial: 'shared/showflash' %>
+        <%= yield %>
+        <% if current_user && current_user.is_admin? %>
+          <p>
+          <%= link_to 'Speeldagen', controller: 'playdates', action: 'index' %>
+          <%= link_to 'Spelers', controller: 'players', action: 'index' %>
+          <%= link_to 'Hoofd', controller: 'main', action: 'index' %>
+          </p>
+        <% end %>
+      </div>
+      <% if current_user %>
+        <p class="logout"><%= link_to 'Wachtwoord wijzigen', controller: 'login', action: 'edit' %></p>
+      <% end %>
+    </div>
+  </body>
+</html>

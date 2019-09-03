@@ -1,0 +1,56 @@
+<% content_for :page_title do %>
+  Playdate! The Application
+<% end %>
+
+<table class="playdate-overview">
+  <tr>
+    <th class="player">Speler</th>
+    <th class="playdate" colspan="<%= [@playdates.length, 1].max %>">Datum</th>
+    <th class="action"></th>
+  </tr>
+
+  <tr>
+    <td class="player"></td>
+    <% @playdates.each do |playdate| %>
+      <td class="playdate <%= status_to_class(@stats[playdate]) %>">
+        <%= h nice_date_display(playdate.day) %>
+      </td>
+    <% end %>
+    <% if @playdates.empty? %>
+      <td class="playdate" nowrap>Geen relevante speeldata gedefinieerd.</td>
+    <% end %>
+    <td class="action">
+      <% if can_dates_be_added? then -%>
+        <%= link_to 'Meer>>', { controller: 'range', action: 'create' }, method: :post %>
+      <% end -%>
+    </td>
+  </tr>
+
+  <% @players.each do |player| %>
+    <tr class="<%= class_if_current_user(player) %>">
+      <td class="player"><%= h player.abbreviation %></td>
+      <% @playdates.each do |playdate| %>
+        <td class="playdate <%= status_to_class(@stats[playdate]) %>">
+          <%= availability_status_character(player.availability_for_playdate(playdate), player) %>
+        </td>
+      <% end -%>
+      <% if @playdates.empty? %>
+        <td></td>
+      <% end -%>
+      <td class="action <%= class_if_current_user(player) %>">
+        <%= link_to 'Wijzigen', action: 'edit' if player == current_user %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr class="summary">
+    <th>Optie?</th>
+    <% @playdates.each do |playdate| %>
+      <td><%= status_to_text(@stats[playdate]) %></td>
+    <% end %>
+    <% if @playdates.empty? %>
+      <td></td>
+    <% end %>
+    <td></td>
+  </tr>
+</table>

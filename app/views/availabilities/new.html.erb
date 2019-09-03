@@ -1,0 +1,24 @@
+<% content_for :page_title do %>
+  New availability
+<% end %>
+
+<div class="content">
+  <%= form_for [@playdate, @availability] do %>
+    <%= error_messages_for 'availability' %>
+
+    <p><label>Datum</label><br>
+    <%= @playdate.day %></p>
+
+    <p><label for="availability_player">Speler</label><br>
+    <%= select('availability', 'player_id',
+               regular_players.map { |p| [p.name, p.id] }) %></p>
+
+    <p><label for="availability_status">Status</label><br>
+    <%= select('availability', 'status',
+               Availability::VALUES.map { |v| [Availability::LONG_DISPLAY[v], v] }) %></p>
+
+    <%= submit_tag 'Save' %>
+  <% end %>
+
+  <%= link_to 'Back to list', playdate_path(@playdate) %>
+</div>
