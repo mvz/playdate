@@ -47,7 +47,7 @@ group :development do
 end
 
 gem 'blind', group: :test
-gem 'minitest-spec-rails', '~> 5.3', group: :test
+gem 'minitest-spec-rails', '~> 6.0', group: :test
 gem 'simplecov', group: :test, require: false
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
