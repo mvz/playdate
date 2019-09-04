@@ -20,6 +20,7 @@ Layout/AlignHash:
 Layout/DotPosition:
   EnforcedStyle: trailing
 
+# Looks nicer
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: same_line
 
@@ -48,8 +49,8 @@ Rails/CreateTableWithTimestamps:
 Style/AndOr:
   EnforcedStyle: conditionals
 
-# Disable for strftime/strptime
-Style/FormatStringToken:
+# Not common in Rails projects
+Style/Documentation:
   Enabled: false
 
 # Prefer maths
@@ -70,9 +71,5 @@ Style/SymbolArray:
 
 Style/RedundantReturn:
   AllowMultipleReturnValues: true
-
-# Not common in Rails projects
-Style/Documentation:
-  Enabled: false
 
 inherit_from: .rubocop_todo.yml
