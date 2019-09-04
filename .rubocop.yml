@@ -19,6 +19,9 @@ Layout/AlignHash:
 Layout/DotPosition:
   EnforcedStyle: trailing
 
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
