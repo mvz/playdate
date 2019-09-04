@@ -7,8 +7,9 @@ AllCops:
     - 'tmp/**/*'
     - 'db/schema.rb'
     - 'bin/**/*'
-  TargetRubyVersion: 2.4
-  TargetRailsVersion: 5.1
+    - 'node_modules/**/*'
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 6.0
 
 Rails:
   Enabled: true
