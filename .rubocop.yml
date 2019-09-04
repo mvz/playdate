@@ -48,9 +48,6 @@ Rails/CreateTableWithTimestamps:
 Style/AndOr:
   EnforcedStyle: conditionals
 
-Style/BlockDelimiters:
-  Enabled: false
-
 # Disable for strftime/strptime
 Style/FormatStringToken:
   Enabled: false

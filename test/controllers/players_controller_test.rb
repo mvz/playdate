@@ -78,13 +78,13 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   describe '#create' do
-    let(:player_params) {
+    let(:player_params) do
       { name: 'new',
         full_name: 'New Name',
         abbreviation: 'nn',
         password: 'test123',
         password_confirmation: 'test123' }
-    }
+    end
 
     before do
       @player_count = Player.all.length
@@ -137,13 +137,13 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   describe '#update' do
-    let(:player_params) {
+    let(:player_params) do
       { name: 'new',
         full_name: 'New Name',
         abbreviation: 'nn',
         is_admin: 'true',
         default_status: Availability::STATUS_JA.to_s }
-    }
+    end
     let(:expected_params) do
       ActionController::Parameters.new(player_params).permit!
     end

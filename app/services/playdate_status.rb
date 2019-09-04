@@ -24,9 +24,9 @@ class PlaydateStatus
     end
 
     max = stats.map { |_d, s| s[:yes] }.max
-    max_has_house = !stats.find { |_d, s|
+    max_has_house = !stats.find do |_d, s|
       s[:yes] == max && s[:house] > 0
-    }.nil?
+    end.nil?
 
     stats.each_value do |s|
       s[:code] = status_code(s, max, max_has_house, numplayers)

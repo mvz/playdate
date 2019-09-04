@@ -10,10 +10,10 @@ class PlaydateTest < ActiveSupport::TestCase
   def test_raw_validation
     dt = Playdate.new
     assert_not dt.valid?, 'Playdate should not be valid without initialisation parameters'
-    REQ_ATTR_NAMES.each { |attr_name|
+    REQ_ATTR_NAMES.each do |attr_name|
       assert dt.errors[attr_name.to_sym].any?,
              "Should be an error message for :#{attr_name}"
-    }
+    end
   end
 
   def test_fixtures_valid
