@@ -50,7 +50,4 @@ gem 'blind', group: :test
 gem 'minitest-spec-rails', '~> 6.0', group: :test
 gem 'simplecov', group: :test, require: false
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
 gem 'rails-controller-testing', '~> 1.0', group: :test
