@@ -13,7 +13,7 @@ class PlaydateStatusTest < ActiveSupport::TestCase
       end
 
       result = PlaydateStatus.calculate(playdates, players)
-      result[playdates(:today)][:code].must_equal 0
+      _(result[playdates(:today)][:code]).must_equal 0
     end
   end
 end

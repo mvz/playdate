@@ -92,7 +92,7 @@ class PlayersControllerTest < ActionController::TestCase
     end
 
     it 'assigns to @player' do
-      assigns(:player).wont_be_nil
+      _(assigns(:player)).wont_be_nil
     end
 
     it 'redirects to the player list' do
