@@ -33,10 +33,10 @@ class MainController < ApplicationController
 
     playdate_ids = @playdates.map(&:id)
 
-    @updated_at = @players.
-      flat_map(&:availabilities).
-      select { |it| playdate_ids.include? it.playdate_id }.
-      map(&:updated_at).compact.max
+    @updated_at = @players
+      .flat_map(&:availabilities)
+      .select { |it| playdate_ids.include? it.playdate_id }
+      .map(&:updated_at).compact.max
 
     @content = render_to_string "feed_table", layout: false, formats: [:html]
     render layout: false

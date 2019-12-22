@@ -57,8 +57,8 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_select "form[action=?] input[value='patch']", playdate_availability_path(1, 1)
 
     # Unknown id combo
-    _(proc { get "edit", params: { playdate_id: 2, id: 1 }, session: adminsession }).
-      must_raise ActiveRecord::RecordNotFound
+    _(proc { get "edit", params: { playdate_id: 2, id: 1 }, session: adminsession })
+      .must_raise ActiveRecord::RecordNotFound
   end
 
   # Update: Edit, then return to list of availabilities for playdate.
