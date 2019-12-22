@@ -2,7 +2,7 @@
 
 module MainHelper
   STATUS_CLASSES = %w(bad neutral option best).freeze
-  STATUS_TEXTS = ['Nee', '', 'Ja', 'Beste'].freeze # "Misschien" for "" ?
+  STATUS_TEXTS = ["Nee", "", "Ja", "Beste"].freeze # "Misschien" for "" ?
 
   def status_to_class(status)
     STATUS_CLASSES[status[:code]]
@@ -13,7 +13,7 @@ module MainHelper
   end
 
   def class_if_current_user(player)
-    player == current_user ? 'current' : ''
+    player == current_user ? "current" : ""
   end
 
   def nice_date_display(date)
@@ -24,9 +24,9 @@ module MainHelper
     return Availability::SHORT_DISPLAY[availability.status] unless availability.nil?
 
     s = player.default_status || Availability::STATUS_MISSCHIEN
-    return '' if s == Availability::STATUS_MISSCHIEN
+    return "" if s == Availability::STATUS_MISSCHIEN
 
-    '(' + Availability::SHORT_DISPLAY[s] + ')'
+    "(" + Availability::SHORT_DISPLAY[s] + ")"
   end
 
   def can_dates_be_added?

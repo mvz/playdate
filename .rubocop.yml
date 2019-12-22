@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - rubocop-performance
   - rubocop-rails
@@ -14,28 +16,38 @@ AllCops:
 Rails:
   Enabled: true
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
 
-Layout/DotPosition:
-  EnforcedStyle: trailing
+# Require lines to fit in pull requests.
+Layout/LineLength:
+  Max: 92
 
-# Looks nicer
+# Don't force lonely closing parentheses
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: same_line
 
+# Multi-line method calls should be simply indented. Aligning them makes it
+# even harder to keep a sane line length.
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+# Multi-line assignment should be simply indented. Aligning them makes it even
+# harder to keep a sane line length.
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+
+# Force consistent spacing independent of block contents
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyleForEmptyBraces: space
 
 # Assume the programmer knows how bracketed block syntax works
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 
-Metrics/LineLength:
-  Max: 92
+# Allow if (foo = get_foo) style
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: true
 
 # Timestamps are added in migration 007 and we can't change these migrations
 # after the fact.
@@ -45,7 +57,7 @@ Rails/CreateTableWithTimestamps:
     - 'db/migrate/002_create_playdates.rb'
     - 'db/migrate/003_create_availabilities.rb'
 
-# Support use of and and or for control flow.
+# Allow and/or for control flow only
 Style/AndOr:
   EnforcedStyle: conditionals
 
@@ -62,14 +74,14 @@ Style/PercentLiteralDelimiters:
     '%W': ()
     '%w': ()
 
-Style/SignalException:
-  EnforcedStyle: only_raise
+# Allow explicit return with multiple return values
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+# Do not commit to use of interpolation
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
 
 # Prefer symbols to look like symbols
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-Style/RedundantReturn:
-  AllowMultipleReturnValues: true
-
-inherit_from: .rubocop_todo.yml

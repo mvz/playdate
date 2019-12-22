@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class MainControllerTest < ActionController::TestCase
   render_views!
@@ -10,7 +10,7 @@ class MainControllerTest < ActionController::TestCase
     [:index, :edit, :update].each do |a|
       [:get, :post].each do |m|
         method(m).call(a, params: {}, session: {})
-        assert_redirected_to controller: 'session', action: 'new'
+        assert_redirected_to controller: "session", action: "new"
       end
     end
   end
@@ -18,20 +18,20 @@ class MainControllerTest < ActionController::TestCase
   def test_index_as_user
     get :index, params: {}, session: playersession
     assert_response :success
-    assert_template 'index'
+    assert_template "index"
     assert_not_nil assigns(:playdates)
     assert_equal [playdates(:today), playdates(:tomorrow)], assigns(:playdates)
     assert_not_nil assigns(:stats)
     assert_select 'a[href="/more"]'
     assert_select 'a[href="/playdates"]', false
 
-    assert_select 'h1', 'Playdate! The Application'
+    assert_select "h1", "Playdate! The Application"
   end
 
   def test_index_as_admin
     get :index, params: {}, session: adminsession
     assert_response :success
-    assert_template 'index'
+    assert_template "index"
     assert_not_nil assigns(:playdates)
     assert_not_nil assigns(:stats)
     assert_select 'a[href="/playdates"]'
@@ -60,13 +60,13 @@ class MainControllerTest < ActionController::TestCase
 
     get :index, params: {}, session: playersession
 
-    assert_select 'tr.summary td:first-of-type', 'Nee'
+    assert_select "tr.summary td:first-of-type", "Nee"
   end
 
   def test_index_shows_empty_for_neutral_day
     get :index, params: {}, session: playersession
 
-    assert_select 'tr.summary td:first-of-type', ''
+    assert_select "tr.summary td:first-of-type", ""
   end
 
   def test_index_shows_best_for_only_good_day
@@ -79,7 +79,7 @@ class MainControllerTest < ActionController::TestCase
 
     get :index, params: {}, session: playersession
 
-    assert_select 'tr.summary td:first-of-type', 'Beste'
+    assert_select "tr.summary td:first-of-type", "Beste"
   end
 
   def test_index_both_days_good_but_first_is_best
@@ -100,8 +100,8 @@ class MainControllerTest < ActionController::TestCase
 
     get :index, params: {}, session: playersession
 
-    assert_select 'tr.summary td:nth-of-type(1)', 'Beste'
-    assert_select 'tr.summary td:nth-of-type(2)', 'Ja'
+    assert_select "tr.summary td:nth-of-type(1)", "Beste"
+    assert_select "tr.summary td:nth-of-type(2)", "Ja"
   end
 
   def test_index_with_house_better_than_without
@@ -125,26 +125,26 @@ class MainControllerTest < ActionController::TestCase
 
     get :index, params: {}, session: playersession
 
-    assert_select 'tr.summary td:nth-of-type(1)', 'Ja'
-    assert_select 'tr.summary td:nth-of-type(2)', 'Beste'
+    assert_select "tr.summary td:nth-of-type(1)", "Ja"
+    assert_select "tr.summary td:nth-of-type(2)", "Beste"
   end
 
   def test_edit
     get :edit, params: {}, session: playersession
     assert_response :success
-    assert_template 'edit'
+    assert_template "edit"
     assert_not_nil assigns(:playdates)
     assert_equal 2, assigns(:playdates).count
-    assert_select 'select', assigns(:playdates).count
-    assert_select 'select' do |elements|
+    assert_select "select", assigns(:playdates).count
+    assert_select "select" do |elements|
       elements.each do |element|
-        assert_select element, 'option', 'Ja'
-        assert_select element, 'option', 'Nee'
-        assert_select element, 'option', 'Misschien'
-        assert_select element, 'option', 'Huis'
+        assert_select element, "option", "Ja"
+        assert_select element, "option", "Nee"
+        assert_select element, "option", "Misschien"
+        assert_select element, "option", "Huis"
       end
     end
-    assert_select 'h1', 'Beschikbaarheid bewerken'
+    assert_select "h1", "Beschikbaarheid bewerken"
   end
 
   def test_update
@@ -152,27 +152,27 @@ class MainControllerTest < ActionController::TestCase
          params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
          session: { user_id: players(:robert).id }
     assert_response :redirect
-    assert_redirected_to controller: 'main', action: 'index'
+    assert_redirected_to controller: "main", action: "index"
     assert Availability.count == 4
     newavs = players(:robert).availabilities.sort_by(&:playdate_id)
     assert newavs.map { |a| [a.playdate_id, a.status] }.flatten == [1, 2, 2, 3]
   end
 
   def test_feed
-    get :feed, params: { format: 'xml' }, session: {}
+    get :feed, params: { format: "xml" }, session: {}
     assert_response :success
-    assert_template 'feed'
-    assert_template 'feed_table'
+    assert_template "feed"
+    assert_template "feed_table"
     assert_not_nil assigns(:playdates)
     assert_not_nil assigns(:link)
     assert_nil assigns(:updated_at)
     assert_nil assigns(:date)
 
-    av = playdates(:tomorrow).availabilities.
-      build(player_id: players(:robert).id, status: 1)
+    av = playdates(:tomorrow).availabilities
+      .build(player_id: players(:robert).id, status: 1)
     av.save!
 
-    get :feed, params: { format: 'xml' }, session: {}
+    get :feed, params: { format: "xml" }, session: {}
     assert_response :success
     assert_equal assigns(:updated_at).to_s, av.updated_at.to_s
     assert_not_nil assigns(:stats)

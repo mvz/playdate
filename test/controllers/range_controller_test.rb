@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class RangeControllerTest < ActionController::TestCase
   render_views!
 
   def test_authorization
     get :new, params: {}, session: {}
-    assert_redirected_to controller: 'session', action: 'new'
+    assert_redirected_to controller: "session", action: "new"
     post :create, params: {}, session: {}
-    assert_redirected_to controller: 'session', action: 'new'
+    assert_redirected_to controller: "session", action: "new"
   end
 
   def test_new
     oldcount = Playdate.count
     get :new, params: {}, session: playersession
     assert_response :success
-    assert_template 'new'
-    assert_select 'form'
+    assert_template "new"
+    assert_select "form"
     assert_equal Playdate.count, oldcount
-    assert_select 'h1', 'Speeldagen toevoegen'
+    assert_select "h1", "Speeldagen toevoegen"
   end
 
   # FIXME: Use fixed dates rather than relying on logic based on the current
@@ -29,7 +29,7 @@ class RangeControllerTest < ActionController::TestCase
     oldcount = Playdate.count
     post :create, params: {}, session: playersession
     assert_response :redirect
-    assert_redirected_to controller: 'main', action: 'index'
+    assert_redirected_to controller: "main", action: "index"
     assert_operator Playdate.count, :>, oldcount + 1
     assert_operator Playdate.count, :<=, oldcount + 12
     startdate = Time.zone.today + 1

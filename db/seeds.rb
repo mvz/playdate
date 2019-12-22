@@ -10,8 +10,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-admin = Player.create(name: 'admin',
-                      password: 'trundle',
-                      password_confirmation: 'trundle',
+admin = Player.create(name: "admin",
+                      password: "trundle",
+                      password_confirmation: "trundle",
                       is_admin: true)
-admin.valid? or raise 'No user created?'
+admin.valid? or raise "No user created?"
