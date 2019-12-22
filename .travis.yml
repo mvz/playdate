@@ -1,5 +1,7 @@
-sudo: false
 language: ruby
+
+dist: xenial
+
 cache:
   bundler: true
   directories:
