@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class AvailabilityTest < ActiveSupport::TestCase
   REQ_ATTR_NAMES = %w(player playdate).freeze
@@ -38,12 +38,12 @@ class AvailabilityTest < ActiveSupport::TestCase
   end
 
   def test_status_character
-    assert_equal '+', availabilities(:onfriday).status_character
+    assert_equal "+", availabilities(:onfriday).status_character
     @onsaturday = availabilities(:onsaturday)
-    assert_equal 'h', @onsaturday.status_character
+    assert_equal "h", @onsaturday.status_character
     @onsaturday.status = Availability::STATUS_NEE
-    assert_equal '−', @onsaturday.status_character
+    assert_equal "−", @onsaturday.status_character
     @onsaturday.status = Availability::STATUS_MISSCHIEN
-    assert_equal '?', @onsaturday.status_character
+    assert_equal "?", @onsaturday.status_character
   end
 end

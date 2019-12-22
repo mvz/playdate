@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'digest/sha2'
+require "digest/sha2"
 
 class Player < ApplicationRecord
   has_many :availabilities, dependent: :destroy
@@ -15,9 +15,9 @@ class Player < ApplicationRecord
                                        user.password_hash.nil? or !user.password.to_s.empty?
                                      } }
 
-  SALT = 'change this to your own salt'
+  SALT = "change this to your own salt"
 
-  default_scope { order('abbreviation') }
+  default_scope { order("abbreviation") }
 
   attr_reader :password
 

@@ -20,16 +20,16 @@ class MainController < ApplicationController
       av.status = av_param[:status]
       av.save!
     end
-    flash[:notice] = 'Wijzigingen opgeslagen.'
-    redirect_to action: 'index'
+    flash[:notice] = "Wijzigingen opgeslagen."
+    redirect_to action: "index"
   end
 
   def feed
     set_overview_fields
 
-    @feed_title = 'Playdate! The Application'
-    headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
-    @link = url_for action: 'index'
+    @feed_title = "Playdate! The Application"
+    headers["Content-Type"] = "application/atom+xml; charset=utf-8"
+    @link = url_for action: "index"
 
     playdate_ids = @playdates.map(&:id)
 
@@ -38,7 +38,7 @@ class MainController < ApplicationController
       select { |it| playdate_ids.include? it.playdate_id }.
       map(&:updated_at).compact.max
 
-    @content = render_to_string 'feed_table', layout: false, formats: [:html]
+    @content = render_to_string "feed_table", layout: false, formats: [:html]
     render layout: false
   end
 
