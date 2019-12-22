@@ -9,6 +9,7 @@ cache:
   yarn: true
 
 before_script:
+  - nvm install 10
   - yarn install
 
 rvm:
