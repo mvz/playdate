@@ -16,8 +16,12 @@ AllCops:
 Rails:
   Enabled: true
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
+
+# Require lines to fit in pull requests.
+Layout/LineLength:
+  Max: 92
 
 # Don't force lonely closing parentheses
 Layout/MultilineMethodCallBraceLayout:
@@ -44,10 +48,6 @@ Lint/AmbiguousBlockAssociation:
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
-
-# Require lines to fit in pull requests.
-Metrics/LineLength:
-  Max: 92
 
 # Timestamps are added in migration 007 and we can't change these migrations
 # after the fact.
