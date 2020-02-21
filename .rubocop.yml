@@ -19,7 +19,7 @@ Rails:
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
 
-# Require lines to fit in pull requests.
+# Be lenient with line length
 Layout/LineLength:
   Max: 92
 
@@ -49,26 +49,28 @@ Lint/AmbiguousBlockAssociation:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
-# Timestamps are added in migration 007 and we can't change these migrations
-# after the fact.
-Rails/CreateTableWithTimestamps:
-  Exclude:
-    - 'db/migrate/001_create_players.rb'
-    - 'db/migrate/002_create_playdates.rb'
-    - 'db/migrate/003_create_availabilities.rb'
-
 # Allow and/or for control flow only
 Style/AndOr:
   EnforcedStyle: conditionals
 
-# Not common in Rails projects
-Style/Documentation:
-  Enabled: false
+# Require at least two dependent lines before suggesting a guard clause
+Style/GuardClause:
+  MinBodyLength: 2
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
 
 # Prefer maths
 Style/NumericPredicate:
   Enabled: false
 
+# Use older RuboCop default
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%W': ()
@@ -85,3 +87,17 @@ Style/StringLiterals:
 # Prefer symbols to look like symbols
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+# Project-specific configuration goes here.
+
+# Not common in Rails projects
+Style/Documentation:
+  Enabled: false
+
+# Timestamps are added in migration 007 and we can't change these migrations
+# after the fact.
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - 'db/migrate/001_create_players.rb'
+    - 'db/migrate/002_create_playdates.rb'
+    - 'db/migrate/003_create_availabilities.rb'
