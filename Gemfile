@@ -19,7 +19,7 @@ gem "jquery-rails", "~> 4.1"
 
 gem "dynamic_form"
 gem "responders", "~> 3.0"
-gem "will_paginate", "~> 3.2.0"
+gem "will_paginate", "~> 3.3.0"
 
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
