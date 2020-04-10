@@ -49,6 +49,12 @@ Lint/AmbiguousBlockAssociation:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
 # Allow and/or for control flow only
 Style/AndOr:
   EnforcedStyle: conditionals
