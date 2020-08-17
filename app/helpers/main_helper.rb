@@ -26,7 +26,7 @@ module MainHelper
     s = player.default_status || Availability::STATUS_MISSCHIEN
     return "" if s == Availability::STATUS_MISSCHIEN
 
-    "(" + Availability::SHORT_DISPLAY[s] + ")"
+    "(#{Availability::SHORT_DISPLAY[s]})"
   end
 
   def can_dates_be_added?
