@@ -17,6 +17,10 @@ AllCops:
 Rails:
   Enabled: true
 
+# Make BeginEndAlignment behavior match EndAlignment
+Layout/BeginEndAlignment:
+  EnforcedStyleAlignWith: begin
+
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
 
