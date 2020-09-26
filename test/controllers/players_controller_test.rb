@@ -6,12 +6,10 @@ class PlayersControllerTest < ActionController::TestCase
   let(:adminsession) { { user_id: players(:admin).id } }
 
   describe "when not logged in" do
-    [:create, :destroy, :update].each do |a|
-      [:get, :post].each do |m|
-        it "requires login for #{m} #{a}" do
-          send m, a, params: { id: 1 }
-          assert_redirected_to login_path
-        end
+    [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
+      it "requires login for #{m} #{a}" do
+        send m, a, params: { id: 1 }
+        assert_redirected_to login_path
       end
     end
   end
@@ -19,12 +17,10 @@ class PlayersControllerTest < ActionController::TestCase
   describe "when logged in as a regular player" do
     let(:playersession) { { user_id: players(:matijs).id } }
 
-    [:create, :destroy, :update].each do |a|
-      [:get, :post].each do |m|
-        it "denies access for #{m} #{a}" do
-          send m, a, params: { id: 1 }, session: playersession
-          assert_redirected_to root_path
-        end
+    [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
+      it "denies access for #{m} #{a}" do
+        send m, a, params: { id: 1 }, session: playersession
+        assert_redirected_to root_path
       end
     end
   end
