@@ -39,7 +39,7 @@ class RangeControllerTest < ActionController::TestCase
                 Time.zone.today.next_month.end_of_month
               end
     (startdate + 1).upto(enddate) do |day|
-      if [5, 6].include?(day.wday)
+      if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
         assert_not_nil Playdate.find_by(day: day)
       else
         assert_nil Playdate.find_by(day: day)

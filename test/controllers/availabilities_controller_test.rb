@@ -9,18 +9,22 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_redirected_to controller: "playdates", action: "show", id: id.to_s
   end
 
-  def test_authorization
-    playersession = { user_id: players(:matijs).id }
-    [
-      [{}, "session", "new"],
-      [playersession, "main", "index"]
-    ].each do |session, controller, action|
-      [:destroy, :create, :update, :edit, :new].each do |a|
-        [:get, :post].each do |m|
-          method(m).call(a, params: { playdate_id: 1, id: 1 }, session: session)
-          assert_redirected_to(controller: controller,
-                               action: action)
-        end
+  describe "when not logged in" do
+    [:destroy, :create, :update, :edit, :new].product([:get, :post]) do |(a, m)|
+      it "requires login for #{m} #{a}" do
+        send m, a, params: { playdate_id: 1, id: 1 }
+        assert_redirected_to login_path
+      end
+    end
+  end
+
+  describe "when logged in as a regular player" do
+    let(:playersession) { { user_id: players(:matijs).id } }
+
+    [:destroy, :create, :update, :edit, :new].product([:get, :post]) do |(a, m)|
+      it "denies access for #{m} #{a}" do
+        send m, a, params: { playdate_id: 1, id: 1 }, session: playersession
+        assert_redirected_to root_path
       end
     end
   end

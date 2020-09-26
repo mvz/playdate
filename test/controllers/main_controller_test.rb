@@ -7,11 +7,9 @@ class MainControllerTest < ActionController::TestCase
   MainController::MIN_PLAYERS = 2
 
   def test_authorization
-    [:index, :edit, :update].each do |a|
-      [:get, :post].each do |m|
-        method(m).call(a, params: {}, session: {})
-        assert_redirected_to controller: "session", action: "new"
-      end
+    [:index, :edit, :update].product([:get, :post]) do |(a, m)|
+      method(m).call(a, params: {}, session: {})
+      assert_redirected_to controller: "session", action: "new"
     end
   end
 
@@ -42,7 +40,7 @@ class MainControllerTest < ActionController::TestCase
     startdate = Time.zone.today + 2
     enddate = Time.zone.today.next_month.end_of_month
     startdate.upto(enddate) do |day|
-      next unless [5, 6].include?(day.wday)
+      next unless MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
 
       Playdate.new(day: day).save!
     end
@@ -83,20 +81,18 @@ class MainControllerTest < ActionController::TestCase
   end
 
   def test_index_both_days_good_but_first_is_best
-    [:matijs, :robert].each do |p|
-      [:today, :tomorrow].each do |d|
-        players(p).availabilities.build.tap do |av|
-          av.playdate = playdates(d)
-          av.status = Availability::STATUS_JA
-        end.save!
-      end
+    [:matijs, :robert].product([:today, :tomorrow]) do |(p, d)|
+      av = players(p).availabilities.build
+      av.playdate = playdates(d)
+      av.status = Availability::STATUS_JA
+      av.save!
     end
 
     # today is best, tomorrow is good
-    players(:admin).availabilities.build.tap do |av|
-      av.playdate = playdates(:today)
-      av.status = Availability::STATUS_JA
-    end.save!
+    av = players(:admin).availabilities.build
+    av.playdate = playdates(:today)
+    av.status = Availability::STATUS_JA
+    av.save!
 
     get :index, params: {}, session: playersession
 
