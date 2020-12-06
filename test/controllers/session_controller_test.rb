@@ -41,6 +41,8 @@ class SessionControllerTest < ActionController::TestCase
     assert_nil session[:user_id]
   end
 
+  private
+
   def playersession
     { user_id: players(:matijs).id }
   end

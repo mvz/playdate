@@ -135,6 +135,8 @@ class PlaydatesControllerTest < ActionController::TestCase
     assert Playdate.all.map(&:id).sort == [3, 4]
   end
 
+  private
+
   def adminsession
     { user_id: players(:admin).id }
   end

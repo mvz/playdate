@@ -174,6 +174,8 @@ class MainControllerTest < ActionController::TestCase
     assert_not_nil assigns(:stats)
   end
 
+  private
+
   def playersession
     { user_id: players(:matijs).id }
   end
