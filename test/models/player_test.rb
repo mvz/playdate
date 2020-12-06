@@ -82,11 +82,11 @@ class PlayerTest < ActiveSupport::TestCase
 
   def test_associations
     avs = @matijs.availabilities.sort_by(&:id)
-    assert avs.length == 2, "Expected 2 availabilities"
+    assert_equal 2, avs.length, "Expected 2 availabilities"
     assert_equal([@onfriday, @onsaturday], avs,
                  "Did not get right availabilities for matijs")
     pds = @matijs.playdates.sort_by(&:id)
-    assert pds.length == 2, "Expected 2 playdates"
+    assert_equal 2, pds.length, "Expected 2 playdates"
     assert_equal([@friday, @saturday], pds,
                  "Did not get right playdates for matijs")
   end

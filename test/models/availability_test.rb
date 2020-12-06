@@ -34,7 +34,7 @@ class AvailabilityTest < ActiveSupport::TestCase
   end
 
   def test_constants
-    assert Availability::VALUES.length == 4
+    assert_equal 4, Availability::VALUES.length
   end
 
   def test_status_character

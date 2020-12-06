@@ -149,9 +149,9 @@ class MainControllerTest < ActionController::TestCase
          session: { user_id: players(:robert).id }
     assert_response :redirect
     assert_redirected_to controller: "main", action: "index"
-    assert Availability.count == 4
+    assert_equal 4, Availability.count
     newavs = players(:robert).availabilities.sort_by(&:playdate_id)
-    assert newavs.map { |a| [a.playdate_id, a.status] }.flatten == [1, 2, 2, 3]
+    assert_equal [1, 2, 2, 3], newavs.map { |a| [a.playdate_id, a.status] }.flatten
   end
 
   def test_feed
