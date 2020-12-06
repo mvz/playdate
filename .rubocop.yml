@@ -10,6 +10,7 @@ AllCops:
     - 'db/schema.rb'
     - 'bin/**/*'
     - 'node_modules/**/*'
+    - 'vendor/bundle/**/*'
   NewCops: enable
   TargetRubyVersion: 2.5
   TargetRailsVersion: 6.0
