@@ -20,8 +20,8 @@ module ApplicationHelper
     result = tag.h3("Fout")
     result << tag.p("Controleer de invoer en probeer het opnieuw")
     list = +""
-    obj.errors.each do |at, ms|
-      list << tag.li("#{MODEL_TRANSLATIONS[at]} #{ms}.")
+    obj.errors.each do |error|
+      list << tag.li("#{MODEL_TRANSLATIONS[error.attribute]} #{error.message}.")
     end
     result << tag.ul(list)
     result
