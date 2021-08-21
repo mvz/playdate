@@ -126,14 +126,16 @@ class PlaydatesControllerTest < ActionController::TestCase
 
   def test_prune_using_post
     num_playdates = Playdate.count
-    assert num_playdates == 4
+    assert_equal 4, num_playdates
     post "prune", params: {}, session: adminsession
 
     assert_response :redirect
     assert_redirected_to controller: "playdates", action: "index"
-    assert Playdate.count == 2
-    assert Playdate.all.map(&:id).sort == [3, 4]
+    assert_equal 2, Playdate.count
+    assert_equal [3, 4], Playdate.all.map(&:id).sort
   end
+
+  private
 
   def adminsession
     { user_id: players(:admin).id }

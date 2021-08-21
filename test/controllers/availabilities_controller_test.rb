@@ -5,10 +5,6 @@ require "test_helper"
 class AvailabilitiesControllerTest < ActionController::TestCase
   render_views!
 
-  def assert_redirect_to_playdate_view(id)
-    assert_redirected_to controller: "playdates", action: "show", id: id.to_s
-  end
-
   describe "when not logged in" do
     [:destroy, :create, :update, :edit, :new].product([:get, :post]) do |(a, m)|
       it "requires login for #{m} #{a}" do
@@ -110,6 +106,12 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_redirect_to_playdate_view(1)
 
     assert_equal num_availabilities + 1, Availability.count
+  end
+
+  private
+
+  def assert_redirect_to_playdate_view(id)
+    assert_redirected_to controller: "playdates", action: "show", id: id.to_s
   end
 
   def adminsession

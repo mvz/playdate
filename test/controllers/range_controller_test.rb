@@ -47,6 +47,8 @@ class RangeControllerTest < ActionController::TestCase
     end
   end
 
+  private
+
   def playersession
     { user_id: players(:matijs).id }
   end

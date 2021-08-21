@@ -29,6 +29,8 @@ class LoginControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  private
+
   def playersession
     { user_id: players(:matijs).id }
   end
