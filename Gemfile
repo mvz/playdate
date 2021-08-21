@@ -9,13 +9,8 @@ gem "rails", "~> 6.1.0"
 gem "sqlite3", "~> 1.4"
 # Use Puma as the app server
 gem "puma", "~> 5.0"
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", "~> 5.0"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
-
-# Use jquery as the JavaScript library
-gem "jquery-rails", "~> 4.1"
 
 gem "dynamic_form"
 gem "responders", "~> 3.0"
