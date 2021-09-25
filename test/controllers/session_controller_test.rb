@@ -17,9 +17,9 @@ class SessionControllerTest < ActionController::TestCase
     matijs.password = "gnoef!"
     matijs.password_confirmation = "gnoef!"
     matijs.save!
-    post :create, params: { name: "matijs", password: "gnoef!" }
+    post :create, params: {name: "matijs", password: "gnoef!"}
     assert_redirected_to controller: "main", action: "index"
-    post :create, params: { name: "matijs", password: "zonk" }
+    post :create, params: {name: "matijs", password: "zonk"}
     assert_response :success
     assert_template "new"
   end
@@ -44,6 +44,6 @@ class SessionControllerTest < ActionController::TestCase
   private
 
   def playersession
-    { user_id: players(:matijs).id }
+    {user_id: players(:matijs).id}
   end
 end

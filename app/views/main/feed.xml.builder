@@ -2,7 +2,7 @@
 
 xml.instruct! :xml, version: "1.0", encoding: "UTF-8"
 # FIXME: xml.instruct! "xml-stylesheet", type: "text/css", href: stylesheet_path('feed')
-xml.feed "xml:lang" => "en-US", xmlns: "http://www.w3.org/2005/Atom" do
+xml.feed "xml:lang" => "en-US", :xmlns => "http://www.w3.org/2005/Atom" do
   xml.title @feed_title
   xml.id "tag:www.matijs.org,2007:/apps/playdate"
   xml.generator "Playdate", uri: "http://www.matijs.net/", version: "1.0"
@@ -17,10 +17,10 @@ xml.feed "xml:lang" => "en-US", xmlns: "http://www.w3.org/2005/Atom" do
         xml.name "Playdate!"
         xml.email "playdate@matijs.net"
       end
-      xml.id "tag:www.matijs.org,#{@updated_at.strftime('%Y-%m-%d')}:/apps/playdate"
+      xml.id "tag:www.matijs.org,#{@updated_at.strftime("%Y-%m-%d")}:/apps/playdate"
 
       xml.updated @updated_at.xmlschema
-      title = "Updates voor #{@updated_at.strftime('%d/%m/%Y')}"
+      title = "Updates voor #{@updated_at.strftime("%d/%m/%Y")}"
       xml.title title, type: "html"
 
       xml.content @content, type: "html"

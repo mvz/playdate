@@ -48,12 +48,15 @@ class PlayersController < ApplicationController
   private
 
   def player_params
-    params.require(:player).permit(:name,
-                                   :full_name,
-                                   :abbreviation,
-                                   :is_admin,
-                                   :default_status,
-                                   :password,
-                                   :password_confirmation)
+    params.require(:player)
+      .permit(
+        :name,
+        :full_name,
+        :abbreviation,
+        :is_admin,
+        :default_status,
+        :password,
+        :password_confirmation
+      )
   end
 end

@@ -5,9 +5,9 @@ class Availability < ApplicationRecord
   belongs_to :playdate
 
   validates :player, :playdate, presence: true
-  validates :playdate_id, uniqueness: { scope: [:player_id] }
+  validates :playdate_id, uniqueness: {scope: [:player_id]}
   validates_associated :player, :playdate
-  validates :status, inclusion: { in: 0..3 }
+  validates :status, inclusion: {in: 0..3}
 
   STATUS_MISSCHIEN = 0
   STATUS_JA = 1
@@ -18,15 +18,15 @@ class Availability < ApplicationRecord
   VALUES = [STATUS_MISSCHIEN, STATUS_NEE, STATUS_JA, STATUS_HUIS].freeze
   LONG_DISPLAY = {
     STATUS_MISSCHIEN => "Misschien",
-    STATUS_JA        => "Ja",
-    STATUS_NEE       => "Nee",
-    STATUS_HUIS      => "Huis"
+    STATUS_JA => "Ja",
+    STATUS_NEE => "Nee",
+    STATUS_HUIS => "Huis"
   }.freeze
   SHORT_DISPLAY = {
     STATUS_MISSCHIEN => "?",
-    STATUS_JA        => "+",
-    STATUS_NEE       => "−",
-    STATUS_HUIS      => "h"
+    STATUS_JA => "+",
+    STATUS_NEE => "−",
+    STATUS_HUIS => "h"
   }.freeze
   def status_character
     # TODO: Deprecate?

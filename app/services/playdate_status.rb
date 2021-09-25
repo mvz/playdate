@@ -40,7 +40,7 @@ class PlaydateStatus
     no = stat[Availability::STATUS_NEE]
     maybe = stat[Availability::STATUS_MISSCHIEN]
     house = stat[Availability::STATUS_HUIS]
-    { yes: yes, no: no, maybe: maybe, house: house }
+    {yes: yes, no: no, maybe: maybe, house: house}
   end
 
   def status_code(status, max, max_has_house, numplayers)

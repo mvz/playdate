@@ -7,13 +7,13 @@ class Player < ApplicationRecord
   has_many :playdates, through: :availabilities, inverse_of: :players
 
   validates :name, presence: true
-  validates :name, length: { minimum: 1 }
+  validates :name, length: {minimum: 1}
   validates :password, confirmation: true
   validates :name, uniqueness: true
-  validates :password, length: { minimum: 5,
-                                 if: proc { |user|
-                                       user.password_hash.nil? or !user.password.to_s.empty?
-                                     } }
+  validates :password, length: {minimum: 5,
+                                if: proc { |user|
+                                      user.password_hash.nil? or !user.password.to_s.empty?
+                                    }}
 
   SALT = "change this to your own salt"
 

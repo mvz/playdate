@@ -33,11 +33,12 @@ class RangeControllerTest < ActionController::TestCase
     assert_operator Playdate.count, :>, oldcount + 1
     assert_operator Playdate.count, :<=, oldcount + 12
     startdate = Time.zone.today + 1
-    enddate = if startdate + 7 <= Time.zone.today.end_of_month
-                Time.zone.today.end_of_month
-              else
-                Time.zone.today.next_month.end_of_month
-              end
+    enddate =
+      if startdate + 7 <= Time.zone.today.end_of_month
+        Time.zone.today.end_of_month
+      else
+        Time.zone.today.next_month.end_of_month
+      end
     (startdate + 1).upto(enddate) do |day|
       if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
         assert_not_nil Playdate.find_by(day: day)
@@ -50,6 +51,6 @@ class RangeControllerTest < ActionController::TestCase
   private
 
   def playersession
-    { user_id: players(:matijs).id }
+    {user_id: players(:matijs).id}
   end
 end
