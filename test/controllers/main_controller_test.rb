@@ -145,8 +145,8 @@ class MainControllerTest < ActionController::TestCase
 
   def test_update
     post :update,
-         params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
-         session: { user_id: players(:robert).id }
+      params: {availability: {1 => {status: 2}, 2 => {status: 3}}},
+      session: {user_id: players(:robert).id}
     assert_response :redirect
     assert_redirected_to controller: "main", action: "index"
     assert_equal 4, Availability.count
@@ -155,7 +155,7 @@ class MainControllerTest < ActionController::TestCase
   end
 
   def test_feed
-    get :feed, params: { format: "xml" }, session: {}
+    get :feed, params: {format: "xml"}, session: {}
     assert_response :success
     assert_template "feed"
     assert_template "feed_table"
@@ -168,7 +168,7 @@ class MainControllerTest < ActionController::TestCase
       .build(player_id: players(:robert).id, status: 1)
     av.save!
 
-    get :feed, params: { format: "xml" }, session: {}
+    get :feed, params: {format: "xml"}, session: {}
     assert_response :success
     assert_equal assigns(:updated_at).to_s, av.updated_at.to_s
     assert_not_nil assigns(:stats)
@@ -177,10 +177,10 @@ class MainControllerTest < ActionController::TestCase
   private
 
   def playersession
-    { user_id: players(:matijs).id }
+    {user_id: players(:matijs).id}
   end
 
   def adminsession
-    { user_id: players(:admin).id }
+    {user_id: players(:admin).id}
   end
 end

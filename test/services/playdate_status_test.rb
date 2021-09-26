@@ -8,8 +8,10 @@ class PlaydateStatusTest < ActiveSupport::TestCase
   describe ".calculate" do
     it "sets code to no for a bad day" do
       [:matijs, :robert].each do |p|
-        players(p).availabilities.create!(playdate: playdates(:today),
-                                          status: Availability::STATUS_NEE)
+        players(p).availabilities.create!(
+          playdate: playdates(:today),
+          status: Availability::STATUS_NEE
+        )
       end
 
       result = PlaydateStatus.calculate(playdates, players)

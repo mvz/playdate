@@ -16,11 +16,12 @@ class RangeController < ApplicationController
 
     count = Playdate.make_new_range(period, PlaydatesController::DAY_SATURDAY)
     count += Playdate.make_new_range(period, PlaydatesController::DAY_FRIDAY)
-    flash[:notice] = if count > 0
-                       "Data toegevoegd"
-                     else
-                       "Geen data toegevoegd"
-                     end
+    flash[:notice] =
+      if count > 0
+        "Data toegevoegd"
+      else
+        "Geen data toegevoegd"
+      end
     redirect_to root_path
   end
 end

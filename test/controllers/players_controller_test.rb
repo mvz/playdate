@@ -3,23 +3,23 @@
 require "test_helper"
 
 class PlayersControllerTest < ActionController::TestCase
-  let(:adminsession) { { user_id: players(:admin).id } }
+  let(:adminsession) { {user_id: players(:admin).id} }
 
   describe "when not logged in" do
     [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
       it "requires login for #{m} #{a}" do
-        send m, a, params: { id: 1 }
+        send m, a, params: {id: 1}
         assert_redirected_to login_path
       end
     end
   end
 
   describe "when logged in as a regular player" do
-    let(:playersession) { { user_id: players(:matijs).id } }
+    let(:playersession) { {user_id: players(:matijs).id} }
 
     [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
       it "denies access for #{m} #{a}" do
-        send m, a, params: { id: 1 }, session: playersession
+        send m, a, params: {id: 1}, session: playersession
         assert_redirected_to root_path
       end
     end
@@ -45,7 +45,7 @@ class PlayersControllerTest < ActionController::TestCase
     render_views!
 
     before do
-      get :edit, params: { id: 1 }, session: adminsession
+      get :edit, params: {id: 1}, session: adminsession
     end
 
     it "renders edit" do
@@ -75,16 +75,16 @@ class PlayersControllerTest < ActionController::TestCase
 
   describe "#create" do
     let(:player_params) do
-      { name: "new",
-        full_name: "New Name",
-        abbreviation: "nn",
-        password: "test123",
-        password_confirmation: "test123" }
+      {name: "new",
+       full_name: "New Name",
+       abbreviation: "nn",
+       password: "test123",
+       password_confirmation: "test123"}
     end
 
     before do
       @player_count = Player.all.length
-      post :create, params: { player: player_params }, session: adminsession
+      post :create, params: {player: player_params}, session: adminsession
     end
 
     it "assigns to @player" do
@@ -107,7 +107,7 @@ class PlayersControllerTest < ActionController::TestCase
       @player_count = Player.all.length
       @num_avs = Availability.count
       @num_player_avs = player.availabilities.count
-      post :destroy, params: { id: player.id }, session: adminsession
+      post :destroy, params: {id: player.id}, session: adminsession
     end
 
     it "redirects to the player list" do
@@ -134,11 +134,11 @@ class PlayersControllerTest < ActionController::TestCase
 
   describe "#update" do
     let(:player_params) do
-      { name: "new",
-        full_name: "New Name",
-        abbreviation: "nn",
-        is_admin: "true",
-        default_status: Availability::STATUS_JA.to_s }
+      {name: "new",
+       full_name: "New Name",
+       abbreviation: "nn",
+       is_admin: "true",
+       default_status: Availability::STATUS_JA.to_s}
     end
     let(:expected_params) do
       ActionController::Parameters.new(player_params).permit!
@@ -149,13 +149,13 @@ class PlayersControllerTest < ActionController::TestCase
       player = MiniTest::Mock.new
       player.expect(:update, true, [expected_params])
       Player.stub :find, player do
-        post :update, params: { id: 1, player: player_params }, session: adminsession
+        post :update, params: {id: 1, player: player_params}, session: adminsession
       end
       player.verify
     end
 
     it "redirects to the player list" do
-      post :update, params: { id: 1, player: player_params }, session: adminsession
+      post :update, params: {id: 1, player: player_params}, session: adminsession
       assert_redirected_to players_path
     end
   end

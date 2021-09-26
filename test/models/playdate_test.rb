@@ -3,16 +3,16 @@
 require "test_helper"
 
 class PlaydateTest < ActiveSupport::TestCase
-  REQ_ATTR_NAMES = %w(day).freeze
-  DUPLICATE_ATTR_NAMES = %w(day).freeze
-  NEW_PARAMS = { day: "2006-01-10" }.freeze
+  REQ_ATTR_NAMES = %w[day].freeze
+  DUPLICATE_ATTR_NAMES = %w[day].freeze
+  NEW_PARAMS = {day: "2006-01-10"}.freeze
 
   def test_raw_validation
     dt = Playdate.new
     assert_not dt.valid?, "Playdate should not be valid without initialisation parameters"
     REQ_ATTR_NAMES.each do |attr_name|
       assert dt.errors[attr_name.to_sym].any?,
-             "Should be an error message for :#{attr_name}"
+        "Should be an error message for :#{attr_name}"
     end
   end
 

@@ -19,20 +19,23 @@ AllCops:
 Rails:
   Enabled: true
 
-# Make BeginEndAlignment behavior match EndAlignment
-Layout/BeginEndAlignment:
-  EnforcedStyleAlignWith: begin
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
 
-Layout/HashAlignment:
-  EnforcedHashRocketStyle: table
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Layout/ExtraSpacing:
+  AllowForAlignment: false
+  AllowBeforeTrailingComments: false
+  ForceEqualSignAlignment: false
 
 # Be lenient with line length
 Layout/LineLength:
   Max: 92
-
-# Don't force lonely closing parentheses
-Layout/MultilineMethodCallBraceLayout:
-  EnforcedStyle: same_line
 
 # Multi-line method calls should be simply indented. Aligning them makes it
 # even harder to keep a sane line length.
@@ -48,8 +51,16 @@ Layout/MultilineOperationIndentation:
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyleForEmptyBraces: space
 
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+
 # Assume the programmer knows how bracketed block syntax works
 Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+# Assume the programmer knows precendence rules
+Lint/AmbiguousOperatorPrecedence:
   Enabled: false
 
 # Allow if (foo = get_foo) style
@@ -59,23 +70,16 @@ Lint/AssignmentInCondition:
 Performance/StartWith:
   AutoCorrect: true
 
-# Allow and/or for control flow only
-Style/AndOr:
-  EnforcedStyle: conditionals
-
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
 
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+
 # Prefer maths
 Style/NumericPredicate:
   Enabled: false
-
-# Use older RuboCop default
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%W': ()
-    '%w': ()
 
 # Allow explicit return with multiple return values
 Style/RedundantReturn:
@@ -83,6 +87,9 @@ Style/RedundantReturn:
 
 # Do not commit to use of interpolation
 Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
 # Prefer symbols to look like symbols

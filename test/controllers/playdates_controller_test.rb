@@ -8,18 +8,18 @@ class PlaydatesControllerTest < ActionController::TestCase
   describe "when not logged in" do
     [:destroy, :index, :new, :show, :prune].product([:get, :post]) do |(a, m)|
       it "requires login for #{m} #{a}" do
-        send m, a, params: { id: 1 }
+        send m, a, params: {id: 1}
         assert_redirected_to login_path
       end
     end
   end
 
   describe "when logged in as a regular player" do
-    let(:playersession) { { user_id: players(:matijs).id } }
+    let(:playersession) { {user_id: players(:matijs).id} }
 
     [:destroy, :index, :new, :show, :prune].product([:get, :post]) do |(a, m)|
       it "denies access for #{m} #{a}" do
-        send m, a, params: { id: 1 }, session: playersession
+        send m, a, params: {id: 1}, session: playersession
         assert_redirected_to root_path
       end
     end
@@ -32,7 +32,7 @@ class PlaydatesControllerTest < ActionController::TestCase
     num_pd_avs = pd.availabilities.count
     assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
 
-    delete "destroy", params: { id: 1 }, session: adminsession
+    delete "destroy", params: {id: 1}, session: adminsession
     assert_response :redirect
     assert_redirected_to controller: "playdates", action: "index"
 
@@ -72,7 +72,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_create
     num_playdates = Playdate.count
 
-    post "create", params: { playdate: { day: "2006-03-11" } }, session: adminsession
+    post "create", params: {playdate: {day: "2006-03-11"}}, session: adminsession
 
     assert_response :redirect
     assert_redirected_to controller: "playdates", action: "index"
@@ -83,7 +83,7 @@ class PlaydatesControllerTest < ActionController::TestCase
   def test_create_with_range
     num_playdates = Playdate.count
 
-    post "create", params: { period: 2, daytype: 6 }, session: adminsession
+    post "create", params: {period: 2, daytype: 6}, session: adminsession
 
     assert_response :redirect
     assert_redirected_to controller: "playdates", action: "index"
@@ -93,19 +93,19 @@ class PlaydatesControllerTest < ActionController::TestCase
   end
 
   def test_create_with_range_invalid_period
-    post "create", params: { period: 3, daytype: 6 }, session: adminsession
+    post "create", params: {period: 3, daytype: 6}, session: adminsession
 
     assert_template :new
   end
 
   def test_create_with_range_invalid_day_type
-    post "create", params: { period: 2, daytype: 7 }, session: adminsession
+    post "create", params: {period: 2, daytype: 7}, session: adminsession
 
     assert_template :new
   end
 
   def test_show
-    get "show", params: { id: 1 }, session: adminsession
+    get "show", params: {id: 1}, session: adminsession
 
     assert_response :success
     assert_template "show"
@@ -138,6 +138,6 @@ class PlaydatesControllerTest < ActionController::TestCase
   private
 
   def adminsession
-    { user_id: players(:admin).id }
+    {user_id: players(:admin).id}
   end
 end
