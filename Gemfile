@@ -48,7 +48,7 @@ end
 
 gem "blind", group: :test
 gem "minitest", "~> 5.12", group: :test
-gem "minitest-spec-rails", "~> 6.0.2", group: :test
+gem "minitest-spec-rails", "~> 6.1.0", group: :test
 gem "simplecov", group: :test, require: false
 
 gem "rails-controller-testing", "~> 1.0", group: :test
