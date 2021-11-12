@@ -22,38 +22,38 @@ jobs:
         ruby: [2.7, "3.0"]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
-    - name: Set up Node
-      uses: actions/setup-node@v2-beta
-      with:
-        node-version: '12'
-    - uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: node-modules-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-        restore-keys: |
-          node-modules-${{ runner.os }}-yarn-
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Set up Node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-yarn-
 
-    - name: Install Node modules
-      run: yarn install
-    - name: Run tests
-      run: bundle exec rake
+      - name: Install Node modules
+        run: yarn install
+      - name: Run tests
+        run: bundle exec rake
 
   rubocop:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-        bundler-cache: true
-    - name: Run RuboCop
-      run: bundle exec rubocop -P
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+      - name: Run RuboCop
+        run: bundle exec rubocop -P
