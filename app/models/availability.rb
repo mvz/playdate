@@ -4,7 +4,6 @@ class Availability < ApplicationRecord
   belongs_to :player
   belongs_to :playdate
 
-  validates :player, :playdate, presence: true
   validates :playdate_id, uniqueness: {scope: [:player_id]}
   validates_associated :player, :playdate
   validates :status, inclusion: {in: 0..3}
