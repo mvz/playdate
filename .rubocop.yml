@@ -1,5 +1,9 @@
 inherit_from: .rubocop_todo.yml
 
+inherit_mode:
+  merge:
+    - Exclude
+
 require:
   - rubocop-minitest
   - rubocop-performance
@@ -7,11 +11,8 @@ require:
 
 AllCops:
   Exclude:
-    - 'tmp/**/*'
     - 'db/schema.rb'
     - 'bin/**/*'
-    - 'node_modules/**/*'
-    - 'vendor/bundle/**/*'
   NewCops: enable
   TargetRubyVersion: 2.7
   TargetRailsVersion: 6.1
