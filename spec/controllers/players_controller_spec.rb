@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class PlayersControllerTest < ActionController::TestCase
+RSpec.describe PlayersController, type: :controller do
+  fixtures :players
+
   let(:adminsession) { {user_id: players(:admin).id} }
 
   describe "when not logged in" do
@@ -26,7 +28,7 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   describe "#index" do
-    render_views!
+    render_views
 
     before do
       get :index, params: {}, session: adminsession
@@ -42,7 +44,7 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   describe "#edit" do
-    render_views!
+    render_views
 
     before do
       get :edit, params: {id: 1}, session: adminsession
@@ -58,7 +60,7 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   describe "#new" do
-    render_views!
+    render_views
 
     before do
       get :new, params: {}, session: adminsession
@@ -88,7 +90,7 @@ class PlayersControllerTest < ActionController::TestCase
     end
 
     it "assigns to @player" do
-      _(assigns(:player)).wont_be_nil
+      expect(assigns(:player)).not_to be_nil
     end
 
     it "redirects to the player list" do
@@ -146,12 +148,11 @@ class PlayersControllerTest < ActionController::TestCase
 
     it "updates all desired attributes" do
       adminsession
-      player = MiniTest::Mock.new
-      player.expect(:update, true, [expected_params])
-      Player.stub :find, player do
-        post :update, params: {id: 1, player: player_params}, session: adminsession
-      end
-      player.verify
+      player = instance_double(Player)
+      allow(player).to receive(:update)
+      allow(Player).to receive(:find).and_return(player)
+      post :update, params: {id: 1, player: player_params}, session: adminsession
+      expect(player).to have_received(:update).with(expected_params)
     end
 
     it "redirects to the player list" do

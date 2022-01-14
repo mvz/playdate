@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class LoginControllerTest < ActionController::TestCase
-  render_views!
+RSpec.describe LoginController, type: :controller do
+  render_views
+  fixtures :players
 
-  def test_edit_password
+  it "edit_password" do
     get :edit
     assert_response :redirect
     assert_redirected_to controller: "session", action: "new"
@@ -14,7 +15,7 @@ class LoginControllerTest < ActionController::TestCase
     assert_select "h1", "Wachtwoord wijzigen"
   end
 
-  def test_update_password
+  it "update_password" do
     post :update, params: {player: {password: "slurp", password_confirmation: "slurp"}}
     assert_response :redirect
     assert_redirected_to controller: "session", action: "new"

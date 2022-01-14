@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class SessionControllerTest < ActionController::TestCase
-  render_views!
+RSpec.describe SessionController, type: :controller do
+  fixtures :players
+  render_views
 
-  def test_login_intent
+  it "login_intent" do
     get :new
     assert_response :success
     assert_template "new"
     assert_select "h1", "Inloggen in Playdate"
   end
 
-  def test_login
+  it "login" do
     matijs = players(:matijs)
     matijs.password = "gnoef!"
     matijs.password_confirmation = "gnoef!"
@@ -24,17 +25,17 @@ class SessionControllerTest < ActionController::TestCase
     assert_template "new"
   end
 
-  def test_logout_intent
+  it "logout_intent" do
     get :edit
     assert_response :redirect
     get :edit, params: {}, session: playersession
     assert_response :success
-    assert_not_nil session[:user_id]
+    refute_nil session[:user_id]
     assert_template "edit"
     assert_select "h1", "Uitloggen"
   end
 
-  def test_logout
+  it "logout" do
     post :destroy, params: {}, session: playersession
     assert_response :redirect
     assert_redirected_to controller: "session", action: "new"

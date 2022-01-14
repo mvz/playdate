@@ -1,41 +1,43 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class MainControllerTest < ActionController::TestCase
-  render_views!
+RSpec.describe MainController, type: :controller do
+  fixtures :players, :playdates
+
+  render_views
   MainController::MIN_PLAYERS = 2
 
-  def test_authorization
+  it "authorization" do
     [:index, :edit, :update].product([:get, :post]) do |(a, m)|
       method(m).call(a, params: {}, session: {})
       assert_redirected_to controller: "session", action: "new"
     end
   end
 
-  def test_index_as_user
+  it "index_as_user" do
     get :index, params: {}, session: playersession
     assert_response :success
     assert_template "index"
-    assert_not_nil assigns(:playdates)
+    refute_nil assigns(:playdates)
     assert_equal [playdates(:today), playdates(:tomorrow)], assigns(:playdates)
-    assert_not_nil assigns(:stats)
+    refute_nil assigns(:stats)
     assert_select 'a[href="/more"]'
     assert_select 'a[href="/playdates"]', false
 
     assert_select "h1", "Playdate! The Application"
   end
 
-  def test_index_as_admin
+  it "index_as_admin" do
     get :index, params: {}, session: adminsession
     assert_response :success
     assert_template "index"
-    assert_not_nil assigns(:playdates)
-    assert_not_nil assigns(:stats)
+    refute_nil assigns(:playdates)
+    refute_nil assigns(:stats)
     assert_select 'a[href="/playdates"]'
   end
 
-  def test_index_all_dates_present
+  it "index_all_dates_present" do
     # today and tomorrow are already there
     startdate = Time.zone.today + 2
     enddate = Time.zone.today.next_month.end_of_month
@@ -48,7 +50,7 @@ class MainControllerTest < ActionController::TestCase
     assert_select 'a[href="/more"]', false
   end
 
-  def test_index_shows_no_for_bad_day
+  it "index_shows_no_for_bad_day" do
     [:matijs, :robert].each do |p|
       players(p).availabilities.build.tap do |av|
         av.playdate = playdates(:today)
@@ -61,13 +63,13 @@ class MainControllerTest < ActionController::TestCase
     assert_select "tr.summary td:first-of-type", "Nee"
   end
 
-  def test_index_shows_empty_for_neutral_day
+  it "index_shows_empty_for_neutral_day" do
     get :index, params: {}, session: playersession
 
     assert_select "tr.summary td:first-of-type", ""
   end
 
-  def test_index_shows_best_for_only_good_day
+  it "index_shows_best_for_only_good_day" do
     [:matijs, :robert].each do |p|
       players(p).availabilities.build.tap do |av|
         av.playdate = playdates(:today)
@@ -80,7 +82,7 @@ class MainControllerTest < ActionController::TestCase
     assert_select "tr.summary td:first-of-type", "Beste"
   end
 
-  def test_index_both_days_good_but_first_is_best
+  it "index_both_days_good_but_first_is_best" do
     [:matijs, :robert].product([:today, :tomorrow]) do |(p, d)|
       av = players(p).availabilities.build
       av.playdate = playdates(d)
@@ -100,7 +102,7 @@ class MainControllerTest < ActionController::TestCase
     assert_select "tr.summary td:nth-of-type(2)", "Ja"
   end
 
-  def test_index_with_house_better_than_without
+  it "index_with_house_better_than_without" do
     [:today, :tomorrow].each do |d|
       players(:matijs).availabilities.build.tap do |av|
         av.playdate = playdates(d)
@@ -125,11 +127,11 @@ class MainControllerTest < ActionController::TestCase
     assert_select "tr.summary td:nth-of-type(2)", "Beste"
   end
 
-  def test_edit
+  it "edit" do
     get :edit, params: {}, session: playersession
     assert_response :success
     assert_template "edit"
-    assert_not_nil assigns(:playdates)
+    refute_nil assigns(:playdates)
     assert_equal 2, assigns(:playdates).count
     assert_select "select", assigns(:playdates).count
     assert_select "select" do |elements|
@@ -143,7 +145,7 @@ class MainControllerTest < ActionController::TestCase
     assert_select "h1", "Beschikbaarheid bewerken"
   end
 
-  def test_update
+  it "update" do
     post :update,
       params: {availability: {1 => {status: 2}, 2 => {status: 3}}},
       session: {user_id: players(:robert).id}
@@ -154,13 +156,13 @@ class MainControllerTest < ActionController::TestCase
     assert_equal [1, 2, 2, 3], newavs.map { |a| [a.playdate_id, a.status] }.flatten
   end
 
-  def test_feed
+  it "feed" do
     get :feed, params: {format: "xml"}, session: {}
     assert_response :success
     assert_template "feed"
     assert_template "feed_table"
-    assert_not_nil assigns(:playdates)
-    assert_not_nil assigns(:link)
+    refute_nil assigns(:playdates)
+    refute_nil assigns(:link)
     assert_nil assigns(:updated_at)
     assert_nil assigns(:date)
 
@@ -171,7 +173,7 @@ class MainControllerTest < ActionController::TestCase
     get :feed, params: {format: "xml"}, session: {}
     assert_response :success
     assert_equal assigns(:updated_at).to_s, av.updated_at.to_s
-    assert_not_nil assigns(:stats)
+    refute_nil assigns(:stats)
   end
 
   private
