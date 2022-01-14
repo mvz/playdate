@@ -35,7 +35,9 @@ module PlayDate
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.generators do |g|
-      g.test_framework :mini_test, spec: true, fixture: false
+      g.test_framework :rspec
+      g.system_tests nil
+      g.integration_tool nil
     end
 
     # Since this is an old application, it uses numbered migrations.
