@@ -4,7 +4,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.1.0"
+gem "rails", "~> 7.0.1"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
 # Use Puma as the app server
@@ -14,6 +14,7 @@ gem "turbolinks", "~> 5"
 
 gem "dynamic_form"
 gem "responders", "~> 3.0"
+gem "sprockets-rails", "~> 3.4.2"
 gem "will_paginate", "~> 3.3.0"
 
 # Use Active Model has_secure_password
@@ -36,9 +37,6 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console'
   # anywhere in the code.
   gem "web-console", "~> 4.0"
-  # Spring speeds up development by keeping your application running in the
-  # background. Read more: https://github.com/rails/spring
-  gem "spring", "~> 4.0"
 
   gem "rubocop", "~> 1.24.0", require: false
   gem "rubocop-minitest", "~> 0.17.0", require: false
