@@ -41,9 +41,9 @@ group :development do
   gem "web-console", "~> 4.0"
 
   gem "rubocop", "~> 1.24.0", require: false
-  gem "rubocop-minitest", "~> 0.17.0", require: false
   gem "rubocop-performance", "~> 1.13.0", require: false
   gem "rubocop-rails", "~> 2.13.0", require: false
+  gem "rubocop-rspec", "~> 2.7.0", require: false
 end
 
 group :test do
