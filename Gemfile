@@ -14,6 +14,7 @@ gem "turbolinks", "~> 5"
 
 gem "dynamic_form"
 gem "responders", "~> 3.0"
+gem "sprockets-rails", "~> 3.4.2"
 gem "will_paginate", "~> 3.3.0"
 
 # Use Active Model has_secure_password
