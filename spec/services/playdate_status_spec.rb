@@ -16,7 +16,7 @@ RSpec.describe PlaydateStatus do
         )
       end
 
-      result = PlaydateStatus.calculate(playdates, players)
+      result = described_class.calculate(playdates, players)
       expect(result[playdates(:today)][:code]).to eq 0
     end
   end

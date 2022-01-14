@@ -18,7 +18,7 @@ RSpec.describe Player, type: :model do
   end
 
   it "raw_validation" do
-    player = Player.new
+    player = described_class.new
     refute player.valid?, "Player should not be valid without initialisation parameters"
     required_attributes.each do |attr_name|
       assert player.errors[attr_name.to_sym].any?,
@@ -33,7 +33,7 @@ RSpec.describe Player, type: :model do
   end
 
   it "new" do
-    player = Player.new(NEW_PLAYER)
+    player = described_class.new(NEW_PLAYER)
     assert player.valid?, "Player should be valid"
     assert_equal NEW_PLAYER[:name], player[:name], "Player.@name incorrect"
     assert player.check_password(NEW_PLAYER[:password]), "Password set incorrectly"
@@ -43,7 +43,7 @@ RSpec.describe Player, type: :model do
     required_attributes.each do |attr_name|
       tmp_player = NEW_PLAYER.dup
       tmp_player.delete attr_name.to_sym
-      player = Player.new(tmp_player)
+      player = described_class.new(tmp_player)
       refute player.valid?, "Player should be invalid, as @#{attr_name} is invalid"
       assert player.errors[attr_name.to_sym].any?,
         "Should be an error message for :#{attr_name}"
@@ -66,13 +66,15 @@ RSpec.describe Player, type: :model do
     @matijs.password = "zoppa"
     assert @matijs.check_password("zoppa")
     @matijs.save!
-    assert_equal @matijs, Player.authenticate("matijs", "zoppa")
+    assert_equal @matijs, described_class.authenticate("matijs", "zoppa")
   end
 
   it "duplicate" do
-    current_player = Player.first
+    current_player = described_class.first
     DUPLICATE_ATTR_NAMES.each do |attr_name|
-      player = Player.new(NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name]))
+      player = described_class.new(
+        NEW_PLAYER.merge(attr_name.to_sym => current_player[attr_name])
+      )
       refute player.valid?, "Player should be invalid, as @#{attr_name} is a duplicate"
       assert player.errors[attr_name.to_sym].any?,
         "Should be an error message for :#{attr_name}"

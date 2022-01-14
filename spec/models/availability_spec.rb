@@ -8,7 +8,7 @@ RSpec.describe Availability, type: :model do
   required_attributes = %w[player playdate].freeze
 
   it "raw_validation" do
-    availability = Availability.new
+    availability = described_class.new
     refute availability.valid?
     required_attributes.each do |attr_name|
       assert availability.errors[attr_name.to_sym].any?,
@@ -17,7 +17,7 @@ RSpec.describe Availability, type: :model do
   end
 
   it "new" do
-    availability = Availability.new
+    availability = described_class.new
 
     availability.player = players(:robert)
     availability.playdate = playdates(:friday)

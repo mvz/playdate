@@ -6,7 +6,7 @@ RSpec.describe MainController, type: :controller do
   fixtures :players, :playdates
 
   render_views
-  MainController::MIN_PLAYERS = 2
+  described_class::MIN_PLAYERS = 2
 
   it "authorization" do
     [:index, :edit, :update].product([:get, :post]) do |(a, m)|

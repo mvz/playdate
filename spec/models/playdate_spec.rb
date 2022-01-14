@@ -9,7 +9,7 @@ RSpec.describe Playdate, type: :model do
   NEW_PARAMS = {day: "2006-01-10"}.freeze
 
   it "raw_validation" do
-    dt = Playdate.new
+    dt = described_class.new
     refute dt.valid?, "Playdate should not be valid without initialisation parameters"
     required_attributes.each do |attr_name|
       assert dt.errors[attr_name.to_sym].any?,
@@ -24,14 +24,14 @@ RSpec.describe Playdate, type: :model do
   end
 
   it "new" do
-    dt = Playdate.new(NEW_PARAMS)
+    dt = described_class.new(NEW_PARAMS)
     assert dt.valid?, "Availability should be valid"
     assert_equal Date.new(2006, 1, 10), dt.day, "Playdate.day incorrect"
   end
 
   it "duplicate" do
-    current = Playdate.first
-    playdate = Playdate.new(day: current[:day])
+    current = described_class.first
+    playdate = described_class.new(day: current[:day])
     refute playdate.valid?, "Player should be invalid, as @day is a duplicate"
     assert playdate.errors[:day].any?, "Should be an error message for :day"
   end
