@@ -9,8 +9,15 @@ gem "rails", "~> 7.0.1"
 gem "sqlite3", "~> 1.4"
 # Use Puma as the app server
 gem "puma", "~> 5.0"
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem "turbolinks", "~> 5"
+
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "importmap-rails"
+
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails"
+
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
 
 gem "dynamic_form"
 gem "responders", "~> 3.0"
