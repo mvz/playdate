@@ -71,6 +71,10 @@ Lint/AssignmentInCondition:
 Performance/StartWith:
   AutoCorrect: true
 
+RSpec/Capaybara/FeatureMethods:
+  Exclude:
+    - 'spec/features/**/*_spec.rb'
+
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2

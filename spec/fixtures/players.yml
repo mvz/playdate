@@ -2,6 +2,7 @@
 admin:
   id: 1
   name: "admin"
+  full_name: "Administrator"
   is_admin: true
   password_hash: "total_nonsense"
 matijs:
