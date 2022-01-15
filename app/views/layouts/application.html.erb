@@ -32,7 +32,7 @@
         <% end %>
       </div>
       <% if current_user %>
-        <p class="logout"><%= link_to 'Wachtwoord wijzigen', controller: 'login', action: 'edit' %></p>
+        <p class="logout"><%= link_to 'Wachtwoord wijzigen', edit_credentials_path %></p>
       <% end %>
     </div>
   </body>
