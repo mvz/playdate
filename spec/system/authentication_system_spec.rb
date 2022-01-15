@@ -2,16 +2,17 @@
 
 require "rails_helper"
 
-RSpec.feature "Logging in and out", type: :feature do
+RSpec.describe "Authentication system", type: :system do
   fixtures :players
 
   let(:admin) { players(:admin) }
 
   before do
+    driven_by :selenium, using: :headless_firefox
     admin.update!(password: "foobar")
   end
 
-  scenario "User logs in and out" do
+  it "enables the user to log in and out" do
     visit "/"
     fill_in "Naam", with: "admin"
     fill_in "Wachtwoord", with: "foobar"
