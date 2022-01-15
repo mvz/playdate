@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe RangeController, type: :controller do
-  fixtures :players
+  fixtures :players, :playdates, :availabilities
 
   render_views
 

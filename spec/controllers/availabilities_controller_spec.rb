@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe AvailabilitiesController, type: :controller do
   render_views
-  fixtures :players, :playdates
+  fixtures :players, :playdates, :availabilities
 
   describe "when not logged in" do
     [:destroy, :create, :update, :edit, :new].product([:get, :post]) do |(a, m)|

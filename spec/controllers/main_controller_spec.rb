@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe MainController, type: :controller do
-  fixtures :players, :playdates
+  fixtures :players, :playdates, :availabilities
 
   render_views
   described_class::MIN_PLAYERS = 2

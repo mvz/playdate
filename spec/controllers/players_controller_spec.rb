@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe PlayersController, type: :controller do
-  fixtures :players
+  fixtures :players, :playdates, :availabilities
 
   let(:adminsession) { {user_id: players(:admin).id} }
 
