@@ -8,7 +8,7 @@ RSpec.describe "Authentication system", type: :system do
   let(:admin) { players(:admin) }
 
   before do
-    driven_by :rack_test
+    driven_by :selenium, using: :headless_firefox
     admin.update!(password: "foobar")
   end
 
