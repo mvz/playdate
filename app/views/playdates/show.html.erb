@@ -24,7 +24,7 @@
                     { controller: 'availabilities', action: 'destroy', id: av, playdate_id: @playdate.id },
                     data: {
                       'turbo-method': :delete,
-                      confirm: 'Weet je zeker dat je deze beschikbaarheid wil verwijderen?' }) %></td>
+                      'turbo-confirm': 'Weet je zeker dat je deze beschikbaarheid wil verwijderen?' }) %></td>
     </tr>
   <% end %>
 </table>
