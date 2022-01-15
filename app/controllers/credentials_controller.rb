@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LoginController < ApplicationController
+class CredentialsController < ApplicationController
   before_action :authorize
 
   def edit

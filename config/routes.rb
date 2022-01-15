@@ -15,8 +15,7 @@ Rails.application.routes.draw do
 
   get "/feed" => "main#feed", :format => false, :defaults => {format: "xml"}
 
-  get "/login/edit" => "login#edit"
-  post "/login/edit" => "login#update"
+  resource :credentials, only: [:edit, :update]
 
   resources :playdates, only: [:index, :show, :new, :create, :destroy] do
     collection do
