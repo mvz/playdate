@@ -100,7 +100,7 @@
 #
 # See https://guides.rubyonrails.org/action_controller_overview.html#cookies
 # for more information.
-Rails.application.config.action_dispatch.cookies_serializer = :json
+Rails.application.config.action_dispatch.cookies_serializer = :hybrid
 
 # Enable parameter wrapping for JSON.
 # Previously this was set in an initializer. It's fine to keep using that
