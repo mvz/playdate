@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class AvailabilitiesControllerTest < ActionController::TestCase
-  render_views!
+RSpec.describe AvailabilitiesController, type: :controller do
+  render_views
+  fixtures :players, :playdates, :availabilities
 
   describe "when not logged in" do
     [:destroy, :create, :update, :edit, :new].product([:get, :post]) do |(a, m)|
@@ -26,29 +27,24 @@ class AvailabilitiesControllerTest < ActionController::TestCase
   end
 
   # Destroy, go to view of playdate (which has a list of availabilities)
-  def test_destroy
-    assert_not_nil Availability.find(1)
+  it "destroy" do
+    refute_nil Availability.find(1)
 
     delete "destroy", params: {playdate_id: 1, id: 1}, session: adminsession
     assert_response :redirect
     assert_redirect_to_playdate_view(1)
 
-    assert_raise(ActiveRecord::RecordNotFound) { Availability.find(1) }
-  end
-
-  def test_no_route_to_destroy_without_id
-    assert_not_routed action: "destroy", controller: "availabilities"
-    assert_not_routed action: "destroy", controller: "availabilities", playdate_id: 1
+    assert_raises(ActiveRecord::RecordNotFound) { Availability.find(1) }
   end
 
   # Edit: Show edit screen.
-  def test_edit
+  it "edit" do
     get "edit", params: {playdate_id: 1, id: 1}, session: adminsession
 
     assert_response :success
     assert_template "edit"
 
-    assert_not_nil assigns(:availability)
+    refute_nil assigns(:availability)
     assert assigns(:availability).valid?
 
     assert_select "h1", "Editing availability"
@@ -57,12 +53,12 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_select "form[action=?] input[value='patch']", playdate_availability_path(1, 1)
 
     # Unknown id combo
-    _(proc { get "edit", params: {playdate_id: 2, id: 1}, session: adminsession })
-      .must_raise ActiveRecord::RecordNotFound
+    expect { get "edit", params: {playdate_id: 2, id: 1}, session: adminsession }
+      .to raise_error ActiveRecord::RecordNotFound
   end
 
   # Update: Edit, then return to list of availabilities for playdate.
-  def test_update
+  it "update" do
     put :update,
       params: {
         playdate_id: 1,
@@ -75,23 +71,18 @@ class AvailabilitiesControllerTest < ActionController::TestCase
     assert_redirect_to_playdate_view(1)
   end
 
-  def test_no_route_to_edit_without_id
-    assert_not_routed action: "edit", controller: "availabilities"
-    assert_not_routed action: "edit", controller: "availabilities", playdate_id: 1
-  end
-
-  def test_new
+  it "new" do
     get "new", params: {playdate_id: 1}, session: adminsession
 
     assert_response :success
     assert_template "new"
 
-    assert_not_nil assigns(:availability)
+    refute_nil assigns(:availability)
 
     assert_select "h1", "New availability"
   end
 
-  def test_create
+  it "create" do
     num_availabilities = Availability.count
 
     post :create,

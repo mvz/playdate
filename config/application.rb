@@ -15,7 +15,7 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
 require "sprockets/railtie"
-require "rails/test_unit/railtie"
+# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,7 +35,9 @@ module PlayDate
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.generators do |g|
-      g.test_framework :mini_test, spec: true, fixture: false
+      g.test_framework :rspec
+      g.system_tests nil
+      g.integration_tool nil
     end
 
     # Since this is an old application, it uses numbered migrations.

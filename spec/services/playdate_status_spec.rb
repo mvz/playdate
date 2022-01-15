@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class PlaydateStatusTest < ActiveSupport::TestCase
+RSpec.describe PlaydateStatus do
   MainController::MIN_PLAYERS = 2
+
+  fixtures :players, :playdates
 
   describe ".calculate" do
     it "sets code to no for a bad day" do
@@ -14,8 +16,8 @@ class PlaydateStatusTest < ActiveSupport::TestCase
         )
       end
 
-      result = PlaydateStatus.calculate(playdates, players)
-      _(result[playdates(:today)][:code]).must_equal 0
+      result = described_class.calculate(playdates, players)
+      expect(result[playdates(:today)][:code]).to eq 0
     end
   end
 end

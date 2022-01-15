@@ -30,6 +30,8 @@ gem "psych", "~> 4.0", require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+
+  gem "rspec-rails", "~> 5.0.0"
 end
 
 group :development do
@@ -39,14 +41,12 @@ group :development do
   gem "web-console", "~> 4.0"
 
   gem "rubocop", "~> 1.24.0", require: false
-  gem "rubocop-minitest", "~> 0.17.0", require: false
   gem "rubocop-performance", "~> 1.13.0", require: false
   gem "rubocop-rails", "~> 2.13.0", require: false
+  gem "rubocop-rspec", "~> 2.7.0", require: false
 end
 
-gem "blind", group: :test
-gem "minitest", "~> 5.12", group: :test
-gem "minitest-spec-rails", "~> 6.1.0", group: :test
-gem "simplecov", group: :test, require: false
-
-gem "rails-controller-testing", "~> 1.0", group: :test
+group :test do
+  gem "rails-controller-testing", "~> 1.0"
+  gem "simplecov", require: false
+end

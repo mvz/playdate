@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class AvailabilityTest < ActiveSupport::TestCase
-  REQ_ATTR_NAMES = %w[player playdate].freeze
+RSpec.describe Availability, type: :model do
+  fixtures :players, :playdates, :availabilities
 
-  def test_raw_validation
-    availability = Availability.new
-    assert_not availability.valid?
-    REQ_ATTR_NAMES.each do |attr_name|
+  required_attributes = %w[player playdate].freeze
+
+  it "raw_validation" do
+    availability = described_class.new
+    refute availability.valid?
+    required_attributes.each do |attr_name|
       assert availability.errors[attr_name.to_sym].any?,
         "Should be an error message for :#{attr_name}"
     end
   end
 
-  def test_new
-    availability = Availability.new
+  it "new" do
+    availability = described_class.new
 
     availability.player = players(:robert)
     availability.playdate = playdates(:friday)
@@ -27,17 +29,17 @@ class AvailabilityTest < ActiveSupport::TestCase
     assert_equal playdates(:friday), availability.playdate
   end
 
-  def test_fixtures_valid
+  it "fixtures_valid" do
     [:onfriday, :onsaturday].each do |a|
       assert availabilities(a).valid?, "Availability #{a} should be valid"
     end
   end
 
-  def test_constants
+  it "constants" do
     assert_equal 4, Availability::VALUES.length
   end
 
-  def test_status_character
+  it "status_character" do
     assert_equal "+", availabilities(:onfriday).status_character
     @onsaturday = availabilities(:onsaturday)
     assert_equal "h", @onsaturday.status_character

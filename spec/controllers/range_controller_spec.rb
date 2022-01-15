@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require "rails_helper"
 
-class RangeControllerTest < ActionController::TestCase
-  render_views!
+RSpec.describe RangeController, type: :controller do
+  fixtures :players, :playdates, :availabilities
 
-  def test_authorization
+  render_views
+
+  it "authorization" do
     get :new, params: {}, session: {}
     assert_redirected_to controller: "session", action: "new"
     post :create, params: {}, session: {}
     assert_redirected_to controller: "session", action: "new"
   end
 
-  def test_new
+  it "new" do
     oldcount = Playdate.count
     get :new, params: {}, session: playersession
     assert_response :success
@@ -25,7 +27,7 @@ class RangeControllerTest < ActionController::TestCase
   # FIXME: Use fixed dates rather than relying on logic based on the current
   # date. Test each case (only this month, also next month) separately, with
   # seperate checks for the borderline dates.
-  def test_create
+  it "create" do
     oldcount = Playdate.count
     post :create, params: {}, session: playersession
     assert_response :redirect
@@ -41,7 +43,7 @@ class RangeControllerTest < ActionController::TestCase
       end
     (startdate + 1).upto(enddate) do |day|
       if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
-        assert_not_nil Playdate.find_by(day: day)
+        refute_nil Playdate.find_by(day: day)
       else
         assert_nil Playdate.find_by(day: day)
       end
