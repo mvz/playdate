@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 #
 # This file eases your Rails 7.0 framework defaults upgrade.
@@ -99,7 +100,7 @@
 #
 # See https://guides.rubyonrails.org/action_controller_overview.html#cookies
 # for more information.
-# Rails.application.config.action_dispatch.cookies_serializer = :hybrid
+Rails.application.config.action_dispatch.cookies_serializer = :json
 
 # Enable parameter wrapping for JSON.
 # Previously this was set in an initializer. It's fine to keep using that
