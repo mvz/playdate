@@ -71,7 +71,7 @@ Lint/AssignmentInCondition:
 Performance/StartWith:
   AutoCorrect: true
 
-RSpec/Capaybara/FeatureMethods:
+RSpec/Capybara/FeatureMethods:
   Exclude:
     - 'spec/features/**/*_spec.rb'
 
