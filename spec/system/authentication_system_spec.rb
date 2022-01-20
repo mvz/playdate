@@ -20,6 +20,9 @@ RSpec.describe "Authentication system", type: :system do
 
     expect(page).to have_text("Ingelogd als #{admin.full_name}")
 
+    # FIXME: This shouldn't be needed.
+    sleep 0.01
+
     click_link "Uitloggen"
 
     aggregate_failures do
