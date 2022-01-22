@@ -28,4 +28,12 @@ RSpec.describe "Players", type: :system do
     click_button "Aanmaken"
     expect(page).to have_text "Roger N. Player"
   end
+
+  it "enables the admin to update players" do
+    click_link "Spelers"
+    find_all("a", text: "Bewerken")[1].click
+    fill_in :player_full_name, with: "Not Your Original Name"
+    click_button "Update"
+    expect(page).to have_text "Not Your Original Name"
+  end
 end
