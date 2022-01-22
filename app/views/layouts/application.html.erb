@@ -15,7 +15,7 @@
     <div id="box" class="wrapper">
       <% if current_user %>
         <p class="logout">Ingelogd als <%= h current_user.full_name %>.
-        <%= link_to 'Uitloggen', { controller: 'session', action: 'destroy' }, data: { 'turbo-method': :post } %></p>
+        <%= link_to 'Uitloggen', { controller: 'session', action: 'destroy' }, data: { turbo_method: :post } %></p>
       <% end %>
 
       <h1><%= yield :page_title %></h1>
