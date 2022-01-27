@@ -38,7 +38,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
-  gem "rspec-rails", "~> 5.1.0"
+  gem "rspec-rails", "~> 5.1"
 end
 
 group :development do
@@ -47,10 +47,10 @@ group :development do
   # anywhere in the code.
   gem "web-console", "~> 4.0"
 
-  gem "rubocop", "~> 1.25.0", require: false
-  gem "rubocop-performance", "~> 1.13.0", require: false
-  gem "rubocop-rails", "~> 2.13.0", require: false
-  gem "rubocop-rspec", "~> 2.8.0", require: false
+  gem "rubocop", "~> 1.25", require: false
+  gem "rubocop-performance", "~> 1.13", require: false
+  gem "rubocop-rails", "~> 2.13", require: false
+  gem "rubocop-rspec", "~> 2.8", require: false
 end
 
 group :test do
