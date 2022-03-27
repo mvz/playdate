@@ -4,8 +4,6 @@ linters:
   ErbSafety:
     enabled: true
     better_html_config: .better-html.yml
-  RequireInputAutocomplete:
-    enabled: false
   Rubocop:
     enabled: true
     rubocop_config:
