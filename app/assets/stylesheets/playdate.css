@@ -27,10 +27,13 @@ h1 {
 }
 
 .logout {
+  display: flex;
   font-size: 80%;
-  text-align: right;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 0.5em;
+  padding-right: 0.5em;
   margin: 0px;
-  margin-right: 0.5em;
 }
 
 table {
