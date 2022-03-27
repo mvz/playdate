@@ -28,19 +28,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - name: Set up Node
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: '12'
-      - uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-yarn-
-
-      - name: Install Node modules
-        run: yarn install
       - name: Run tests
         run: bundle exec rake
 
