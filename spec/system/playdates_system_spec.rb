@@ -29,6 +29,6 @@ RSpec.describe "Playdates system", type: :system do
       click_link "Opruimen"
     end
 
-    expect(page).to have_text "Oude speeldagen zijn opgeruimd."
+    expect(page).to have_text I18n.t!("playdates.prune.notice")
   end
 end

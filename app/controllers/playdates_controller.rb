@@ -26,7 +26,7 @@ class PlaydatesController < ApplicationController
   def create
     if params[:playdate]
       @playdate = Playdate.new(playdate_params)
-      flash[:notice] = "De nieuwe speeldag is toegevoegd." if @playdate.save
+      flash[:notice] = t(".notice") if @playdate.save
       respond_with @playdate, location: playdates_path
     else
       @period = (params[:period] || PERIOD_THIS_MONTH).to_i
@@ -37,13 +37,13 @@ class PlaydatesController < ApplicationController
 
   def destroy
     @playdate = Playdate.find(params[:id])
-    flash[:notice] = "De speeldag is verwijderd." if @playdate.destroy
+    flash[:notice] = t(".notice") if @playdate.destroy
     respond_with @playdate, location: playdates_path
   end
 
   def prune
     Playdate.irrelevant.each(&:destroy)
-    flash[:notice] = "Oude speeldagen zijn opgeruimd."
+    flash[:notice] = t(".notice")
     redirect_to playdates_path
   end
 
@@ -51,12 +51,12 @@ class PlaydatesController < ApplicationController
 
   def save_new_range(period, daytype)
     unless [DAY_SATURDAY, DAY_FRIDAY].include?(daytype)
-      flash[:notice] = "Invalid day!"
+      flash[:notice] = t("playdates.alerts.invalid_day")
       render :new
       return
     end
     unless [PERIOD_THIS_MONTH, PERIOD_NEXT_MONTH].include?(period)
-      flash[:notice] = "Invalid period!"
+      flash[:notice] = t("playdates.alerts.invalid_period")
       render :new
       return
     end
@@ -64,10 +64,10 @@ class PlaydatesController < ApplicationController
     count = Playdate.make_new_range(period, daytype)
 
     if count > 0
-      flash[:notice] = "Saved #{count}."
+      flash[:notice] = t("playdates.notices.saved_new_range", count: count)
       redirect_to action: "index"
     else
-      flash[:notice] = "Er zijn geen nieuwe datums toegevoegd."
+      flash[:notice] = t("playdates.notices.saved_none")
       render :new
     end
   end

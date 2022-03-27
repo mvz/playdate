@@ -14,7 +14,7 @@ class PlayersController < ApplicationController
 
   def create
     @player = Player.new(player_params)
-    flash[:notice] = "Player was successfully created." if @player.save
+    flash[:notice] = t(".notice") if @player.save
     respond_with @player, location: players_path
   end
 
@@ -25,7 +25,7 @@ class PlayersController < ApplicationController
   def update
     @player = Player.find(params[:id])
 
-    flash[:notice] = "Player was successfully updated." if @player.update player_params
+    flash[:notice] = t(".notice") if @player.update player_params
     respond_with @player, location: players_path
   end
 
@@ -33,13 +33,13 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     if @player == current_user
-      flash[:error] = "Cannot delete yourself"
+      flash[:error] = t(".cannot_delete_self")
       redirect_to(players_url)
     else
       if @player.destroy
-        flash[:notice] = "Player was successfully destroyed."
+        flash[:notice] = t(".notice")
       else
-        flash[:error] = "Destroying the player failed."
+        flash[:error] = t(".failed")
       end
       respond_with @player, location: players_path
     end

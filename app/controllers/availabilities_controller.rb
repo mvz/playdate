@@ -13,7 +13,7 @@ class AvailabilitiesController < ApplicationController
 
   def create
     @availability = @playdate.availabilities.build(new_availability_params)
-    flash[:notice] = "A new availability was successfully added." if @availability.save
+    flash[:notice] = t(".notice") if @availability.save
     respond_with @availability, location: playdate_path(@playdate)
   end
 
@@ -22,15 +22,13 @@ class AvailabilitiesController < ApplicationController
   end
 
   def update
-    if @availability.update(edit_availability_params)
-      flash[:notice] = "The availability was successfully edited."
-    end
+    flash[:notice] = t(".notice") if @availability.update(edit_availability_params)
     respond_with @availability, location: playdate_path(@playdate)
   end
 
   def destroy
     @availability.destroy
-    flash[:notice] = "The availability was successfully destroyed."
+    flash[:notice] = t(".notice")
     respond_with @availability, location: playdate_path(@playdate)
   end
 
