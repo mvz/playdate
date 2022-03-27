@@ -24,13 +24,13 @@ class ApplicationController < ActionController::Base
   attr_reader :current_user
 
   def access_denied_not_logged_in
-    flash[:notice] = "Log eerst in om Playdate te gebruiken."
+    flash[:notice] = t("application.notice.log_in_first")
     redirect_to(controller: "session", action: "new")
     false
   end
 
   def access_denied_no_admin
-    flash[:notice] = "Toegang geweigerd: Je bent geen beheerder."
+    flash[:notice] = t("application.notice.access_denied_no_admin")
     redirect_to(controller: "main", action: "index")
     false
   end
