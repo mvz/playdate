@@ -1,0 +1,25 @@
+---
+EnableDefaultLinters: true
+linters:
+  ErbSafety:
+    enabled: true
+    better_html_config: .better-html.yml
+  RequireInputAutocomplete:
+    enabled: false
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      AllCops:
+        TargetRubyVersion: 2.7
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/TrailingEmptyLines:
+        Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false
+      Style/FrozenStringLiteralComment:
+        Enabled: false
+      Style/StringLiterals:
+        EnforcedStyle: double_quotes
+      Style/StringLiteralsInInterpolation:
+        EnforcedStyle: double_quotes

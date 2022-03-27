@@ -21,11 +21,11 @@
       <td><%= h player.is_admin %></td>
       <td><%= h status_display(player.default_status) %></td>
       <td class="action">
-        <%= link_to 'Bewerken', edit_player_path(player) %>
+        <%= link_to "Bewerken", edit_player_path(player) %>
       </td>
       <td class="action">
         <% unless player == current_user %>
-          <%= link_to 'Destroy', player, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+          <%= link_to "Destroy", player, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
         <% end %>
       </td>
     </tr>
@@ -34,4 +34,4 @@
 
 <%= will_paginate @players %>
 
-<%= link_to 'New player', new_player_path %>
+<%= link_to "New player", new_player_path %>

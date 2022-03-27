@@ -6,9 +6,9 @@
 
 <%= form_for(@player) do |f| %>
   <p>
-  <%= render 'form_fields', f: f %>
+  <%= render "form_fields", f: f %>
   <%= f.submit "Aanmaken" %>
   </p>
 <% end %>
 
-<%= link_to 'Terug', players_path %>
+<%= link_to "Terug", players_path %>
