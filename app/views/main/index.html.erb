@@ -21,7 +21,7 @@
     <% end %>
     <td class="action">
       <% if can_dates_be_added? then -%>
-        <%= link_to 'Meer>>', { controller: 'range', action: 'create' }, data: { turbo_method: :post } %>
+        <%= link_to "Meer>>", { controller: "range", action: "create" }, data: { turbo_method: :post } %>
       <% end -%>
     </td>
   </tr>
@@ -38,7 +38,7 @@
         <td></td>
       <% end -%>
       <td class="action <%= class_if_current_user(player) %>">
-        <%= link_to 'Wijzigen', action: 'edit' if player == current_user %>
+        <%= link_to "Wijzigen", action: "edit" if player == current_user %>
       </td>
     </tr>
   <% end %>

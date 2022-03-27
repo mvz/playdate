@@ -7,11 +7,11 @@
     <%= form_tag do %>
       <p>
       <label for="name">Naam:</label>
-      <%= text_field_tag :name, params[:name] %>
+      <%= text_field_tag :name, params[:name], autocomplete: "username" %>
       </p>
       <p>
       <label for="password">Wachtwoord:</label>
-      <%= password_field_tag :password, params[:password] %>
+      <%= password_field_tag :password, params[:password], autocomplete: "current-password" %>
       </p>
       <p><%= submit_tag "Inloggen" %></p>
     <% end %>

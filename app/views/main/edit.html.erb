@@ -5,7 +5,7 @@
 <div class="playdate-form">
   <fieldset>
     <legend>Vul hieronder in wanneer je beschikbaar bent.</legend>
-    <%= form_tag action: 'edit' do -%>
+    <%= form_tag action: "edit" do -%>
       <table>
         <tr>
           <th>Datum</th>
@@ -16,14 +16,14 @@
             <td><%= h nice_date_display(playdate.day) %></td>
             <td>
               <%= fields_for :availability, current_user.availability_for_playdate(playdate) do |av_fields| %>
-                <%= av_fields.select 'status', availability_options, {}, { index: playdate.id } %>
+                <%= av_fields.select "status", availability_options, {}, { index: playdate.id } %>
               <% end %>
             </td>
           </tr>
         <% end %>
       </table>
-      <p><%= submit_tag 'Opslaan' %></p>
-      <p><%= link_to 'Terug naar overzicht', action: 'index' %></p>
+      <p><%= submit_tag "Opslaan" %></p>
+      <p><%= link_to "Terug naar overzicht", action: "index" %></p>
     <% end %>
   </fieldset>
 </div>
