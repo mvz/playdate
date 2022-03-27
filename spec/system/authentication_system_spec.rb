@@ -8,7 +8,7 @@ RSpec.describe "Authentication system", type: :system do
   let(:admin) { players(:admin) }
 
   before do
-    driven_by :selenium, using: :headless_firefox
+    driven_by(:rack_test)
     admin.update!(password: "foobar")
   end
 
@@ -20,10 +20,7 @@ RSpec.describe "Authentication system", type: :system do
 
     expect(page).to have_text("Ingelogd als #{admin.full_name}")
 
-    # FIXME: This shouldn't be needed.
-    sleep 0.01
-
-    click_link "Uitloggen"
+    click_link_or_button "Uitloggen"
 
     aggregate_failures do
       expect(page).not_to have_text("Ingelogd als #{admin.full_name}")
