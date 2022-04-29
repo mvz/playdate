@@ -20,8 +20,8 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 gem "dynamic_form"
+gem "propshaft", "~> 0.6.4"
 gem "responders", "~> 3.0"
-gem "sprockets-rails", "~> 3.4.2"
 gem "will_paginate", "~> 3.3.0"
 
 # Use Active Model has_secure_password
