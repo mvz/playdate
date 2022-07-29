@@ -22,7 +22,7 @@ RSpec.describe MainController, type: :controller do
     refute_nil assigns(:playdates)
     assert_equal [playdates(:today), playdates(:tomorrow)], assigns(:playdates)
     refute_nil assigns(:stats)
-    assert_select 'a[href="/more"]'
+    expect(response.body).to have_button "Meer>>"
     assert_select 'a[href="/playdates"]', false
 
     assert_select "h1", "Playdate! The Application"

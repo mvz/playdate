@@ -51,7 +51,7 @@ RSpec.describe PlaydatesController, type: :controller do
 
     assert_select "h1", "Speeldagen"
 
-    assert_select "a[href=?][data-turbo-method=delete]", playdate_path(1), "Verwijderen"
+    expect(response.body).to have_button "Verwijderen"
   end
 
   it "new" do
@@ -113,8 +113,7 @@ RSpec.describe PlaydatesController, type: :controller do
     assert_select "h1", "Speeldag: 2006-02-10"
 
     assert_select "a[href=?]", edit_playdate_availability_path(1, 1)
-    # XXX: Rather technical test.
-    assert_select "a[href=?][data-turbo-method=delete]", playdate_availability_path(1, 1)
+    expect(response.body).to have_button "Verwijderen"
   end
 
   it "prune_using_post" do
