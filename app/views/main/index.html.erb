@@ -21,7 +21,7 @@
     <% end %>
     <td class="action">
       <% if can_dates_be_added? then -%>
-        <%= link_to "Meer>>", { controller: "range", action: "create" }, data: { turbo_method: :post } %>
+        <%= button_to "Meer>>", { controller: "range", action: "create" }, form: { data: { turbo_method: :post } } %>
       <% end -%>
     </td>
   </tr>

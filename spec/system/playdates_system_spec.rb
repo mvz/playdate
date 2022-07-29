@@ -26,7 +26,7 @@ RSpec.describe "Playdates system", type: :system do
     sleep 0.01
 
     accept_confirm do
-      click_link "Opruimen"
+      click_link_or_button "Opruimen"
     end
 
     expect(page).to have_text I18n.t!("playdates.prune.notice")
