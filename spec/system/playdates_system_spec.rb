@@ -22,9 +22,6 @@ RSpec.describe "Playdates system", type: :system do
 
     expect(page).to have_content "Speeldagen"
 
-    # FIXME: This shouldn't be needed.
-    sleep 0.01
-
     accept_confirm do
       click_link_or_button "Opruimen"
     end
