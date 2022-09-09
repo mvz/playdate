@@ -51,12 +51,12 @@ class PlaydatesController < ApplicationController
 
   def save_new_range(period, daytype)
     unless [DAY_SATURDAY, DAY_FRIDAY].include?(daytype)
-      flash[:notice] = t("playdates.alerts.invalid_day")
+      flash.now[:notice] = t("playdates.alerts.invalid_day")
       render :new
       return
     end
     unless [PERIOD_THIS_MONTH, PERIOD_NEXT_MONTH].include?(period)
-      flash[:notice] = t("playdates.alerts.invalid_period")
+      flash.now[:notice] = t("playdates.alerts.invalid_period")
       render :new
       return
     end
@@ -67,7 +67,7 @@ class PlaydatesController < ApplicationController
       flash[:notice] = t("playdates.notices.saved_new_range", count: count)
       redirect_to action: "index"
     else
-      flash[:notice] = t("playdates.notices.saved_none")
+      flash.now[:notice] = t("playdates.notices.saved_none")
       render :new
     end
   end
