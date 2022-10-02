@@ -8,26 +8,23 @@ RSpec.describe CredentialsController, type: :controller do
 
   it "edit_password" do
     get :edit
-    assert_response :redirect
-    assert_redirected_to controller: "session", action: "new"
+    expect(response).to redirect_to controller: "session", action: "new"
     get :edit, params: {}, session: playersession
-    assert_response :success
-    assert_select "h1", "Wachtwoord wijzigen"
+    expect(response).to be_successful
+    expect(response.body).to have_css "h1", text: "Wachtwoord wijzigen"
   end
 
   it "update_password" do
     post :update, params: {player: {password: "slurp", password_confirmation: "slurp"}}
-    assert_response :redirect
-    assert_redirected_to controller: "session", action: "new"
+    expect(response).to redirect_to controller: "session", action: "new"
     post :update,
       params: {player: {password: "slurp", password_confirmation: "slurp"}},
       session: playersession
-    assert_response :redirect
-    assert_redirected_to controller: "main", action: "index"
+    expect(response).to redirect_to controller: "main", action: "index"
     post :update,
       params: {player: {password: "slu", password_confirmation: "slurp"}},
       session: playersession
-    assert_response :success
+    expect(response).to be_successful
   end
 
   private

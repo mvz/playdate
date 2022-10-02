@@ -8,9 +8,9 @@ RSpec.describe SessionController, type: :controller do
 
   it "login_intent" do
     get :new
-    assert_response :success
-    assert_template "new"
-    assert_select "h1", "Inloggen in Playdate"
+    expect(response).to be_successful
+    expect(response).to render_template "new"
+    expect(response.body).to have_css "h1", text: "Inloggen in Playdate"
   end
 
   it "login" do
@@ -19,27 +19,26 @@ RSpec.describe SessionController, type: :controller do
     matijs.password_confirmation = "gnoef!"
     matijs.save!
     post :create, params: {name: "matijs", password: "gnoef!"}
-    assert_redirected_to controller: "main", action: "index"
+    expect(response).to redirect_to controller: "main", action: "index"
     post :create, params: {name: "matijs", password: "zonk"}
-    assert_response :success
-    assert_template "new"
+    expect(response).to be_successful
+    expect(response).to render_template "new"
   end
 
   it "logout_intent" do
     get :edit
-    assert_response :redirect
+    expect(response).to be_redirect
     get :edit, params: {}, session: playersession
-    assert_response :success
-    refute_nil session[:user_id]
-    assert_template "edit"
-    assert_select "h1", "Uitloggen"
+    expect(response).to be_successful
+    expect(session[:user_id]).not_to be_nil
+    expect(response).to render_template "edit"
+    expect(response.body).to have_css "h1", text: "Uitloggen"
   end
 
   it "logout" do
     post :destroy, params: {}, session: playersession
-    assert_response :redirect
-    assert_redirected_to controller: "session", action: "new"
-    assert_nil session[:user_id]
+    expect(response).to redirect_to controller: "session", action: "new"
+    expect(session[:user_id]).to be_nil
   end
 
   private

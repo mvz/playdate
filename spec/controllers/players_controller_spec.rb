@@ -11,7 +11,7 @@ RSpec.describe PlayersController, type: :controller do
     [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
       it "requires login for #{m} #{a}" do
         send m, a, params: {id: 1}
-        assert_redirected_to login_path
+        expect(response).to redirect_to login_path
       end
     end
   end
@@ -22,7 +22,7 @@ RSpec.describe PlayersController, type: :controller do
     [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
       it "denies access for #{m} #{a}" do
         send m, a, params: {id: 1}, session: playersession
-        assert_redirected_to root_path
+        expect(response).to redirect_to root_path
       end
     end
   end
@@ -35,11 +35,11 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "renders index" do
-      assert_template "index"
+      expect(response).to render_template "index"
     end
 
     it "has the correct heading" do
-      assert_select "h1", "Spelers"
+      expect(response.body).to have_css "h1", text: "Spelers"
     end
   end
 
@@ -51,11 +51,11 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "renders edit" do
-      assert_template "edit"
+      expect(response).to render_template "edit"
     end
 
     it "has the correct heading" do
-      assert_select "h1", "Speler bewerken"
+      expect(response.body).to have_css "h1", text: "Speler bewerken"
     end
   end
 
@@ -67,11 +67,11 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "renders new" do
-      assert_template "new"
+      expect(response).to render_template "new"
     end
 
     it "has the correct heading" do
-      assert_select "h1", "Nieuwe speler"
+      expect(response.body).to have_css "h1", text: "Nieuwe speler"
     end
   end
 
@@ -94,11 +94,11 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "redirects to the player list" do
-      assert_redirected_to players_path
+      expect(response).to redirect_to players_path
     end
 
     it "increases the number of players" do
-      assert_equal @player_count + 1, Player.all.length
+      expect(Player.all.length).to eq @player_count + 1
     end
   end
 
@@ -113,23 +113,23 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "redirects to the player list" do
-      assert_redirected_to players_path
+      expect(response).to redirect_to players_path
     end
 
     it "decreases the number of players" do
-      assert_equal @player_count - 1, Player.all.length
+      expect(Player.all.length).to eq @player_count - 1
     end
 
     it "destroys the player's availabilities" do
-      assert @num_player_avs > 0
-      assert_equal @num_avs - @num_player_avs, Availability.count
+      expect(@num_player_avs).to be > 0
+      expect(Availability.count).to eq @num_avs - @num_player_avs
     end
 
     describe "when attempting to destroy onesself" do
       let(:player) { players(:admin) }
 
       it "does not reduce the number of players" do
-        assert_equal @player_count, Player.all.length
+        expect(Player.all.length).to eq @player_count
       end
     end
   end
@@ -157,7 +157,7 @@ RSpec.describe PlayersController, type: :controller do
 
     it "redirects to the player list" do
       post :update, params: {id: 1, player: player_params}, session: adminsession
-      assert_redirected_to players_path
+      expect(response).to redirect_to players_path
     end
   end
 end

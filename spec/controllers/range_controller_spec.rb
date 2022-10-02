@@ -9,19 +9,19 @@ RSpec.describe RangeController, type: :controller do
 
   it "authorization" do
     get :new, params: {}, session: {}
-    assert_redirected_to controller: "session", action: "new"
+    expect(response).to redirect_to controller: "session", action: "new"
     post :create, params: {}, session: {}
-    assert_redirected_to controller: "session", action: "new"
+    expect(response).to redirect_to controller: "session", action: "new"
   end
 
   it "new" do
     oldcount = Playdate.count
     get :new, params: {}, session: playersession
-    assert_response :success
-    assert_template "new"
-    assert_select "form"
-    assert_equal Playdate.count, oldcount
-    assert_select "h1", "Speeldagen toevoegen"
+    expect(response).to be_successful
+    expect(response).to render_template "new"
+    expect(response.body).to have_css "form"
+    expect(oldcount).to eq Playdate.count
+    expect(response.body).to have_css "h1", text: "Speeldagen toevoegen"
   end
 
   # FIXME: Use fixed dates rather than relying on logic based on the current
@@ -30,10 +30,9 @@ RSpec.describe RangeController, type: :controller do
   it "create" do
     oldcount = Playdate.count
     post :create, params: {}, session: playersession
-    assert_response :redirect
-    assert_redirected_to controller: "main", action: "index"
-    assert_operator Playdate.count, :>, oldcount + 1
-    assert_operator Playdate.count, :<=, oldcount + 12
+    expect(response).to redirect_to controller: "main", action: "index"
+    expect(Playdate.count).to be > oldcount + 1
+    expect(Playdate.count).to be <= oldcount + 12
     startdate = Time.zone.today + 1
     enddate =
       if startdate + 7 <= Time.zone.today.end_of_month
@@ -43,9 +42,9 @@ RSpec.describe RangeController, type: :controller do
       end
     (startdate + 1).upto(enddate) do |day|
       if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
-        refute_nil Playdate.find_by(day: day)
+        expect(Playdate.find_by(day: day)).not_to be_nil
       else
-        assert_nil Playdate.find_by(day: day)
+        expect(Playdate.find_by(day: day)).to be_nil
       end
     end
   end

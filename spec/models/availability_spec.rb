@@ -5,14 +5,15 @@ require "rails_helper"
 RSpec.describe Availability, type: :model do
   fixtures :players, :playdates, :availabilities
 
-  required_attributes = %w[player playdate].freeze
+  describe "validations" do
+    let(:availability) { described_class.new }
 
-  it "raw_validation" do
-    availability = described_class.new
-    refute availability.valid?
-    required_attributes.each do |attr_name|
-      assert availability.errors[attr_name.to_sym].any?,
-        "Should be an error message for :#{attr_name}"
+    it "requires player to be present" do
+      expect(availability).to belong_to :player
+    end
+
+    it "requires playdate to be present" do
+      expect(availability).to belong_to :playdate
     end
   end
 
@@ -23,29 +24,29 @@ RSpec.describe Availability, type: :model do
     availability.playdate = playdates(:friday)
     availability.status = Availability::STATUS_JA
 
-    assert availability.valid?
-    assert_equal 1, availability.status
-    assert_equal players(:robert), availability.player
-    assert_equal playdates(:friday), availability.playdate
+    expect(availability).to be_valid
+    expect(availability.status).to eq 1
+    expect(availability.player).to eq players(:robert)
+    expect(availability.playdate).to eq playdates(:friday)
   end
 
   it "fixtures_valid" do
     [:onfriday, :onsaturday].each do |a|
-      assert availabilities(a).valid?, "Availability #{a} should be valid"
+      expect(availabilities(a)).to be_valid
     end
   end
 
   it "constants" do
-    assert_equal 4, Availability::VALUES.length
+    expect(Availability::VALUES.length).to eq 4
   end
 
   it "status_character" do
-    assert_equal "+", availabilities(:onfriday).status_character
+    expect(availabilities(:onfriday).status_character).to eq "+"
     @onsaturday = availabilities(:onsaturday)
-    assert_equal "h", @onsaturday.status_character
+    expect(@onsaturday.status_character).to eq "h"
     @onsaturday.status = Availability::STATUS_NEE
-    assert_equal "−", @onsaturday.status_character
+    expect(@onsaturday.status_character).to eq "−"
     @onsaturday.status = Availability::STATUS_MISSCHIEN
-    assert_equal "?", @onsaturday.status_character
+    expect(@onsaturday.status_character).to eq "?"
   end
 end
