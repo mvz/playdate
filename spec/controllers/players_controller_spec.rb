@@ -84,16 +84,13 @@ RSpec.describe PlayersController, type: :controller do
        password_confirmation: "test123"}
     end
 
-    before do
-      @player_count = Player.all.length
-      post :create, params: {player: player_params}, session: adminsession
-    end
-
     it "assigns to @player" do
+      post :create, params: {player: player_params}, session: adminsession
       expect(assigns(:player)).not_to be_nil
     end
 
     it "redirects to the player list with a message" do
+      post :create, params: {player: player_params}, session: adminsession
       aggregate_failures do
         expect(response).to redirect_to players_path
         expect(request).to set_flash[:notice].to I18n.t("flash.players.create.notice")
@@ -101,21 +98,16 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "increases the number of players" do
-      expect(Player.all.length).to eq @player_count + 1
+      expect { post :create, params: {player: player_params}, session: adminsession }
+        .to change(Player, :count).by 1
     end
   end
 
   describe "#destroy" do
     let(:player) { players(:matijs) }
 
-    before do
-      @player_count = Player.all.length
-      @num_avs = Availability.count
-      @num_player_avs = player.availabilities.count
-      post :destroy, params: {id: player.id}, session: adminsession
-    end
-
     it "redirects to the player list with a message" do
+      post :destroy, params: {id: player.id}, session: adminsession
       aggregate_failures do
         expect(response).to redirect_to players_path
         expect(request).to set_flash[:notice].to I18n.t("flash.players.destroy.notice")
@@ -123,19 +115,23 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "decreases the number of players" do
-      expect(Player.all.length).to eq @player_count - 1
+      expect { post :destroy, params: {id: player.id}, session: adminsession }
+        .to change(Player, :count).by(-1)
     end
 
     it "destroys the player's availabilities" do
-      expect(@num_player_avs).to be > 0
-      expect(Availability.count).to eq @num_avs - @num_player_avs
+      num_player_avs = player.availabilities.count
+      expect(num_player_avs).to be > 0
+      expect { post :destroy, params: {id: player.id}, session: adminsession }
+        .to change(Availability, :count).by(-num_player_avs)
     end
 
     describe "when attempting to destroy onesself" do
       let(:player) { players(:admin) }
 
       it "does not reduce the number of players" do
-        expect(Player.all.length).to eq @player_count
+        expect { post :destroy, params: {id: player.id}, session: adminsession }
+          .not_to change(Player, :count)
       end
     end
   end

@@ -28,7 +28,6 @@ RSpec/ExampleLength:
 # Configuration parameters: AssignmentOnly.
 RSpec/InstanceVariable:
   Exclude:
-    - 'spec/controllers/players_controller_spec.rb'
     - 'spec/models/availability_spec.rb'
     - 'spec/models/player_spec.rb'
 
