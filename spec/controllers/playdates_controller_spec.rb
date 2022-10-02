@@ -10,7 +10,7 @@ RSpec.describe PlaydatesController, type: :controller do
     [:destroy, :index, :new, :show, :prune].product([:get, :post]) do |(a, m)|
       it "requires login for #{m} #{a}" do
         send m, a, params: {id: 1}
-        assert_redirected_to login_path
+        expect(response).to redirect_to login_path
       end
     end
   end
@@ -21,35 +21,34 @@ RSpec.describe PlaydatesController, type: :controller do
     [:destroy, :index, :new, :show, :prune].product([:get, :post]) do |(a, m)|
       it "denies access for #{m} #{a}" do
         send m, a, params: {id: 1}, session: playersession
-        assert_redirected_to root_path
+        expect(response).to redirect_to root_path
       end
     end
   end
 
   it "destroy" do
     pd = Playdate.find(1)
-    refute_nil pd
+    expect(pd).not_to be_nil
     num_avs = Availability.count
     num_pd_avs = pd.availabilities.count
-    assert num_pd_avs > 0, "Test won't work if pd has no availabilities"
+    expect(num_pd_avs).to be > 0
 
     delete "destroy", params: {id: 1}, session: adminsession
-    assert_response :redirect
-    assert_redirected_to controller: "playdates", action: "index"
+    expect(response).to redirect_to controller: "playdates", action: "index"
 
-    assert_raises(ActiveRecord::RecordNotFound) { Playdate.find(1) }
-    assert_equal num_avs - num_pd_avs, Availability.count
+    expect { Playdate.find(1) }.to raise_error ActiveRecord::RecordNotFound
+    expect(Availability.count).to eq num_avs - num_pd_avs
   end
 
   it "index" do
     get "index", params: {}, session: adminsession
 
-    assert_response :success
-    assert_template "index"
+    expect(response).to be_successful
+    expect(response).to render_template "index"
 
-    refute_nil assigns(:playdates)
+    expect(assigns(:playdates)).not_to be_nil
 
-    assert_select "h1", "Speeldagen"
+    expect(response.body).to have_css "h1", text: "Speeldagen"
 
     expect(response.body).to have_button "Verwijderen"
   end
@@ -57,13 +56,13 @@ RSpec.describe PlaydatesController, type: :controller do
   it "new" do
     get "new", params: {}, session: adminsession
 
-    assert_response :success
-    assert_template "new"
+    expect(response).to be_successful
+    expect(response).to render_template "new"
 
-    refute_nil assigns(:playdate)
+    expect(assigns(:playdate)).not_to be_nil
 
-    assert_select "h1", "Nieuwe speeldagen"
-    assert_select "form[action=?]", playdates_path
+    expect(response.body).to have_css "h1", text: "Nieuwe speeldagen"
+    expect(response.body).to have_css "form[action=\"#{playdates_path}\"]"
   end
 
   it "create" do
@@ -71,10 +70,9 @@ RSpec.describe PlaydatesController, type: :controller do
 
     post "create", params: {playdate: {day: "2006-03-11"}}, session: adminsession
 
-    assert_response :redirect
-    assert_redirected_to controller: "playdates", action: "index"
+    expect(response).to redirect_to controller: "playdates", action: "index"
 
-    assert_equal num_playdates + 1, Playdate.count
+    expect(Playdate.count).to eq num_playdates + 1
   end
 
   it "create_with_range" do
@@ -82,49 +80,50 @@ RSpec.describe PlaydatesController, type: :controller do
 
     post "create", params: {period: 2, daytype: 6}, session: adminsession
 
-    assert_response :redirect
-    assert_redirected_to controller: "playdates", action: "index"
+    expect(response).to redirect_to controller: "playdates", action: "index"
 
-    assert_operator Playdate.count, :>=, num_playdates + 4
-    assert_operator Playdate.count, :<=, num_playdates + 10
+    expect(Playdate.count).to be >= num_playdates + 4
+    expect(Playdate.count).to be <= num_playdates + 10
   end
 
   it "create_with_range_invalid_period" do
     post "create", params: {period: 3, daytype: 6}, session: adminsession
 
-    assert_template :new
+    expect(response).to render_template :new
   end
 
   it "create_with_range_invalid_day_type" do
     post "create", params: {period: 2, daytype: 7}, session: adminsession
 
-    assert_template :new
+    expect(response).to render_template :new
   end
 
   it "show" do
     get "show", params: {id: 1}, session: adminsession
 
-    assert_response :success
-    assert_template "show"
+    aggregate_failures do
+      expect(response).to be_successful
+      expect(response).to render_template "show"
 
-    refute_nil assigns(:playdate)
-    assert assigns(:playdate).valid?
+      expect(assigns(:playdate)).not_to be_nil
+      expect(assigns(:playdate)).to be_valid
 
-    assert_select "h1", "Speeldag: 2006-02-10"
+      expect(response.body).to have_css "h1", text: "Speeldag: 2006-02-10"
 
-    assert_select "a[href=?]", edit_playdate_availability_path(1, 1)
-    expect(response.body).to have_button "Verwijderen"
+      expect(response.body)
+        .to have_css "a[href=\"#{edit_playdate_availability_path(1, 1)}\"]"
+      expect(response.body).to have_button "Verwijderen"
+    end
   end
 
   it "prune_using_post" do
     num_playdates = Playdate.count
-    assert_equal 4, num_playdates
+    expect(num_playdates).to eq 4
     post "prune", params: {}, session: adminsession
 
-    assert_response :redirect
-    assert_redirected_to controller: "playdates", action: "index"
-    assert_equal 2, Playdate.count
-    assert_equal [3, 4], Playdate.all.map(&:id).sort
+    expect(response).to redirect_to controller: "playdates", action: "index"
+    expect(Playdate.count).to eq 2
+    expect(Playdate.all.map(&:id).sort).to eq [3, 4]
   end
 
   private

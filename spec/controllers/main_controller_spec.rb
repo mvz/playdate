@@ -11,30 +11,33 @@ RSpec.describe MainController, type: :controller do
   it "authorization" do
     [:index, :edit, :update].product([:get, :post]) do |(a, m)|
       method(m).call(a, params: {}, session: {})
-      assert_redirected_to controller: "session", action: "new"
+      expect(response).to redirect_to controller: "session", action: "new"
     end
   end
 
   it "index_as_user" do
     get :index, params: {}, session: playersession
-    assert_response :success
-    assert_template "index"
-    refute_nil assigns(:playdates)
-    assert_equal [playdates(:today), playdates(:tomorrow)], assigns(:playdates)
-    refute_nil assigns(:stats)
-    expect(response.body).to have_button "Meer>>"
-    assert_select 'a[href="/playdates"]', false
 
-    assert_select "h1", "Playdate! The Application"
+    aggregate_failures do
+      expect(response).to be_successful
+      expect(response).to render_template "index"
+      expect(assigns(:playdates)).not_to be_nil
+      expect(assigns(:playdates)).to eq [playdates(:today), playdates(:tomorrow)]
+      expect(assigns(:stats)).not_to be_nil
+      expect(response.body).to have_button "Meer>>"
+      expect(response.body).not_to have_link href: "/playdates"
+
+      expect(response.body).to have_css "h1", text: "Playdate! The Application"
+    end
   end
 
   it "index_as_admin" do
     get :index, params: {}, session: adminsession
-    assert_response :success
-    assert_template "index"
-    refute_nil assigns(:playdates)
-    refute_nil assigns(:stats)
-    assert_select 'a[href="/playdates"]'
+    expect(response).to be_successful
+    expect(response).to render_template "index"
+    expect(assigns(:playdates)).not_to be_nil
+    expect(assigns(:stats)).not_to be_nil
+    expect(response.body).to have_link href: "/playdates"
   end
 
   it "index_all_dates_present" do
@@ -47,7 +50,7 @@ RSpec.describe MainController, type: :controller do
       Playdate.new(day: day).save!
     end
     get :index, params: {}, session: playersession
-    assert_select 'a[href="/more"]', false
+    expect(response.body).not_to have_link href: "/more"
   end
 
   it "index_shows_no_for_bad_day" do
@@ -60,13 +63,13 @@ RSpec.describe MainController, type: :controller do
 
     get :index, params: {}, session: playersession
 
-    assert_select "tr.summary td:first-of-type", "Nee"
+    expect(response.body).to have_css "tr.summary td:first-of-type", text: "Nee"
   end
 
   it "index_shows_empty_for_neutral_day" do
     get :index, params: {}, session: playersession
 
-    assert_select "tr.summary td:first-of-type", ""
+    expect(response.body).to have_css "tr.summary td:first-of-type", text: ""
   end
 
   it "index_shows_best_for_only_good_day" do
@@ -79,7 +82,7 @@ RSpec.describe MainController, type: :controller do
 
     get :index, params: {}, session: playersession
 
-    assert_select "tr.summary td:first-of-type", "Beste"
+    expect(response.body).to have_css "tr.summary td:first-of-type", text: "Beste"
   end
 
   it "index_both_days_good_but_first_is_best" do
@@ -98,8 +101,8 @@ RSpec.describe MainController, type: :controller do
 
     get :index, params: {}, session: playersession
 
-    assert_select "tr.summary td:nth-of-type(1)", "Beste"
-    assert_select "tr.summary td:nth-of-type(2)", "Ja"
+    expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Beste"
+    expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Ja"
   end
 
   it "index_with_house_better_than_without" do
@@ -123,57 +126,72 @@ RSpec.describe MainController, type: :controller do
 
     get :index, params: {}, session: playersession
 
-    assert_select "tr.summary td:nth-of-type(1)", "Ja"
-    assert_select "tr.summary td:nth-of-type(2)", "Beste"
+    expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Ja"
+    expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Beste"
   end
 
-  it "edit" do
-    get :edit, params: {}, session: playersession
-    assert_response :success
-    assert_template "edit"
-    refute_nil assigns(:playdates)
-    assert_equal 2, assigns(:playdates).count
-    assert_select "select", assigns(:playdates).count
-    assert_select "select" do |elements|
-      elements.each do |element|
-        assert_select element, "option", "Ja"
-        assert_select element, "option", "Nee"
-        assert_select element, "option", "Misschien"
-        assert_select element, "option", "Huis"
-      end
+  describe "#edit" do
+    before do
+      get :edit, params: {}, session: playersession
     end
-    assert_select "h1", "Beschikbaarheid bewerken"
+
+    it "renders the edit template" do
+      expect(response).to be_successful
+      expect(response).to render_template "edit"
+      expect(response.body).to have_css "h1", text: "Beschikbaarheid bewerken"
+    end
+
+    it "assigns available playdates for rendering" do
+      expect(assigns(:playdates)).not_to be_nil
+      expect(assigns(:playdates).count).to eq 2
+    end
+
+    it "creates an availability selector for each playdate" do
+      elements = Capybara.string(response.body).find_css("select")
+      expect(elements.count).to eq assigns(:playdates).count
+      expect(elements).to all have_css "option", text: "Ja"
+      expect(elements).to all have_css "option", text: "Nee"
+      expect(elements).to all have_css "option", text: "Misschien"
+      expect(elements).to all have_css "option", text: "Huis"
+    end
   end
 
   it "update" do
     post :update,
       params: {availability: {1 => {status: 2}, 2 => {status: 3}}},
       session: {user_id: players(:robert).id}
-    assert_response :redirect
-    assert_redirected_to controller: "main", action: "index"
-    assert_equal 4, Availability.count
+    expect(response).to redirect_to controller: "main", action: "index"
+    expect(Availability.count).to eq 4
     newavs = players(:robert).availabilities.sort_by(&:playdate_id)
-    assert_equal [1, 2, 2, 3], newavs.map { |a| [a.playdate_id, a.status] }.flatten
+    expect(newavs.map { |a| [a.playdate_id, a.status] }.flatten).to eq [1, 2, 2, 3]
   end
 
-  it "feed" do
-    get :feed, params: {format: "xml"}, session: {}
-    assert_response :success
-    assert_template "feed"
-    assert_template "feed_table"
-    refute_nil assigns(:playdates)
-    refute_nil assigns(:link)
-    assert_nil assigns(:updated_at)
-    assert_nil assigns(:date)
+  describe "#feed" do
+    it "renders the feed and feed table" do
+      get :feed, params: {format: "xml"}, session: {}
+      expect(response).to be_successful
+      expect(response).to render_template "feed"
+      expect(response).to render_template "feed_table"
+    end
 
-    av = playdates(:tomorrow).availabilities
-      .build(player_id: players(:robert).id, status: 1)
-    av.save!
+    it "assigns needed values" do
+      get :feed, params: {format: "xml"}, session: {}
+      expect(assigns(:playdates)).not_to be_nil
+      expect(assigns(:link)).not_to be_nil
+      expect(assigns(:updated_at)).to be_nil
+      expect(assigns(:date)).to be_nil
+      expect(assigns(:stats)).not_to be_nil
+    end
 
-    get :feed, params: {format: "xml"}, session: {}
-    assert_response :success
-    assert_equal assigns(:updated_at).to_s, av.updated_at.to_s
-    refute_nil assigns(:stats)
+    it "sets updated datetime to latest updated availability" do
+      av = playdates(:tomorrow).availabilities
+        .build(player_id: players(:robert).id, status: 1)
+      av.save!
+
+      get :feed, params: {format: "xml"}, session: {}
+      expect(response).to be_successful
+      expect(av.updated_at.to_s).to eq assigns(:updated_at).to_s
+    end
   end
 
   private
