@@ -135,13 +135,15 @@ RSpec.describe PlaydatesController, type: :controller do
   end
 
   it "prune_using_post" do
-    num_playdates = Playdate.count
-    expect(num_playdates).to eq 4
+    today = Playdate.create!(day: Time.zone.today)
+    tomorrow = Playdate.create!(day: Time.zone.tomorrow)
+    expect(Playdate.count).to eq 4
+
     post "prune", params: {}, session: adminsession
 
     expect(response).to redirect_to controller: "playdates", action: "index"
     expect(Playdate.count).to eq 2
-    expect(Playdate.all.map(&:id).sort).to eq [3, 4]
+    expect(Playdate.all).to match_array [today, tomorrow]
   end
 
   private

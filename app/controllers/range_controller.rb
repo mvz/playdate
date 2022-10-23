@@ -8,8 +8,8 @@ class RangeController < ApplicationController
   end
 
   def create
-    last_date = Playdate.last.day
     today = Time.zone.today
+    last_date = Playdate.last&.day || today
     last_date = today if last_date < today
 
     period = last_date + 7 > today.end_of_month ? 2 : 1
