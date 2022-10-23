@@ -6,13 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: enums
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - 'spec/models/playdate_spec.rb'
-    - 'spec/models/player_spec.rb'
-
 # Configuration parameters: AllowedMethods, AllowedPatterns, IgnoredMethods, CountRepeatedAttributes.
 Metrics/AbcSize:
   Max: 28
@@ -24,20 +17,6 @@ Metrics/MethodLength:
 # Configuration parameters: CountAsOne.
 RSpec/ExampleLength:
   Max: 19
-
-# Configuration parameters: AssignmentOnly.
-RSpec/InstanceVariable:
-  Exclude:
-    - 'spec/controllers/players_controller_spec.rb'
-    - 'spec/models/availability_spec.rb'
-    - 'spec/models/player_spec.rb'
-
-RSpec/LeakyConstantDeclaration:
-  Exclude:
-    - 'spec/controllers/main_controller_spec.rb'
-    - 'spec/models/playdate_spec.rb'
-    - 'spec/models/player_spec.rb'
-    - 'spec/services/playdate_status_spec.rb'
 
 RSpec/MultipleExpectations:
   Max: 5
