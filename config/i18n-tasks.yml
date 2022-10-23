@@ -1,0 +1,11 @@
+# The "main" locale.
+base_locale: en
+# Available locales.
+locales: [en, nl]
+
+# Read and write translations.
+data:
+  # Locale files or `File.find` patterns where translations are read from:
+  read:
+    - config/locales/%{locale}.yml
+    - config/locales/*.%{locale}.yml
