@@ -4,13 +4,6 @@ en:
     notice:
       access_denied_no_admin: 'Access denied: You are not an admin.'
       log_in_first: Log in first to use Playdate.
-  availabilities:
-    create:
-      notice: A new availability was successfully added.
-    destroy:
-      notice: The availability was successfully destroyed.
-    update:
-      notice: The availability was successfully edited.
   main:
     update:
       notice: Changes saved.

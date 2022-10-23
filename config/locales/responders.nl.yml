@@ -9,6 +9,13 @@ nl:
         notice: "%{resource_name} is verwijderd."
       update:
         notice: "%{resource_name} is bijgewerkt."
+    availabilities:
+      create:
+        notice: Een nieuwe beschikbaarheid is toegevoegd.
+      destroy:
+        notice: De beschikbaarheid is verwijderd.
+      update:
+        notice: De beschikbaarheid is bijgewerkt.
     playdates:
       create:
         notice: De nieuwe speeldag is toegevoegd.

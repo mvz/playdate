@@ -4,13 +4,6 @@ nl:
     notice:
       access_denied_no_admin: 'Toegang geweigerd: Je bent geen beheerder.'
       log_in_first: Log eerst in om Playdate te gebruiken.
-  availabilities:
-    create:
-      notice: Een nieuwe beschikbaarheid is toegevoegd.
-    destroy:
-      notice: De beschikbaarheid is verwijderd.
-    update:
-      notice: De beschikbaarheid is bijgewerkt.
   main:
     update:
       notice: Wijzigingen opgeslagen.

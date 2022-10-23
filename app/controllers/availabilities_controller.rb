@@ -16,18 +16,17 @@ class AvailabilitiesController < ApplicationController
 
   def create
     @availability = @playdate.availabilities.build(new_availability_params)
-    flash[:notice] = t(".notice") if @availability.save
+    @availability.save
     respond_with @availability, location: playdate_path(@playdate)
   end
 
   def update
-    flash[:notice] = t(".notice") if @availability.update(edit_availability_params)
+    @availability.update(edit_availability_params)
     respond_with @availability, location: playdate_path(@playdate)
   end
 
   def destroy
     @availability.destroy
-    flash[:notice] = t(".notice")
     respond_with @availability, location: playdate_path(@playdate)
   end
 

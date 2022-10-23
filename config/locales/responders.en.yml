@@ -9,6 +9,13 @@ en:
         notice: "%{resource_name} was successfully destroyed."
       update:
         notice: "%{resource_name} was successfully updated."
+    availabilities:
+      create:
+        notice: A new availability was successfully added.
+      destroy:
+        notice: The availability was successfully destroyed.
+      update:
+        notice: The availability was successfully edited.
     playdates:
       create:
         notice: The new playdate was added.
