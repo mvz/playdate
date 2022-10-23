@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PlayersController < ApplicationController
-  respond_to :html
   before_action :authorize_admin
 
   def index
@@ -18,14 +17,13 @@ class PlayersController < ApplicationController
 
   def create
     @player = Player.new(player_params)
-    flash[:notice] = t(".notice") if @player.save
+    @player.save
     respond_with @player, location: players_path
   end
 
   def update
     @player = Player.find(params[:id])
-
-    flash[:notice] = t(".notice") if @player.update player_params
+    @player.update player_params
     respond_with @player, location: players_path
   end
 
@@ -33,14 +31,10 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     if @player == current_user
-      flash[:error] = t(".cannot_delete_self")
+      flash[:alert] = t(".cannot_delete_self")
       redirect_to(players_url)
     else
-      if @player.destroy
-        flash[:notice] = t(".notice")
-      else
-        flash[:error] = t(".failed")
-      end
+      @player.destroy
       respond_with @player, location: players_path
     end
   end

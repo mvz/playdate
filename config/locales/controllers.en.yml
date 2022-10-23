@@ -4,13 +4,6 @@ en:
     notice:
       access_denied_no_admin: 'Access denied: You are not an admin.'
       log_in_first: Log in first to use Playdate.
-  availabilities:
-    create:
-      notice: A new availability was successfully added.
-    destroy:
-      notice: The availability was successfully destroyed.
-    update:
-      notice: The availability was successfully edited.
   main:
     update:
       notice: Changes saved.
@@ -18,21 +11,11 @@ en:
     alerts:
       invalid_day: Invalid day!
       invalid_period: Invalid period!
-    create:
-      notice: The new playdate was added.
-    destroy:
-      notice: The playdate was removed.
     notices:
       saved_new_range: Saved %{count}.
       saved_none: No new dates were added.
     prune:
       notice: Old playdates have been cleaned up.
   players:
-    create:
-      notice: Player was successfully created.
     destroy:
       cannot_delete_self: Cannot delete yourself
-      failed: Destroying the player failed.
-      notice: Player was successfully destroyed.
-    update:
-      notice: Player was successfully updated.

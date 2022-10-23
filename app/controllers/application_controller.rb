@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
+require "application_responder"
+
 # Main controller superclass.
 class ApplicationController < ActionController::Base
+  self.responder = ApplicationResponder
+  respond_to :html
+
   before_action :load_current_user
 
   helper_method :current_user

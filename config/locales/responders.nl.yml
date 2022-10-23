@@ -1,0 +1,31 @@
+---
+nl:
+  flash:
+    actions:
+      create:
+        notice: "%{resource_name} is aangemaakt."
+      destroy:
+        alert: "%{resource_name} kon niet verwijderd worden."
+        notice: "%{resource_name} is verwijderd."
+      update:
+        notice: "%{resource_name} is bijgewerkt."
+    availabilities:
+      create:
+        notice: Een nieuwe beschikbaarheid is toegevoegd.
+      destroy:
+        notice: De beschikbaarheid is verwijderd.
+      update:
+        notice: De beschikbaarheid is bijgewerkt.
+    playdates:
+      create:
+        notice: De nieuwe speeldag is toegevoegd.
+      destroy:
+        notice: De speeldag is verwijderd.
+    players:
+      create:
+        notice: Speler is toegevoegd.
+      destroy:
+        failed: Verwijderen van de speler is mislukt.
+        notice: De speler is verwijderd.
+      update:
+        notice: De speler is bijgewerkt.

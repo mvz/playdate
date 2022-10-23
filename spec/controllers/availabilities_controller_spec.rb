@@ -26,14 +26,24 @@ RSpec.describe AvailabilitiesController, type: :controller do
     end
   end
 
-  # Destroy, go to view of playdate (which has a list of availabilities)
-  it "destroy" do
-    expect(Availability.find(1)).not_to be_nil
+  describe "#destroy" do
+    it "destroys the availability" do
+      expect(Availability.find(1)).not_to be_nil
 
-    delete "destroy", params: {playdate_id: 1, id: 1}, session: adminsession
-    expect(response).to redirect_to playdate_path(1)
+      delete "destroy", params: {playdate_id: 1, id: 1}, session: adminsession
 
-    expect { Availability.find(1) }.to raise_error ActiveRecord::RecordNotFound
+      expect { Availability.find(1) }.to raise_error ActiveRecord::RecordNotFound
+    end
+
+    it "redirects to the playdate with a message" do
+      delete "destroy", params: {playdate_id: 1, id: 1}, session: adminsession
+
+      aggregate_failures do
+        expect(response).to redirect_to playdate_path(1)
+        expect(request).to set_flash[:notice]
+          .to I18n.t("flash.availabilities.destroy.notice")
+      end
+    end
   end
 
   # Edit: Show edit screen.
@@ -65,17 +75,19 @@ RSpec.describe AvailabilitiesController, type: :controller do
     end
   end
 
-  # Update: Edit, then return to list of availabilities for playdate.
-  it "update" do
-    put :update,
-      params: {
-        playdate_id: 1,
-        id: 1,
-        availability: {status: Availability::STATUS_JA}
-      },
-      session: adminsession
+  describe "#update" do
+    it "redirects to the playdate with a message" do
+      put :update,
+        params: {playdate_id: 1, id: 1,
+                 availability: {status: Availability::STATUS_JA}},
+        session: adminsession
 
-    expect(response).to redirect_to playdate_path(1)
+      aggregate_failures do
+        expect(response).to redirect_to playdate_path(1)
+        expect(request).to set_flash[:notice]
+          .to I18n.t("flash.availabilities.update.notice")
+      end
+    end
   end
 
   it "new" do
@@ -89,19 +101,32 @@ RSpec.describe AvailabilitiesController, type: :controller do
     expect(response.body).to have_css "h1", text: "New availability"
   end
 
-  it "create" do
-    num_availabilities = Availability.count
+  describe "#create" do
+    it "creates a new availability" do
+      expect do
+        post :create,
+          params: {
+            playdate_id: playdates(:friday).id,
+            availability: {player_id: players(:robert).id, status: 1}
+          },
+          session: adminsession
+      end.to change(Availability, :count).by(1)
+    end
 
-    post :create,
-      params: {
-        playdate_id: playdates(:friday).id,
-        availability: {player_id: players(:robert).id, status: 1}
-      },
-      session: adminsession
+    it "redirects to the playdate with a message" do
+      post :create,
+        params: {
+          playdate_id: playdates(:friday).id,
+          availability: {player_id: players(:robert).id, status: 1}
+        },
+        session: adminsession
 
-    expect(response).to redirect_to playdate_path(1)
-
-    expect(Availability.count).to eq num_availabilities + 1
+      aggregate_failures do
+        expect(response).to redirect_to playdate_path(1)
+        expect(request).to set_flash[:notice]
+          .to I18n.t("flash.availabilities.create.notice")
+      end
+    end
   end
 
   private

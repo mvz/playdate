@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PlaydatesController < ApplicationController
-  respond_to :html
   before_action :authorize_admin
 
   PERIOD_THIS_MONTH = 1
@@ -26,7 +25,7 @@ class PlaydatesController < ApplicationController
   def create
     if params[:playdate]
       @playdate = Playdate.new(playdate_params)
-      flash[:notice] = t(".notice") if @playdate.save
+      @playdate.save
       respond_with @playdate, location: playdates_path
     else
       @period = (params[:period] || PERIOD_THIS_MONTH).to_i
@@ -37,7 +36,7 @@ class PlaydatesController < ApplicationController
 
   def destroy
     @playdate = Playdate.find(params[:id])
-    flash[:notice] = t(".notice") if @playdate.destroy
+    @playdate.destroy
     respond_with @playdate, location: playdates_path
   end
 
