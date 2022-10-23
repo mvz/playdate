@@ -24,9 +24,7 @@ nl:
     currency:
       format:
         format: "%u %n"
-        unit: !binary |
-          4oKs
-
+        unit: "€"
         separator: ","
         precision: 2
         delimiter: .
