@@ -46,3 +46,5 @@ jobs:
         run: bundle exec rubocop -P
       - name: Run ERB Lint
         run: bundle exec erblint --lint-all
+      - name: Run i18n-tasks
+        run: bundle exec i18n-tasks health

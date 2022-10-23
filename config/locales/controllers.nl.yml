@@ -2,37 +2,37 @@
 nl:
   application:
     notice:
-      access_denied_no_admin: "Toegang geweigerd: Je bent geen beheerder."
-      log_in_first: "Log eerst in om Playdate te gebruiken."
+      access_denied_no_admin: 'Toegang geweigerd: Je bent geen beheerder.'
+      log_in_first: Log eerst in om Playdate te gebruiken.
   availabilities:
     create:
-      notice: "Een nieuwe beschikbaarheid is toegevoegd."
+      notice: Een nieuwe beschikbaarheid is toegevoegd.
     destroy:
-      notice: "De beschikbaarheid is verwijderd."
+      notice: De beschikbaarheid is verwijderd.
     update:
-      notice: "De beschikbaarheid is bijgewerkt."
+      notice: De beschikbaarheid is bijgewerkt.
   main:
     update:
-      notice: "Wijzigingen opgeslagen."
+      notice: Wijzigingen opgeslagen.
   playdates:
     alerts:
-      invalid_day: "Ongeldige dag!"
-      invalid_period: "Ongeldige periode!"
+      invalid_day: Ongeldige dag!
+      invalid_period: Ongeldige periode!
     create:
-      notice: "De nieuwe speeldag is toegevoegd."
+      notice: De nieuwe speeldag is toegevoegd.
     destroy:
-      notice: "De speeldag is verwijderd."
+      notice: De speeldag is verwijderd.
     notices:
       saved_new_range: "%{count} opgeslagen."
-      saved_none: "Er zijn geen nieuwe datums toegevoegd."
+      saved_none: Er zijn geen nieuwe datums toegevoegd.
     prune:
-      notice: "Oude speeldagen zijn opgeruimd."
+      notice: Oude speeldagen zijn opgeruimd.
   players:
     create:
-      notice: "Speler is toegevoegd."
+      notice: Speler is toegevoegd.
     destroy:
-      cannot_delete_self: "Je kunt jezelf niet verwijderen"
-      failed: "Verwijderen van de speler is mislukt."
-      notice: "De speler is verwijderd."
+      cannot_delete_self: Je kunt jezelf niet verwijderen
+      failed: Verwijderen van de speler is mislukt.
+      notice: De speler is verwijderd.
     update:
-      notice: "De speler is bijgewerkt."
+      notice: De speler is bijgewerkt.

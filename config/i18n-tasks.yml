@@ -1,0 +1,19 @@
+# The "main" locale.
+base_locale: en
+# Available locales.
+locales: [en, nl]
+
+data:
+  read:
+    - config/locales/%{locale}.yml
+    - config/locales/*.%{locale}.yml
+
+ignore_unused:
+  - 'activerecord.errors.messages.*'
+  - 'date.*'
+  - 'datetime.*'
+  - 'errors.*'
+  - 'helpers.*'
+  - 'number.*'
+  - 'support.array.*'
+  - 'time.*'

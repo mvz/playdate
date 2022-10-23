@@ -48,6 +48,7 @@ group :development do
   gem "web-console", "~> 4.0"
 
   gem "erb_lint", "~> 0.2.0", require: false
+  gem "i18n-tasks", "~> 1.0", require: false
   gem "rubocop", "~> 1.25", require: false
   gem "rubocop-performance", "~> 1.13", require: false
   gem "rubocop-rails", "~> 2.17", require: false
