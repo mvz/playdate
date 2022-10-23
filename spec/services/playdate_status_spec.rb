@@ -11,15 +11,16 @@ RSpec.describe PlaydateStatus do
 
   describe ".calculate" do
     it "sets code to no for a bad day" do
+      today = Playdate.create!(day: Time.zone.today)
       [:matijs, :robert].each do |p|
         players(p).availabilities.create!(
-          playdate: playdates(:today),
+          playdate: today,
           status: Availability::STATUS_NEE
         )
       end
 
-      result = described_class.calculate(playdates, players)
-      expect(result[playdates(:today)][:code]).to eq 0
+      result = described_class.calculate(Playdate.all, players)
+      expect(result[today][:code]).to eq 0
     end
   end
 end

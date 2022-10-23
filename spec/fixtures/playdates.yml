@@ -5,9 +5,3 @@ friday:
 saturday:
   id: 2
   day: "2006-02-11"
-tomorrow:
-  id: 3
-  day: <%= (Time.now + 1.days).strftime("%Y-%m-%d") %>
-today:
-  id: 4
-  day: <%= Time.now.strftime("%Y-%m-%d") %>

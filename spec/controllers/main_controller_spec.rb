@@ -5,6 +5,9 @@ require "rails_helper"
 RSpec.describe MainController, type: :controller do
   fixtures :players, :playdates, :availabilities
 
+  let!(:today) { Playdate.create!(day: Time.zone.today) }
+  let!(:tomorrow) { Playdate.create!(day: Time.zone.tomorrow) }
+
   render_views
 
   before do
@@ -18,119 +21,121 @@ RSpec.describe MainController, type: :controller do
     end
   end
 
-  it "index_as_user" do
-    get :index, params: {}, session: playersession
+  describe "#index" do
+    it "index_as_user" do
+      get :index, params: {}, session: playersession
 
-    aggregate_failures do
+      aggregate_failures do
+        expect(response).to be_successful
+        expect(response).to render_template "index"
+        expect(assigns(:playdates)).not_to be_nil
+        expect(assigns(:playdates)).to eq [today, tomorrow]
+        expect(assigns(:stats)).not_to be_nil
+        expect(response.body).to have_button "Meer>>"
+        expect(response.body).not_to have_link href: "/playdates"
+
+        expect(response.body).to have_css "h1", text: "Playdate! The Application"
+      end
+    end
+
+    it "index_as_admin" do
+      get :index, params: {}, session: adminsession
       expect(response).to be_successful
       expect(response).to render_template "index"
       expect(assigns(:playdates)).not_to be_nil
-      expect(assigns(:playdates)).to eq [playdates(:today), playdates(:tomorrow)]
       expect(assigns(:stats)).not_to be_nil
-      expect(response.body).to have_button "Meer>>"
-      expect(response.body).not_to have_link href: "/playdates"
-
-      expect(response.body).to have_css "h1", text: "Playdate! The Application"
-    end
-  end
-
-  it "index_as_admin" do
-    get :index, params: {}, session: adminsession
-    expect(response).to be_successful
-    expect(response).to render_template "index"
-    expect(assigns(:playdates)).not_to be_nil
-    expect(assigns(:stats)).not_to be_nil
-    expect(response.body).to have_link href: "/playdates"
-  end
-
-  it "index_all_dates_present" do
-    # today and tomorrow are already there
-    startdate = Time.zone.today + 2
-    enddate = Time.zone.today.next_month.end_of_month
-    startdate.upto(enddate) do |day|
-      next unless MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
-
-      Playdate.new(day: day).save!
-    end
-    get :index, params: {}, session: playersession
-    expect(response.body).not_to have_link href: "/more"
-  end
-
-  it "index_shows_no_for_bad_day" do
-    [:matijs, :robert].each do |p|
-      players(p).availabilities.build.tap do |av|
-        av.playdate = playdates(:today)
-        av.status = Availability::STATUS_NEE
-      end.save!
+      expect(response.body).to have_link href: "/playdates"
     end
 
-    get :index, params: {}, session: playersession
+    it "index_all_dates_present" do
+      # today and tomorrow are already there
+      startdate = Time.zone.today + 2
+      enddate = Time.zone.today.next_month.end_of_month
+      startdate.upto(enddate) do |day|
+        next unless MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
 
-    expect(response.body).to have_css "tr.summary td:first-of-type", text: "Nee"
-  end
+        Playdate.new(day: day).save!
+      end
+      get :index, params: {}, session: playersession
+      expect(response.body).not_to have_link href: "/more"
+    end
 
-  it "index_shows_empty_for_neutral_day" do
-    get :index, params: {}, session: playersession
+    it "index_shows_no_for_bad_day" do
+      [:matijs, :robert].each do |p|
+        players(p).availabilities.build.tap do |av|
+          av.playdate = today
+          av.status = Availability::STATUS_NEE
+        end.save!
+      end
 
-    expect(response.body).to have_css "tr.summary td:first-of-type", text: ""
-  end
+      get :index, params: {}, session: playersession
 
-  it "index_shows_best_for_only_good_day" do
-    [:matijs, :robert].each do |p|
-      players(p).availabilities.build.tap do |av|
-        av.playdate = playdates(:today)
+      expect(response.body).to have_css "tr.summary td:first-of-type", text: "Nee"
+    end
+
+    it "index_shows_empty_for_neutral_day" do
+      get :index, params: {}, session: playersession
+
+      expect(response.body).to have_css "tr.summary td:first-of-type", text: ""
+    end
+
+    it "index_shows_best_for_only_good_day" do
+      [:matijs, :robert].each do |p|
+        players(p).availabilities.build.tap do |av|
+          av.playdate = today
+          av.status = Availability::STATUS_JA
+        end.save!
+      end
+
+      get :index, params: {}, session: playersession
+
+      expect(response.body).to have_css "tr.summary td:first-of-type", text: "Beste"
+    end
+
+    it "index_both_days_good_but_first_is_best" do
+      [:matijs, :robert].product([today, tomorrow]) do |(p, d)|
+        av = players(p).availabilities.build
+        av.playdate = d
         av.status = Availability::STATUS_JA
-      end.save!
-    end
+        av.save!
+      end
 
-    get :index, params: {}, session: playersession
-
-    expect(response.body).to have_css "tr.summary td:first-of-type", text: "Beste"
-  end
-
-  it "index_both_days_good_but_first_is_best" do
-    [:matijs, :robert].product([:today, :tomorrow]) do |(p, d)|
-      av = players(p).availabilities.build
-      av.playdate = playdates(d)
+      # today is best, tomorrow is good
+      av = players(:admin).availabilities.build
+      av.playdate = today
       av.status = Availability::STATUS_JA
       av.save!
+
+      get :index, params: {}, session: playersession
+
+      expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Beste"
+      expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Ja"
     end
 
-    # today is best, tomorrow is good
-    av = players(:admin).availabilities.build
-    av.playdate = playdates(:today)
-    av.status = Availability::STATUS_JA
-    av.save!
+    it "index_with_house_better_than_without" do
+      [today, tomorrow].each do |d|
+        players(:matijs).availabilities.build.tap do |av|
+          av.playdate = d
+          av.status = Availability::STATUS_JA
+        end.save!
+      end
 
-    get :index, params: {}, session: playersession
-
-    expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Beste"
-    expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Ja"
-  end
-
-  it "index_with_house_better_than_without" do
-    [:today, :tomorrow].each do |d|
-      players(:matijs).availabilities.build.tap do |av|
-        av.playdate = playdates(d)
+      # today is good, tomorrow is best
+      players(:robert).availabilities.build.tap do |av|
+        av.playdate = today
         av.status = Availability::STATUS_JA
       end.save!
+
+      players(:robert).availabilities.build.tap do |av|
+        av.playdate = tomorrow
+        av.status = Availability::STATUS_HUIS
+      end.save!
+
+      get :index, params: {}, session: playersession
+
+      expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Ja"
+      expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Beste"
     end
-
-    # today is good, tomorrow is best
-    players(:robert).availabilities.build.tap do |av|
-      av.playdate = playdates(:today)
-      av.status = Availability::STATUS_JA
-    end.save!
-
-    players(:robert).availabilities.build.tap do |av|
-      av.playdate = playdates(:tomorrow)
-      av.status = Availability::STATUS_HUIS
-    end.save!
-
-    get :index, params: {}, session: playersession
-
-    expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Ja"
-    expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Beste"
   end
 
   describe "#edit" do
@@ -187,7 +192,7 @@ RSpec.describe MainController, type: :controller do
     end
 
     it "sets updated datetime to latest updated availability" do
-      av = playdates(:tomorrow).availabilities
+      av = tomorrow.availabilities
         .build(player_id: players(:robert).id, status: 1)
       av.save!
 
