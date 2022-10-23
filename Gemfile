@@ -50,7 +50,7 @@ group :development do
   gem "erb_lint", "~> 0.2.0", require: false
   gem "rubocop", "~> 1.25", require: false
   gem "rubocop-performance", "~> 1.13", require: false
-  gem "rubocop-rails", "~> 2.13", require: false
+  gem "rubocop-rails", "~> 2.17", require: false
   gem "rubocop-rspec", "~> 2.8", require: false
 end
 
