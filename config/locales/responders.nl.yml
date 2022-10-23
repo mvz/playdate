@@ -14,3 +14,11 @@ nl:
         notice: De nieuwe speeldag is toegevoegd.
       destroy:
         notice: De speeldag is verwijderd.
+    players:
+      create:
+        notice: Speler is toegevoegd.
+      destroy:
+        failed: Verwijderen van de speler is mislukt.
+        notice: De speler is verwijderd.
+      update:
+        notice: De speler is bijgewerkt.

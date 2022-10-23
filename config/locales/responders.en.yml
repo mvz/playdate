@@ -14,3 +14,11 @@ en:
         notice: The new playdate was added.
       destroy:
         notice: The playdate was removed.
+    players:
+      create:
+        notice: Player was successfully created.
+      destroy:
+        failed: Destroying the player failed.
+        notice: Player was successfully destroyed.
+      update:
+        notice: Player was successfully updated.

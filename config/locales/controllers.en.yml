@@ -24,11 +24,5 @@ en:
     prune:
       notice: Old playdates have been cleaned up.
   players:
-    create:
-      notice: Player was successfully created.
     destroy:
       cannot_delete_self: Cannot delete yourself
-      failed: Destroying the player failed.
-      notice: Player was successfully destroyed.
-    update:
-      notice: Player was successfully updated.

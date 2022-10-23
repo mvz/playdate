@@ -93,8 +93,11 @@ RSpec.describe PlayersController, type: :controller do
       expect(assigns(:player)).not_to be_nil
     end
 
-    it "redirects to the player list" do
-      expect(response).to redirect_to players_path
+    it "redirects to the player list with a message" do
+      aggregate_failures do
+        expect(response).to redirect_to players_path
+        expect(request).to set_flash[:notice].to I18n.t("flash.players.create.notice")
+      end
     end
 
     it "increases the number of players" do
@@ -112,8 +115,11 @@ RSpec.describe PlayersController, type: :controller do
       post :destroy, params: {id: player.id}, session: adminsession
     end
 
-    it "redirects to the player list" do
-      expect(response).to redirect_to players_path
+    it "redirects to the player list with a message" do
+      aggregate_failures do
+        expect(response).to redirect_to players_path
+        expect(request).to set_flash[:notice].to I18n.t("flash.players.destroy.notice")
+      end
     end
 
     it "decreases the number of players" do
@@ -155,9 +161,12 @@ RSpec.describe PlayersController, type: :controller do
       expect(player).to have_received(:update).with(expected_params)
     end
 
-    it "redirects to the player list" do
+    it "redirects to the player list with a message" do
       post :update, params: {id: 1, player: player_params}, session: adminsession
-      expect(response).to redirect_to players_path
+      aggregate_failures do
+        expect(response).to redirect_to players_path
+        expect(request).to set_flash[:notice].to I18n.t("flash.players.update.notice")
+      end
     end
   end
 end
