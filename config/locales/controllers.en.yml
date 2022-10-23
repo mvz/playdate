@@ -18,8 +18,6 @@ en:
     alerts:
       invalid_day: Invalid day!
       invalid_period: Invalid period!
-    create:
-      notice: The new playdate was added.
     destroy:
       notice: The playdate was removed.
     notices:

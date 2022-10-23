@@ -65,37 +65,41 @@ RSpec.describe PlaydatesController, type: :controller do
     expect(response.body).to have_css "form[action=\"#{playdates_path}\"]"
   end
 
-  it "create" do
-    num_playdates = Playdate.count
+  describe "#create" do
+    it "create" do
+      num_playdates = Playdate.count
 
-    post "create", params: {playdate: {day: "2006-03-11"}}, session: adminsession
+      post "create", params: {playdate: {day: "2006-03-11"}}, session: adminsession
 
-    expect(response).to redirect_to controller: "playdates", action: "index"
+      aggregate_failures do
+        expect(response).to redirect_to controller: "playdates", action: "index"
+        expect(request).to set_flash[:notice].to I18n.t("flash.playdates.create.notice")
+        expect(Playdate.count).to eq num_playdates + 1
+      end
+    end
 
-    expect(Playdate.count).to eq num_playdates + 1
-  end
+    it "create_with_range" do
+      num_playdates = Playdate.count
 
-  it "create_with_range" do
-    num_playdates = Playdate.count
+      post "create", params: {period: 2, daytype: 6}, session: adminsession
 
-    post "create", params: {period: 2, daytype: 6}, session: adminsession
+      expect(response).to redirect_to controller: "playdates", action: "index"
 
-    expect(response).to redirect_to controller: "playdates", action: "index"
+      expect(Playdate.count).to be >= num_playdates + 4
+      expect(Playdate.count).to be <= num_playdates + 10
+    end
 
-    expect(Playdate.count).to be >= num_playdates + 4
-    expect(Playdate.count).to be <= num_playdates + 10
-  end
+    it "create_with_range_invalid_period" do
+      post "create", params: {period: 3, daytype: 6}, session: adminsession
 
-  it "create_with_range_invalid_period" do
-    post "create", params: {period: 3, daytype: 6}, session: adminsession
+      expect(response).to render_template :new
+    end
 
-    expect(response).to render_template :new
-  end
+    it "create_with_range_invalid_day_type" do
+      post "create", params: {period: 2, daytype: 7}, session: adminsession
 
-  it "create_with_range_invalid_day_type" do
-    post "create", params: {period: 2, daytype: 7}, session: adminsession
-
-    expect(response).to render_template :new
+      expect(response).to render_template :new
+    end
   end
 
   it "show" do

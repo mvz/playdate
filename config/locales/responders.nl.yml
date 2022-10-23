@@ -9,3 +9,6 @@ nl:
         notice: "%{resource_name} is verwijderd."
       update:
         notice: "%{resource_name} is bijgewerkt."
+    playdates:
+      create:
+        notice: De nieuwe speeldag is toegevoegd.

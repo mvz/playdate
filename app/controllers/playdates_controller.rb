@@ -25,7 +25,7 @@ class PlaydatesController < ApplicationController
   def create
     if params[:playdate]
       @playdate = Playdate.new(playdate_params)
-      flash[:notice] = t(".notice") if @playdate.save
+      @playdate.save
       respond_with @playdate, location: playdates_path
     else
       @period = (params[:period] || PERIOD_THIS_MONTH).to_i

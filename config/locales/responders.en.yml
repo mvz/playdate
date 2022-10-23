@@ -9,3 +9,6 @@ en:
         notice: "%{resource_name} was successfully destroyed."
       update:
         notice: "%{resource_name} was successfully updated."
+    playdates:
+      create:
+        notice: The new playdate was added.
