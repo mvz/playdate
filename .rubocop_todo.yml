@@ -25,11 +25,6 @@ Metrics/MethodLength:
 RSpec/ExampleLength:
   Max: 19
 
-# Configuration parameters: AssignmentOnly.
-RSpec/InstanceVariable:
-  Exclude:
-    - 'spec/models/player_spec.rb'
-
 RSpec/LeakyConstantDeclaration:
   Exclude:
     - 'spec/controllers/main_controller_spec.rb'

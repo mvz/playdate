@@ -7,14 +7,6 @@ RSpec.describe Player, type: :model do
 
   NEW_PLAYER = {name: "Testy", password: "test123", password_confirmation: "test123"}.freeze
 
-  before do
-    @matijs = players(:matijs)
-    @friday = playdates(:friday)
-    @saturday = playdates(:saturday)
-    @onfriday = availabilities(:onfriday)
-    @onsaturday = availabilities(:onsaturday)
-  end
-
   describe "validations" do
     let(:player) { described_class.new }
 
@@ -49,19 +41,49 @@ RSpec.describe Player, type: :model do
     expect(player.check_password(NEW_PLAYER[:password])).to be true
   end
 
-  it "password_and_authenticate" do
-    @matijs.password = "zoppa"
-    expect(@matijs.check_password("zoppa")).to be true
-    @matijs.save!
-    expect(described_class.authenticate("matijs", "zoppa")).to eq @matijs
+  describe "#check_password" do
+    it "returns true if the password matches" do
+      player = players(:matijs)
+      player.password = "zoppa"
+      expect(player.check_password("zoppa")).to be true
+    end
+
+    it "returns nil if the password doesn't match" do
+      player = players(:matijs)
+      player.password = "zoppa"
+      expect(player.check_password("zopp")).to be_nil
+    end
   end
 
-  it "associations" do
-    avs = @matijs.availabilities.sort_by(&:id)
-    expect(avs.length).to eq 2
-    expect(avs).to eq [@onfriday, @onsaturday]
-    pds = @matijs.playdates.sort_by(&:id)
-    expect(pds.length).to eq 2
-    expect(pds).to eq [@friday, @saturday]
+  describe ".authenticate" do
+    it "returns the requested user if the password matches" do
+      player = players(:matijs)
+      player.password = "zoppa"
+      player.save!
+      expect(described_class.authenticate("matijs", "zoppa")).to eq player
+    end
+
+    it "does not return the requested user if the password doesn't match" do
+      player = players(:matijs)
+      player.password = "zoppa"
+      player.save!
+      expect(described_class.authenticate("matijs", "zopp")).to be_nil
+    end
+  end
+
+  describe "#availabilities" do
+    it "returns associated availabilities" do
+      player = players(:matijs)
+      expect(player.availabilities)
+        .to match_array [availabilities(:onfriday), availabilities(:onsaturday)]
+    end
+  end
+
+  describe "#playdates" do
+    it "returns associated playdates" do
+      player = players(:matijs)
+      expect(player.playdates)
+        .to match_array [playdates(:friday), playdates(:saturday)]
+    end
   end
 end
