@@ -1,0 +1,11 @@
+---
+nl:
+  flash:
+    actions:
+      create:
+        notice: "%{resource_name} is aangemaakt."
+      destroy:
+        alert: "%{resource_name} kon niet verwijderd worden."
+        notice: "%{resource_name} is verwijderd."
+      update:
+        notice: "%{resource_name} is bijgewerkt."
