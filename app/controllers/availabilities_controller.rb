@@ -2,7 +2,6 @@
 
 # Administrative controller for editing availabilities.
 class AvailabilitiesController < ApplicationController
-  respond_to :html
   before_action :authorize_admin
   before_action :load_resource, only: [:edit, :update, :destroy]
   before_action :load_playdate, only: [:new, :create]

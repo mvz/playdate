@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PlayersController < ApplicationController
-  respond_to :html
   before_action :authorize_admin
 
   def index
