@@ -7,6 +7,10 @@ class SessionController < ApplicationController
     # Just show login form
   end
 
+  def edit
+    # Just show logout form
+  end
+
   def create
     player = Player.authenticate(params[:name], params[:password])
     if player
@@ -16,10 +20,6 @@ class SessionController < ApplicationController
       flash.now[:notice] = "Inloggen mislukt"
       render "new"
     end
-  end
-
-  def edit
-    # Just show logout form
   end
 
   def destroy
