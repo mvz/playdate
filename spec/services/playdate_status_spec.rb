@@ -3,9 +3,11 @@
 require "rails_helper"
 
 RSpec.describe PlaydateStatus do
-  MainController::MIN_PLAYERS = 2
-
   fixtures :players, :playdates
+
+  before do
+    stub_const("MainController::MIN_PLAYERS", 2)
+  end
 
   describe ".calculate" do
     it "sets code to no for a bad day" do

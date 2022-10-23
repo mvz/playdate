@@ -5,7 +5,9 @@ require "rails_helper"
 RSpec.describe Player, type: :model do
   fixtures :players, :playdates, :availabilities
 
-  NEW_PLAYER = {name: "Testy", password: "test123", password_confirmation: "test123"}.freeze
+  let(:new_player_params) do
+    {name: "Testy", password: "test123", password_confirmation: "test123"}.freeze
+  end
 
   describe "validations" do
     let(:player) { described_class.new }
@@ -35,10 +37,10 @@ RSpec.describe Player, type: :model do
   end
 
   it "new" do
-    player = described_class.new(NEW_PLAYER)
+    player = described_class.new(new_player_params)
     expect(player).to be_valid
-    expect(player[:name]).to eq NEW_PLAYER[:name]
-    expect(player.check_password(NEW_PLAYER[:password])).to be true
+    expect(player[:name]).to eq new_player_params[:name]
+    expect(player.check_password(new_player_params[:password])).to be true
   end
 
   describe "#check_password" do
