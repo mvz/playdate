@@ -13,6 +13,7 @@ ignore_unused:
   - 'date.*'
   - 'datetime.*'
   - 'errors.*'
+  - 'flash.*'
   - 'helpers.*'
   - 'number.*'
   - 'support.array.*'
