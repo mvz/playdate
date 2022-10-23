@@ -32,13 +32,13 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     if @player == current_user
-      flash[:error] = t(".cannot_delete_self")
+      flash[:alert] = t(".cannot_delete_self")
       redirect_to(players_url)
     else
       if @player.destroy
         flash[:notice] = t(".notice")
       else
-        flash[:error] = t(".failed")
+        flash[:alert] = t(".failed")
       end
       respond_with @player, location: players_path
     end
