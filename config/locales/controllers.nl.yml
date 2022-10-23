@@ -18,8 +18,6 @@ nl:
     alerts:
       invalid_day: Ongeldige dag!
       invalid_period: Ongeldige periode!
-    destroy:
-      notice: De speeldag is verwijderd.
     notices:
       saved_new_range: "%{count} opgeslagen."
       saved_none: Er zijn geen nieuwe datums toegevoegd.

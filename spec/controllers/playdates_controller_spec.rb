@@ -26,18 +26,32 @@ RSpec.describe PlaydatesController, type: :controller do
     end
   end
 
-  it "destroy" do
-    pd = Playdate.find(1)
-    expect(pd).not_to be_nil
-    num_avs = Availability.count
-    num_pd_avs = pd.availabilities.count
-    expect(num_pd_avs).to be > 0
+  describe "#destroy" do
+    it "destroys the given playdate" do
+      pd = Playdate.find(1)
+      expect(pd).not_to be_nil
 
-    delete "destroy", params: {id: 1}, session: adminsession
-    expect(response).to redirect_to controller: "playdates", action: "index"
+      delete "destroy", params: {id: 1}, session: adminsession
 
-    expect { Playdate.find(1) }.to raise_error ActiveRecord::RecordNotFound
-    expect(Availability.count).to eq num_avs - num_pd_avs
+      expect { pd.reload }.to raise_error ActiveRecord::RecordNotFound
+      expect { Playdate.find(1) }.to raise_error ActiveRecord::RecordNotFound
+    end
+
+    it "destroys dependent availabilities" do
+      pd = Playdate.find(1)
+      num_pd_avs = pd.availabilities.count
+
+      expect { delete "destroy", params: {id: 1}, session: adminsession }
+        .to change(Availability, :count).by(-num_pd_avs)
+    end
+
+    it "redirects to index with a message" do
+      delete "destroy", params: {id: 1}, session: adminsession
+      aggregate_failures do
+        expect(response).to redirect_to controller: "playdates", action: "index"
+        expect(request).to set_flash[:notice].to I18n.t("flash.playdates.destroy.notice")
+      end
+    end
   end
 
   it "index" do

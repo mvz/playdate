@@ -36,7 +36,7 @@ class PlaydatesController < ApplicationController
 
   def destroy
     @playdate = Playdate.find(params[:id])
-    flash[:notice] = t(".notice") if @playdate.destroy
+    @playdate.destroy
     respond_with @playdate, location: playdates_path
   end
 

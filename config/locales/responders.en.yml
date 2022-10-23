@@ -12,3 +12,5 @@ en:
     playdates:
       create:
         notice: The new playdate was added.
+      destroy:
+        notice: The playdate was removed.

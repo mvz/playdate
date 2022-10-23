@@ -12,3 +12,5 @@ nl:
     playdates:
       create:
         notice: De nieuwe speeldag is toegevoegd.
+      destroy:
+        notice: De speeldag is verwijderd.
