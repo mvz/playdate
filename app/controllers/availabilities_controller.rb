@@ -11,14 +11,14 @@ class AvailabilitiesController < ApplicationController
     @availability = Availability.new
   end
 
+  def edit
+    @player = @availability.player
+  end
+
   def create
     @availability = @playdate.availabilities.build(new_availability_params)
     flash[:notice] = t(".notice") if @availability.save
     respond_with @availability, location: playdate_path(@playdate)
-  end
-
-  def edit
-    @player = @availability.player
   end
 
   def update

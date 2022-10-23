@@ -12,14 +12,14 @@ class PlayersController < ApplicationController
     @player = Player.new
   end
 
+  def edit
+    @player = Player.find(params[:id])
+  end
+
   def create
     @player = Player.new(player_params)
     flash[:notice] = t(".notice") if @player.save
     respond_with @player, location: players_path
-  end
-
-  def edit
-    @player = Player.find(params[:id])
   end
 
   def update
