@@ -40,13 +40,27 @@ RSpec.describe Availability, type: :model do
     expect(Availability::VALUES.length).to eq 4
   end
 
-  it "status_character" do
-    expect(availabilities(:onfriday).status_character).to eq "+"
-    @onsaturday = availabilities(:onsaturday)
-    expect(@onsaturday.status_character).to eq "h"
-    @onsaturday.status = Availability::STATUS_NEE
-    expect(@onsaturday.status_character).to eq "−"
-    @onsaturday.status = Availability::STATUS_MISSCHIEN
-    expect(@onsaturday.status_character).to eq "?"
+  describe "#status_character" do
+    let(:availability) { described_class.new }
+
+    it "equals '+' for STATUS_JA" do
+      availability.status = Availability::STATUS_JA
+      expect(availability.status_character).to eq "+"
+    end
+
+    it "equals 'h' for STATUS_HUIS" do
+      availability.status = Availability::STATUS_HUIS
+      expect(availability.status_character).to eq "h"
+    end
+
+    it "equals '-' for STATUS_NEE" do
+      availability.status = Availability::STATUS_NEE
+      expect(availability.status_character).to eq "−"
+    end
+
+    it "equals '?' for STATUS_MISSCHIEN" do
+      availability.status = Availability::STATUS_MISSCHIEN
+      expect(availability.status_character).to eq "?"
+    end
   end
 end
