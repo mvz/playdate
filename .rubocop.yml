@@ -71,6 +71,10 @@ Lint/AssignmentInCondition:
 Performance/StartWith:
   AutoCorrect: true
 
+# We want to move away from inferring spec types
+RSpec/Rails/InferredSpecType:
+  Enabled: false
+
 RSpec/Capybara/FeatureMethods:
   Exclude:
     - 'spec/features/**/*_spec.rb'
