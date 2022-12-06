@@ -29,7 +29,7 @@ gem "will_paginate", "~> 3.3.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", "~> 1.15.0", require: false
-gem "psych", "~> 4.0", require: false
+gem "psych", "~> 5.0", require: false
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
