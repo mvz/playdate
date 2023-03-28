@@ -46,7 +46,7 @@ group :development do
   # anywhere in the code.
   gem "web-console", "~> 4.0"
 
-  gem "erb_lint", "~> 0.3.0", require: false
+  gem "erb_lint", "~> 0.4.0", require: false
   gem "i18n-tasks", "~> 1.0", require: false
   gem "rubocop", "~> 1.40", require: false
   gem "rubocop-performance", "~> 1.15", require: false
