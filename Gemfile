@@ -50,8 +50,8 @@ group :development do
   gem "i18n-tasks", "~> 1.0", require: false
   gem "rubocop", "~> 1.40", require: false
   gem "rubocop-performance", "~> 1.15", require: false
-  gem "rubocop-rails", "~> 2.17", require: false
-  gem "rubocop-rspec", "~> 2.14", require: false
+  gem "rubocop-rails", "~> 2.19", require: false
+  gem "rubocop-rspec", "~> 2.19", require: false
 end
 
 group :test do

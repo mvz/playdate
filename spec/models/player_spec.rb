@@ -28,6 +28,13 @@ RSpec.describe Player, type: :model do
       player.password = "zoppa"
       expect(player).to allow_value("").for :password
     end
+
+    it "allows is_admin to be false or true, but not nil" do
+      aggregate_failures do
+        expect(player).to allow_values(true, false).for :is_admin
+        expect(player).not_to allow_value(nil).for :is_admin
+      end
+    end
   end
 
   it "fixtures_valid" do
@@ -77,7 +84,7 @@ RSpec.describe Player, type: :model do
     it "returns associated availabilities" do
       player = players(:matijs)
       expect(player.availabilities)
-        .to match_array [availabilities(:onfriday), availabilities(:onsaturday)]
+        .to contain_exactly availabilities(:onfriday), availabilities(:onsaturday)
     end
   end
 
@@ -85,7 +92,7 @@ RSpec.describe Player, type: :model do
     it "returns associated playdates" do
       player = players(:matijs)
       expect(player.playdates)
-        .to match_array [playdates(:friday), playdates(:saturday)]
+        .to contain_exactly playdates(:friday), playdates(:saturday)
     end
   end
 end

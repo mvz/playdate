@@ -6,6 +6,8 @@ class Player < ApplicationRecord
   has_many :availabilities, dependent: :destroy
   has_many :playdates, through: :availabilities, inverse_of: :players
 
+  attribute :is_admin, default: false
+
   validates :name, presence: true
   validates :name, length: {minimum: 1}
   validates :password, confirmation: true
@@ -14,6 +16,7 @@ class Player < ApplicationRecord
                                 if: proc { |user|
                                       user.password_hash.nil? or !user.password.to_s.empty?
                                     }}
+  validates :is_admin, inclusion: [false, true]
 
   SALT = "change this to your own salt"
 
