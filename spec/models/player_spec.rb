@@ -28,6 +28,13 @@ RSpec.describe Player, type: :model do
       player.password = "zoppa"
       expect(player).to allow_value("").for :password
     end
+
+    it "allows is_admin to be false or true, but not nil" do
+      aggregate_failures do
+        expect(player).to allow_values(true, false).for :is_admin
+        expect(player).not_to allow_value(nil).for :is_admin
+      end
+    end
   end
 
   it "fixtures_valid" do
