@@ -143,7 +143,7 @@ RSpec.describe PlaydatesController, type: :controller do
 
     expect(response).to redirect_to controller: "playdates", action: "index"
     expect(Playdate.count).to eq 2
-    expect(Playdate.all).to match_array [today, tomorrow]
+    expect(Playdate.all).to contain_exactly today, tomorrow
   end
 
   private
