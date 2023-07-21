@@ -17,7 +17,7 @@ class SessionController < ApplicationController
       session[:user_id] = player.id
       redirect_to(controller: "main", action: "index")
     else
-      flash.now[:notice] = "Inloggen mislukt"
+      flash.now[:notice] = t(".failure")
       render "new"
     end
   end

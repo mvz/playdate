@@ -48,10 +48,10 @@ group :development do
 
   gem "erb_lint", "~> 0.4.0", require: false
   gem "i18n-tasks", "~> 1.0", require: false
-  gem "rubocop", "~> 1.40", require: false
-  gem "rubocop-performance", "~> 1.15", require: false
-  gem "rubocop-rails", "~> 2.19", require: false
-  gem "rubocop-rspec", "~> 2.19", require: false
+  gem "rubocop", "~> 1.54", require: false
+  gem "rubocop-performance", "~> 1.18", require: false
+  gem "rubocop-rails", "~> 2.20", require: false
+  gem "rubocop-rspec", "~> 2.22", require: false
 end
 
 group :test do

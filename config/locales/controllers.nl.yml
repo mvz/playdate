@@ -19,3 +19,6 @@ nl:
   players:
     destroy:
       cannot_delete_self: Je kunt jezelf niet verwijderen
+  session:
+    create:
+      failure: Inloggen mislukt
