@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "webdrivers"
 
 RSpec.describe "Playdates system", type: :system do
   fixtures :players, :playdates
