@@ -5,7 +5,7 @@ module ApplicationHelper
     "password" => "Wachtwoord"
   }.freeze
   def regular_players
-    Player.all.order(:abbreviation)
+    Player.order(:abbreviation)
   end
 
   def availability_options
