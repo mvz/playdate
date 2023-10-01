@@ -49,7 +49,7 @@ class MainController < ApplicationController
   end
 
   def set_overview_fields
-    @players = Player.all.includes(:availabilities)
+    @players = Player.includes(:availabilities)
     @playdates = relevant_playdates
     @stats = PlaydateStatus.calculate(@playdates, @players)
     @max = @stats.map { |_d, s| s[:yes] }.max
