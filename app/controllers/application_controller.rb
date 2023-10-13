@@ -4,6 +4,8 @@ require "application_responder"
 
 # Main controller superclass.
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+
   self.responder = ApplicationResponder
   respond_to :html
 

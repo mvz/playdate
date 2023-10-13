@@ -51,3 +51,17 @@ jobs:
         run: bundle exec erblint --lint-all
       - name: Run i18n-tasks
         run: bundle exec i18n-tasks health
+
+  brakeman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: false
+      - name: Install brakeman gem
+        run: gem install brakeman
+      - name: Analyze code statically using Brakeman
+        run: brakeman
