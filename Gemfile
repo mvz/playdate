@@ -47,7 +47,7 @@ group :development do
   gem "web-console", "~> 4.0"
 
   gem "erb_lint", "~> 0.5.0", require: false
-  gem "i18n-tasks", "~> 1.0", require: false
+  gem "i18n-tasks", ["~> 1.0", ">= 1.0.13"], require: false
   gem "rubocop", "~> 1.56", require: false
   gem "rubocop-capybara", "~> 2.19", require: false
   gem "rubocop-performance", "~> 1.19", require: false
