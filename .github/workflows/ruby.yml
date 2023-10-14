@@ -37,9 +37,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - run: |
-                wget http://mirrors.kernel.org/ubuntu/pool/main/liby/libyaml/libyaml-0-2_0.2.5-1_amd64.deb
-                sudo apt-get install ./libyaml-0-2_0.2.5-1_amd64.deb
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
