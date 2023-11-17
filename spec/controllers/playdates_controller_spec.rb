@@ -106,13 +106,30 @@ RSpec.describe PlaydatesController, type: :controller do
     it "create_with_range_invalid_period" do
       post "create", params: {period: 3, daytype: 6}, session: adminsession
 
-      expect(response).to render_template :new
+      aggregate_failures do
+        expect(response).to render_template :new
+        expect(response).to be_unprocessable
+      end
     end
 
     it "create_with_range_invalid_day_type" do
       post "create", params: {period: 2, daytype: 7}, session: adminsession
 
-      expect(response).to render_template :new
+      aggregate_failures do
+        expect(response).to render_template :new
+        expect(response).to be_unprocessable
+      end
+    end
+
+    it "renders new with a message if no dates were created" do
+      post "create", params: {period: 2, daytype: 6}, session: adminsession
+      post "create", params: {period: 2, daytype: 6}, session: adminsession
+
+      aggregate_failures do
+        expect(response).to render_template :new
+        expect(response).to be_unprocessable
+        expect(response.body).to have_text I18n.t("playdates.notices.saved_none")
+      end
     end
   end
 
