@@ -14,6 +14,7 @@
   <%= submit_tag "Save" %>
 <% end %>
 
-<%= button_to("Destroy", { action: "destroy", id: @availability },
+<%= button_to("Destroy", playdate_availability_path(@playdate, @availability),
+              method: :delete,
               data: { turbo_confirm: "Are you sure you want to destroy this availability?" }) %>
 <%= link_to "Back to list", playdate_path(@playdate) %>

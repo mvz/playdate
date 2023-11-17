@@ -30,13 +30,24 @@ RSpec.describe "Availibilities", type: :system do
     expect(page).to have_text "Bewerken"
   end
 
-  it "enables the admin to destroy availabilities" do
+  it "enables the admin to destroy availabilities from the playdate page" do
     click_link "Speeldagen"
     within first("td", text: "Tonen") do
       click_link "Tonen"
     end
     expect(page).to have_text players(:matijs).name
     click_button "Verwijderen"
+    expect(page).not_to have_text players(:matijs).name
+  end
+
+  it "enables the admin to destroy an availability from its edit page" do
+    click_link "Speeldagen"
+    within first("td", text: "Tonen") do
+      click_link "Tonen"
+    end
+    expect(page).to have_text players(:matijs).name
+    click_link "Bewerken"
+    click_button "Destroy"
     expect(page).not_to have_text players(:matijs).name
   end
 end
