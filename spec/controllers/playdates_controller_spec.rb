@@ -80,7 +80,7 @@ RSpec.describe PlaydatesController, type: :controller do
   end
 
   describe "#create" do
-    it "create" do
+    it "can succesfully create a single date" do
       num_playdates = Playdate.count
 
       post "create", params: {playdate: {day: "2006-03-11"}}, session: adminsession
@@ -89,6 +89,17 @@ RSpec.describe PlaydatesController, type: :controller do
         expect(response).to redirect_to controller: "playdates", action: "index"
         expect(request).to set_flash[:notice].to I18n.t("flash.playdates.create.notice")
         expect(Playdate.count).to eq num_playdates + 1
+        expect(response).to have_http_status :see_other
+      end
+    end
+
+    it "renders new when date could not be created" do
+      Playdate.create! day: "2006-03-11"
+      post "create", params: {playdate: {day: "2006-03-11"}}, session: adminsession
+
+      aggregate_failures do
+        expect(response).to be_unprocessable
+        expect(response).to render_template :new
       end
     end
 
