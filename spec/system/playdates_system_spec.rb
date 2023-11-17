@@ -17,6 +17,13 @@ RSpec.describe "Playdates system", type: :system do
     click_button "Inloggen"
   end
 
+  it "enables the admin to create playdates" do
+    click_link "Speeldagen"
+    click_link "Nieuwe speeldag"
+    click_button "Opslaan"
+    expect(page).to have_text "The new playdate was added"
+  end
+
   it "enables the admin to clean up playdates" do
     click_link "Speeldagen"
 
