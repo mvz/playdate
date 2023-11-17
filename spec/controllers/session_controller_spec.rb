@@ -13,15 +13,22 @@ RSpec.describe SessionController, type: :controller do
     expect(response.body).to have_css "h1", text: "Inloggen in Playdate"
   end
 
-  it "login" do
+  it "login success" do
     matijs = players(:matijs)
     matijs.password = "gnoef!"
     matijs.password_confirmation = "gnoef!"
     matijs.save!
     post :create, params: {name: "matijs", password: "gnoef!"}
     expect(response).to redirect_to controller: "main", action: "index"
+  end
+
+  it "login failures" do
+    matijs = players(:matijs)
+    matijs.password = "gnoef!"
+    matijs.password_confirmation = "gnoef!"
+    matijs.save!
     post :create, params: {name: "matijs", password: "zonk"}
-    expect(response).to be_successful
+    expect(response).to be_unprocessable
     expect(response).to render_template "new"
   end
 
