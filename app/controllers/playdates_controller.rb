@@ -51,12 +51,12 @@ class PlaydatesController < ApplicationController
   def save_new_range(period, daytype)
     unless [DAY_SATURDAY, DAY_FRIDAY].include?(daytype)
       flash.now[:notice] = t("playdates.alerts.invalid_day")
-      render :new
+      render :new, status: :unprocessable_entity
       return
     end
     unless [PERIOD_THIS_MONTH, PERIOD_NEXT_MONTH].include?(period)
       flash.now[:notice] = t("playdates.alerts.invalid_period")
-      render :new
+      render :new, status: :unprocessable_entity
       return
     end
 
@@ -67,7 +67,7 @@ class PlaydatesController < ApplicationController
       redirect_to action: "index"
     else
       flash.now[:notice] = t("playdates.notices.saved_none")
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
