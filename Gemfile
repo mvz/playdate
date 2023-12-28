@@ -60,7 +60,7 @@ group :test do
   gem "launchy", "~> 2.5"
   gem "rails-controller-testing", "~> 1.0"
   gem "selenium-webdriver", "~> 4.1", require: false
-  gem "shoulda-matchers", "~> 5.2"
+  gem "shoulda-matchers", "~> 6.0"
   gem "simplecov", require: false
   gem "timecop", "~> 0.9.5"
 end
