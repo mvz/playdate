@@ -28,7 +28,7 @@ gem "will_paginate", "~> 4.0.0"
 # gem 'bcrypt', '~> 3.1.7'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", "~> 1.17.0", require: false
+gem "bootsnap", "~> 1.18.1", require: false
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
