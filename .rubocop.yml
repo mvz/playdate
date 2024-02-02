@@ -20,6 +20,12 @@ AllCops:
 Rails:
   Enabled: true
 
+Capybara/ClickLinkOrButtonStyle:
+  EnforcedStyle: strict
+
+Capybara/NegationMatcher:
+  EnforcedStyle: not_to
+
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
@@ -74,10 +80,6 @@ Performance/StartWith:
 # We want to move away from inferring spec types
 RSpec/Rails/InferredSpecType:
   Enabled: false
-
-RSpec/Capybara/FeatureMethods:
-  Exclude:
-    - 'spec/features/**/*_spec.rb'
 
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
