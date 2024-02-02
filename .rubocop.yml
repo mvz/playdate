@@ -20,6 +20,9 @@ AllCops:
 Rails:
   Enabled: true
 
+Capybara/ClickLinkOrButtonStyle:
+  EnforcedStyle: strict
+
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
