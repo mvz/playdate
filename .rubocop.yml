@@ -15,7 +15,7 @@ AllCops:
     - 'bin/**/*'
   NewCops: enable
   TargetRubyVersion: 3.0
-  TargetRailsVersion: 6.1
+  TargetRailsVersion: 7.1
 
 Rails:
   Enabled: true
