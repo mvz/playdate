@@ -23,6 +23,9 @@ Rails:
 Capybara/ClickLinkOrButtonStyle:
   EnforcedStyle: strict
 
+Capybara/NegationMatcher:
+  EnforcedStyle: not_to
+
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
