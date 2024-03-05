@@ -57,7 +57,7 @@ end
 
 group :test do
   gem "capybara", "~> 3.38", require: false
-  gem "launchy", "~> 2.5"
+  gem "launchy", "~> 3.0"
   gem "rails-controller-testing", "~> 1.0"
   gem "selenium-webdriver", "~> 4.1", require: false
   gem "shoulda-matchers", "~> 6.0"
