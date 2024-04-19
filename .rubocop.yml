@@ -79,7 +79,7 @@ Performance/StartWith:
   AutoCorrect: true
 
 # We want to move away from inferring spec types
-RSpec/Rails/InferredSpecType:
+RSpecRails/InferredSpecType:
   Enabled: false
 
 # Require at least two dependent lines before suggesting a guard clause
