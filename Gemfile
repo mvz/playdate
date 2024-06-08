@@ -20,7 +20,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 gem "dynamic_form"
-gem "propshaft", "~> 0.8.0"
+gem "propshaft", "~> 0.9.0"
 gem "responders", "~> 3.0"
 gem "will_paginate", "~> 4.0.0"
 
