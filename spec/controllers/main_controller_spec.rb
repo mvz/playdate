@@ -65,10 +65,8 @@ RSpec.describe MainController, type: :controller do
 
     it "index_shows_no_for_bad_day" do
       [:matijs, :robert].each do |p|
-        players(p).availabilities.build.tap do |av|
-          av.playdate = today
-          av.status = Availability::STATUS_NEE
-        end.save!
+        players(p).availabilities.create!(playdate: today,
+          status: Availability::STATUS_NEE)
       end
 
       get :index, params: {}, session: playersession
@@ -84,10 +82,8 @@ RSpec.describe MainController, type: :controller do
 
     it "index_shows_best_for_only_good_day" do
       [:matijs, :robert].each do |p|
-        players(p).availabilities.build.tap do |av|
-          av.playdate = today
-          av.status = Availability::STATUS_JA
-        end.save!
+        players(p).availabilities.create!(playdate: today,
+          status: Availability::STATUS_JA)
       end
 
       get :index, params: {}, session: playersession
@@ -97,17 +93,13 @@ RSpec.describe MainController, type: :controller do
 
     it "index_both_days_good_but_first_is_best" do
       [:matijs, :robert].product([today, tomorrow]) do |(p, d)|
-        av = players(p).availabilities.build
-        av.playdate = d
-        av.status = Availability::STATUS_JA
-        av.save!
+        players(p).availabilities.create!(playdate: d,
+          status: Availability::STATUS_JA)
       end
 
       # today is best, tomorrow is good
-      av = players(:admin).availabilities.build
-      av.playdate = today
-      av.status = Availability::STATUS_JA
-      av.save!
+      players(:admin).availabilities.create!(playdate: today,
+        status: Availability::STATUS_JA)
 
       get :index, params: {}, session: playersession
 
@@ -119,22 +111,16 @@ RSpec.describe MainController, type: :controller do
 
     it "index_with_house_better_than_without" do
       [today, tomorrow].each do |d|
-        players(:matijs).availabilities.build.tap do |av|
-          av.playdate = d
-          av.status = Availability::STATUS_JA
-        end.save!
+        players(:matijs).availabilities.create!(playdate: d,
+          status: Availability::STATUS_JA)
       end
 
       # today is good, tomorrow is best
-      players(:robert).availabilities.build.tap do |av|
-        av.playdate = today
-        av.status = Availability::STATUS_JA
-      end.save!
+      players(:robert).availabilities.create!(playdate: today,
+        status: Availability::STATUS_JA)
 
-      players(:robert).availabilities.build.tap do |av|
-        av.playdate = tomorrow
-        av.status = Availability::STATUS_HUIS
-      end.save!
+      players(:robert).availabilities.create!(playdate: tomorrow,
+        status: Availability::STATUS_HUIS)
 
       get :index, params: {}, session: playersession
 
@@ -212,8 +198,7 @@ RSpec.describe MainController, type: :controller do
 
     it "sets updated datetime to latest updated availability" do
       av = tomorrow.availabilities
-        .build(player_id: players(:robert).id, status: 1)
-      av.save!
+        .create!(player_id: players(:robert).id, status: 1)
 
       get :feed, params: { format: "xml" }, session: {}
 
