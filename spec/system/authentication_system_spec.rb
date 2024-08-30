@@ -20,7 +20,7 @@ RSpec.describe "Authentication system", type: :system do
 
     expect(page).to have_text("Ingelogd als #{admin.full_name}")
 
-    click_link_or_button "Uitloggen"
+    click_button "Uitloggen"
 
     aggregate_failures do
       expect(page).not_to have_text("Ingelogd als #{admin.full_name}")
