@@ -4,9 +4,9 @@ class Availability < ApplicationRecord
   belongs_to :player
   belongs_to :playdate
 
-  validates :playdate_id, uniqueness: {scope: [:player_id]}
+  validates :playdate_id, uniqueness: { scope: [:player_id] }
   validates_associated :player, :playdate
-  validates :status, inclusion: {in: 0..3}
+  validates :status, inclusion: { in: 0..3 }
 
   STATUS_MISSCHIEN = 0
   STATUS_JA = 1

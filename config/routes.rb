@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get "/logout" => "session#edit"
   post "/logout" => "session#destroy"
 
-  get "/feed" => "main#feed", :format => false, :defaults => {format: "xml"}
+  get "/feed" => "main#feed", :format => false, :defaults => { format: "xml" }
 
   resource :credentials, only: [:edit, :update]
 

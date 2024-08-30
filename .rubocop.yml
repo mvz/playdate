@@ -60,10 +60,6 @@ Layout/MultilineOperationIndentation:
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyleForEmptyBraces: space
 
-Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
-  EnforcedStyleForEmptyBraces: no_space
-
 # Assume the programmer knows how bracketed block syntax works
 Lint/AmbiguousBlockAssociation:
   Enabled: false
@@ -76,11 +72,25 @@ Lint/AmbiguousOperatorPrecedence:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+# Configuration blocks can be any size
+Metrics/BlockLength:
+  Exclude:
+    - 'config/environments/*'
+
 Performance/StartWith:
   AutoCorrect: true
 
+# System spec scenarios can have multiple steps and expectations for each step
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/system/**'
+
 # We want to move away from inferring spec types
 RSpecRails/InferredSpecType:
+  Enabled: false
+
+# Not common in Rails projects
+Style/Documentation:
   Enabled: false
 
 # Require at least two dependent lines before suggesting a guard clause
@@ -108,12 +118,6 @@ Style/StringLiteralsInInterpolation:
 # Prefer symbols to look like symbols
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-# Project-specific configuration goes here.
-
-# Not common in Rails projects
-Style/Documentation:
-  Enabled: false
 
 # Timestamps are added in migration 007 and we can't change these migrations
 # after the fact.

@@ -24,10 +24,12 @@ RSpec.describe Availability, type: :model do
     availability.playdate = playdates(:friday)
     availability.status = Availability::STATUS_JA
 
-    expect(availability).to be_valid
-    expect(availability.status).to eq 1
-    expect(availability.player).to eq players(:robert)
-    expect(availability.playdate).to eq playdates(:friday)
+    aggregate_failures do
+      expect(availability).to be_valid
+      expect(availability.status).to eq 1
+      expect(availability.player).to eq players(:robert)
+      expect(availability.playdate).to eq playdates(:friday)
+    end
   end
 
   it "fixtures_valid" do

@@ -9,13 +9,13 @@ class Player < ApplicationRecord
   attribute :is_admin, default: false
 
   validates :name, presence: true
-  validates :name, length: {minimum: 1}
+  validates :name, length: { minimum: 1 }
   validates :password, confirmation: true
   validates :name, uniqueness: true
-  validates :password, length: {minimum: 5,
-                                if: proc { |user|
-                                      user.password_hash.nil? or !user.password.to_s.empty?
-                                    }}
+  validates :password, length: { minimum: 5,
+                                 if: proc { |user|
+                                       user.password_hash.nil? or !user.password.to_s.empty?
+                                     } }
   validates :is_admin, inclusion: [false, true]
 
   SALT = "change this to your own salt"

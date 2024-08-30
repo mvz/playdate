@@ -6,7 +6,7 @@ RSpec.describe Player, type: :model do
   fixtures :players, :playdates, :availabilities
 
   let(:new_player_params) do
-    {name: "Testy", password: "test123", password_confirmation: "test123"}.freeze
+    { name: "Testy", password: "test123", password_confirmation: "test123" }.freeze
   end
 
   describe "validations" do
@@ -45,9 +45,11 @@ RSpec.describe Player, type: :model do
 
   it "new" do
     player = described_class.new(new_player_params)
-    expect(player).to be_valid
-    expect(player[:name]).to eq new_player_params[:name]
-    expect(player.check_password(new_player_params[:password])).to be true
+    aggregate_failures do
+      expect(player).to be_valid
+      expect(player[:name]).to eq new_player_params[:name]
+      expect(player.check_password(new_player_params[:password])).to be true
+    end
   end
 
   describe "#check_password" do

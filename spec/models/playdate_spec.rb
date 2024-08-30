@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Playdate, type: :model do
   fixtures :playdates
 
-  let(:new_params) { {day: "2006-01-10"} }
+  let(:new_params) { { day: "2006-01-10" } }
 
   describe "validations" do
     let(:playdate) { described_class.new }
@@ -27,8 +27,10 @@ RSpec.describe Playdate, type: :model do
 
   it "new" do
     dt = described_class.new(new_params)
-    expect(dt).to be_valid
-    expect(dt.day).to eq Date.new(2006, 1, 10)
+    aggregate_failures do
+      expect(dt).to be_valid
+      expect(dt.day).to eq Date.new(2006, 1, 10)
+    end
   end
 
   it "to_s" do
