@@ -63,7 +63,7 @@ class PlaydatesController < ApplicationController
     count = Playdate.make_new_range(period, daytype)
 
     if count > 0
-      flash[:notice] = t("playdates.notices.saved_new_range", count: count)
+      flash[:notice] = t("playdates.notices.saved_new_range", count:)
       redirect_to action: "index"
     else
       flash.now[:notice] = t("playdates.notices.saved_none")

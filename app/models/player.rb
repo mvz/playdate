@@ -33,7 +33,7 @@ class Player < ApplicationRecord
   end
 
   def self.authenticate(name, pass)
-    u = find_by(name: name)
+    u = find_by(name:)
     u.nil? and return nil
     u.check_password(pass) or return nil
     u
