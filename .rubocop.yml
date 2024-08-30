@@ -84,6 +84,10 @@ Performance/StartWith:
 RSpecRails/InferredSpecType:
   Enabled: false
 
+# Not common in Rails projects
+Style/Documentation:
+  Enabled: false
+
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
@@ -109,12 +113,6 @@ Style/StringLiteralsInInterpolation:
 # Prefer symbols to look like symbols
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-# Project-specific configuration goes here.
-
-# Not common in Rails projects
-Style/Documentation:
-  Enabled: false
 
 # Timestamps are added in migration 007 and we can't change these migrations
 # after the fact.
