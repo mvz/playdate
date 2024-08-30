@@ -80,6 +80,11 @@ Metrics/BlockLength:
 Performance/StartWith:
   AutoCorrect: true
 
+# System spec scenarios can have multiple steps and expectations for each step
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/system/**'
+
 # We want to move away from inferring spec types
 RSpecRails/InferredSpecType:
   Enabled: false

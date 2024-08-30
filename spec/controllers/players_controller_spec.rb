@@ -121,9 +121,11 @@ RSpec.describe PlayersController, type: :controller do
 
     it "destroys the player's availabilities" do
       num_player_avs = player.availabilities.count
-      expect(num_player_avs).to be > 0
-      expect { post :destroy, params: { id: player.id }, session: adminsession }
-        .to change(Availability, :count).by(-num_player_avs)
+      aggregate_failures do
+        expect(num_player_avs).to be > 0
+        expect { post :destroy, params: { id: player.id }, session: adminsession }
+          .to change(Availability, :count).by(-num_player_avs)
+      end
     end
 
     describe "when attempting to destroy onesself" do

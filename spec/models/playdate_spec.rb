@@ -27,8 +27,10 @@ RSpec.describe Playdate, type: :model do
 
   it "new" do
     dt = described_class.new(new_params)
-    expect(dt).to be_valid
-    expect(dt.day).to eq Date.new(2006, 1, 10)
+    aggregate_failures do
+      expect(dt).to be_valid
+      expect(dt.day).to eq Date.new(2006, 1, 10)
+    end
   end
 
   it "to_s" do

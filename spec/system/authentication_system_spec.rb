@@ -22,9 +22,7 @@ RSpec.describe "Authentication system", type: :system do
 
     click_button "Uitloggen"
 
-    aggregate_failures do
-      expect(page).not_to have_text("Ingelogd als #{admin.full_name}")
-      expect(page).to have_text "Inloggen in Playdate"
-    end
+    expect(page).not_to have_text("Ingelogd als #{admin.full_name}")
+    expect(page).to have_text "Inloggen in Playdate"
   end
 end

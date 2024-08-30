@@ -40,11 +40,14 @@ RSpec.describe MainController, type: :controller do
 
     it "index_as_admin" do
       get :index, params: {}, session: adminsession
-      expect(response).to be_successful
-      expect(response).to render_template "index"
-      expect(assigns(:playdates)).not_to be_nil
-      expect(assigns(:stats)).not_to be_nil
-      expect(response.body).to have_link href: "/playdates"
+
+      aggregate_failures do
+        expect(response).to be_successful
+        expect(response).to render_template "index"
+        expect(assigns(:playdates)).not_to be_nil
+        expect(assigns(:stats)).not_to be_nil
+        expect(response.body).to have_link href: "/playdates"
+      end
     end
 
     it "index_all_dates_present" do
@@ -108,8 +111,10 @@ RSpec.describe MainController, type: :controller do
 
       get :index, params: {}, session: playersession
 
-      expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Beste"
-      expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Ja"
+      aggregate_failures do
+        expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Beste"
+        expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Ja"
+      end
     end
 
     it "index_with_house_better_than_without" do
@@ -133,8 +138,10 @@ RSpec.describe MainController, type: :controller do
 
       get :index, params: {}, session: playersession
 
-      expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Ja"
-      expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Beste"
+      aggregate_failures do
+        expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Ja"
+        expect(response.body).to have_css "tr.summary td:nth-of-type(2)", text: "Beste"
+      end
     end
   end
 
@@ -144,23 +151,29 @@ RSpec.describe MainController, type: :controller do
     end
 
     it "renders the edit template" do
-      expect(response).to be_successful
-      expect(response).to render_template "edit"
-      expect(response.body).to have_css "h1", text: "Beschikbaarheid bewerken"
+      aggregate_failures do
+        expect(response).to be_successful
+        expect(response).to render_template "edit"
+        expect(response.body).to have_css "h1", text: "Beschikbaarheid bewerken"
+      end
     end
 
     it "assigns available playdates for rendering" do
-      expect(assigns(:playdates)).not_to be_nil
-      expect(assigns(:playdates).count).to eq 2
+      aggregate_failures do
+        expect(assigns(:playdates)).not_to be_nil
+        expect(assigns(:playdates).count).to eq 2
+      end
     end
 
     it "creates an availability selector for each playdate" do
       elements = Capybara.string(response.body).find_css("select")
-      expect(elements.count).to eq assigns(:playdates).count
-      expect(elements).to all have_css "option", text: "Ja"
-      expect(elements).to all have_css "option", text: "Nee"
-      expect(elements).to all have_css "option", text: "Misschien"
-      expect(elements).to all have_css "option", text: "Huis"
+      aggregate_failures do
+        expect(elements.count).to eq assigns(:playdates).count
+        expect(elements).to all have_css "option", text: "Ja"
+        expect(elements).to all have_css "option", text: "Nee"
+        expect(elements).to all have_css "option", text: "Misschien"
+        expect(elements).to all have_css "option", text: "Huis"
+      end
     end
   end
 
@@ -168,27 +181,33 @@ RSpec.describe MainController, type: :controller do
     post :update,
       params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
       session: { user_id: players(:robert).id }
-    expect(response).to redirect_to controller: "main", action: "index"
-    expect(Availability.count).to eq 4
-    newavs = players(:robert).availabilities.sort_by(&:playdate_id)
-    expect(newavs.map { |a| [a.playdate_id, a.status] }.flatten).to eq [1, 2, 2, 3]
+    aggregate_failures do
+      expect(response).to redirect_to controller: "main", action: "index"
+      expect(Availability.count).to eq 4
+      newavs = players(:robert).availabilities.sort_by(&:playdate_id)
+      expect(newavs.map { |a| [a.playdate_id, a.status] }.flatten).to eq [1, 2, 2, 3]
+    end
   end
 
   describe "#feed" do
     it "renders the feed and feed table" do
       get :feed, params: { format: "xml" }, session: {}
-      expect(response).to be_successful
-      expect(response).to render_template "feed"
-      expect(response).to render_template "feed_table"
+      aggregate_failures do
+        expect(response).to be_successful
+        expect(response).to render_template "feed"
+        expect(response).to render_template "feed_table"
+      end
     end
 
     it "assigns needed values" do
       get :feed, params: { format: "xml" }, session: {}
-      expect(assigns(:playdates)).not_to be_nil
-      expect(assigns(:link)).not_to be_nil
-      expect(assigns(:updated_at)).to be_nil
-      expect(assigns(:date)).to be_nil
-      expect(assigns(:stats)).not_to be_nil
+      aggregate_failures do
+        expect(assigns(:playdates)).not_to be_nil
+        expect(assigns(:link)).not_to be_nil
+        expect(assigns(:updated_at)).to be_nil
+        expect(assigns(:date)).to be_nil
+        expect(assigns(:stats)).not_to be_nil
+      end
     end
 
     it "sets updated datetime to latest updated availability" do
@@ -197,8 +216,11 @@ RSpec.describe MainController, type: :controller do
       av.save!
 
       get :feed, params: { format: "xml" }, session: {}
-      expect(response).to be_successful
-      expect(av.updated_at.to_s).to eq assigns(:updated_at).to_s
+
+      aggregate_failures do
+        expect(response).to be_successful
+        expect(av.updated_at.to_s).to eq assigns(:updated_at).to_s
+      end
     end
   end
 

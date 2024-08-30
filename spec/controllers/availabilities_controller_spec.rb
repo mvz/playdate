@@ -28,11 +28,14 @@ RSpec.describe AvailabilitiesController, type: :controller do
 
   describe "#destroy" do
     it "destroys the availability" do
-      expect(Availability.find(1)).not_to be_nil
+      av = Availability.find(1)
 
       delete "destroy", params: { playdate_id: 1, id: 1 }, session: adminsession
 
-      expect { Availability.find(1) }.to raise_error ActiveRecord::RecordNotFound
+      aggregate_failures do
+        expect { av.reload }.to raise_error ActiveRecord::RecordNotFound
+        expect { Availability.find(1) }.to raise_error ActiveRecord::RecordNotFound
+      end
     end
 
     it "redirects to the playdate with a message" do
@@ -51,13 +54,15 @@ RSpec.describe AvailabilitiesController, type: :controller do
     it "renders the selected availability for editing" do
       get "edit", params: { playdate_id: 1, id: 1 }, session: adminsession
 
-      expect(response).to be_successful
-      expect(response).to render_template "edit"
+      aggregate_failures do
+        expect(response).to be_successful
+        expect(response).to render_template "edit"
 
-      expect(assigns(:availability)).not_to be_nil
-      expect(assigns(:availability)).to be_valid
+        expect(assigns(:availability)).not_to be_nil
+        expect(assigns(:availability)).to be_valid
 
-      expect(response.body).to have_css "h1", text: "Editing availability"
+        expect(response.body).to have_css "h1", text: "Editing availability"
+      end
     end
 
     it "has a form that will use the PATCH method" do
@@ -93,12 +98,14 @@ RSpec.describe AvailabilitiesController, type: :controller do
   it "new" do
     get "new", params: { playdate_id: 1 }, session: adminsession
 
-    expect(response).to be_successful
-    expect(response).to render_template "new"
+    aggregate_failures do
+      expect(response).to be_successful
+      expect(response).to render_template "new"
 
-    expect(assigns(:availability)).not_to be_nil
+      expect(assigns(:availability)).not_to be_nil
 
-    expect(response.body).to have_css "h1", text: "New availability"
+      expect(response.body).to have_css "h1", text: "New availability"
+    end
   end
 
   describe "#create" do

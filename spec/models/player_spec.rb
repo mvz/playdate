@@ -45,9 +45,11 @@ RSpec.describe Player, type: :model do
 
   it "new" do
     player = described_class.new(new_player_params)
-    expect(player).to be_valid
-    expect(player[:name]).to eq new_player_params[:name]
-    expect(player.check_password(new_player_params[:password])).to be true
+    aggregate_failures do
+      expect(player).to be_valid
+      expect(player[:name]).to eq new_player_params[:name]
+      expect(player.check_password(new_player_params[:password])).to be true
+    end
   end
 
   describe "#check_password" do
