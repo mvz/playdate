@@ -38,9 +38,9 @@ RSpec.describe RangeController, type: :controller do
         enddate = startdate.end_of_month
         startdate.upto(enddate) do |day|
           if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
-            expect(Playdate.find_by(day: day)).not_to be_nil
+            expect(Playdate.find_by(day:)).not_to be_nil
           else
-            expect(Playdate.find_by(day: day)).to be_nil
+            expect(Playdate.find_by(day:)).to be_nil
           end
         end
       end
@@ -55,9 +55,9 @@ RSpec.describe RangeController, type: :controller do
         enddate = startdate.next_month.end_of_month
         startdate.upto(enddate) do |day|
           if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
-            expect(Playdate.find_by(day: day)).not_to be_nil
+            expect(Playdate.find_by(day:)).not_to be_nil
           else
-            expect(Playdate.find_by(day: day)).to be_nil
+            expect(Playdate.find_by(day:)).to be_nil
           end
         end
       end
@@ -71,9 +71,9 @@ RSpec.describe RangeController, type: :controller do
         enddate = startdate.next_month.end_of_month
         startdate.upto(enddate) do |day|
           if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
-            expect(Playdate.find_by(day: day)).not_to be_nil
+            expect(Playdate.find_by(day:)).not_to be_nil
           else
-            expect(Playdate.find_by(day: day)).to be_nil
+            expect(Playdate.find_by(day:)).to be_nil
           end
         end
       end

@@ -54,7 +54,7 @@ RSpec.describe MainController, type: :controller do
       startdate.upto(enddate) do |day|
         next unless MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
 
-        Playdate.new(day: day).save!
+        Playdate.new(day:).save!
       end
       get :index, params: {}, session: playersession
       expect(response.body).not_to have_link href: "/more"
