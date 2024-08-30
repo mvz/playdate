@@ -83,6 +83,6 @@ RSpec.describe RangeController, type: :controller do
   private
 
   def playersession
-    {user_id: players(:matijs).id}
+    { user_id: players(:matijs).id }
   end
 end

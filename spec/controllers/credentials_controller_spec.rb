@@ -16,14 +16,15 @@ RSpec.describe CredentialsController, type: :controller do
 
   describe "#update" do
     it "requires login" do
-      post :update, params: {player: {password: "slurp", password_confirmation: "slurp"}}
+      post :update,
+        params: { player: { password: "slurp", password_confirmation: "slurp" } }
       expect(response).to redirect_to controller: "session", action: "new"
     end
 
     it "updates the password" do
       matijs = players(:matijs)
       post :update,
-        params: {player: {password: "slurp", password_confirmation: "slurp"}},
+        params: { player: { password: "slurp", password_confirmation: "slurp" } },
         session: playersession
       expect(response).to redirect_to controller: "main", action: "index"
       expect(matijs.reload.check_password("slurp")).to be_truthy
@@ -31,7 +32,7 @@ RSpec.describe CredentialsController, type: :controller do
 
     it "renders edit on failures" do
       post :update,
-        params: {player: {password: "slu", password_confirmation: "slurp"}},
+        params: { player: { password: "slu", password_confirmation: "slurp" } },
         session: playersession
       expect(response).to render_template :edit
       expect(response).to be_unprocessable
@@ -41,6 +42,6 @@ RSpec.describe CredentialsController, type: :controller do
   private
 
   def playersession
-    {user_id: players(:matijs).id}
+    { user_id: players(:matijs).id }
   end
 end

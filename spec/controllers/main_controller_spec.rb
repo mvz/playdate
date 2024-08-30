@@ -166,8 +166,8 @@ RSpec.describe MainController, type: :controller do
 
   it "update" do
     post :update,
-      params: {availability: {1 => {status: 2}, 2 => {status: 3}}},
-      session: {user_id: players(:robert).id}
+      params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
+      session: { user_id: players(:robert).id }
     expect(response).to redirect_to controller: "main", action: "index"
     expect(Availability.count).to eq 4
     newavs = players(:robert).availabilities.sort_by(&:playdate_id)
@@ -176,14 +176,14 @@ RSpec.describe MainController, type: :controller do
 
   describe "#feed" do
     it "renders the feed and feed table" do
-      get :feed, params: {format: "xml"}, session: {}
+      get :feed, params: { format: "xml" }, session: {}
       expect(response).to be_successful
       expect(response).to render_template "feed"
       expect(response).to render_template "feed_table"
     end
 
     it "assigns needed values" do
-      get :feed, params: {format: "xml"}, session: {}
+      get :feed, params: { format: "xml" }, session: {}
       expect(assigns(:playdates)).not_to be_nil
       expect(assigns(:link)).not_to be_nil
       expect(assigns(:updated_at)).to be_nil
@@ -196,7 +196,7 @@ RSpec.describe MainController, type: :controller do
         .build(player_id: players(:robert).id, status: 1)
       av.save!
 
-      get :feed, params: {format: "xml"}, session: {}
+      get :feed, params: { format: "xml" }, session: {}
       expect(response).to be_successful
       expect(av.updated_at.to_s).to eq assigns(:updated_at).to_s
     end
@@ -205,10 +205,10 @@ RSpec.describe MainController, type: :controller do
   private
 
   def playersession
-    {user_id: players(:matijs).id}
+    { user_id: players(:matijs).id }
   end
 
   def adminsession
-    {user_id: players(:admin).id}
+    { user_id: players(:admin).id }
   end
 end

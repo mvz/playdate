@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Playdate, type: :model do
   fixtures :playdates
 
-  let(:new_params) { {day: "2006-01-10"} }
+  let(:new_params) { { day: "2006-01-10" } }
 
   describe "validations" do
     let(:playdate) { described_class.new }

@@ -18,7 +18,7 @@ RSpec.describe SessionController, type: :controller do
     matijs.password = "gnoef!"
     matijs.password_confirmation = "gnoef!"
     matijs.save!
-    post :create, params: {name: "matijs", password: "gnoef!"}
+    post :create, params: { name: "matijs", password: "gnoef!" }
     expect(response).to redirect_to controller: "main", action: "index"
   end
 
@@ -27,7 +27,7 @@ RSpec.describe SessionController, type: :controller do
     matijs.password = "gnoef!"
     matijs.password_confirmation = "gnoef!"
     matijs.save!
-    post :create, params: {name: "matijs", password: "zonk"}
+    post :create, params: { name: "matijs", password: "zonk" }
     expect(response).to be_unprocessable
     expect(response).to render_template "new"
   end
@@ -51,6 +51,6 @@ RSpec.describe SessionController, type: :controller do
   private
 
   def playersession
-    {user_id: players(:matijs).id}
+    { user_id: players(:matijs).id }
   end
 end

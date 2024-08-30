@@ -6,7 +6,7 @@ RSpec.describe Player, type: :model do
   fixtures :players, :playdates, :availabilities
 
   let(:new_player_params) do
-    {name: "Testy", password: "test123", password_confirmation: "test123"}.freeze
+    { name: "Testy", password: "test123", password_confirmation: "test123" }.freeze
   end
 
   describe "validations" do
