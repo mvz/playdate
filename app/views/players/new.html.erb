@@ -2,7 +2,18 @@
   Nieuwe speler
 <% end %>
 
-<%= error_messages_for :player %>
+<% if @player.errors.any? %>
+  <div class="error_explanation">
+    <h2><%= t("errors.template.header", model: "Speler", count: @player.errors.count) %></h2>
+    <p><%= t("errors.template.body") %></p>
+
+    <ul>
+      <% @player.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
 <%= form_for(@player) do |f| %>
   <p>
