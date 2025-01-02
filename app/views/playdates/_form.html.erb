@@ -1,8 +1,17 @@
-<%= error_messages_for "playdate" %>
+<% if @playdate && @playdate.errors.any? %>
+  <div class="error_explanation">
+    <h2><%= t("errors.template.header", model: "Speler", count: @playdate.errors.count) %></h2>
+    <p><%= t("errors.template.body") %></p>
 
-<!--[form:playdate]-->
+    <ul>
+      <% @playdate.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <p>
 <label for="playdate_day">Dag:</label>
 <%= date_select "playdate", "day" %>
 </p>
-<!--[eoform:playdate]-->

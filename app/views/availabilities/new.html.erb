@@ -4,7 +4,18 @@
 
 <div class="content">
   <%= form_for [@playdate, @availability] do %>
-    <%= error_messages_for "availability" %>
+    <% if @availability.errors.any? %>
+      <div class="error_explanation">
+        <h2><%= t("errors.template.header", model: "Speler", count: @availability.errors.count) %></h2>
+        <p><%= t("errors.template.body") %></p>
+
+        <ul>
+          <% @availability.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
     <p><label>Datum</label><br>
     <%= @playdate.day %></p>
