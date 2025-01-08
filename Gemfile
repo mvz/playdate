@@ -45,7 +45,7 @@ group :development do
   # anywhere in the code.
   gem "web-console", "~> 4.0"
 
-  gem "erb_lint", "~> 0.7.0", require: false
+  gem "erb_lint", "~> 0.8.0", require: false
   gem "i18n-tasks", ["~> 1.0", ">= 1.0.13"], require: false
   gem "rubocop", "~> 1.63", require: false
   gem "rubocop-capybara", "~> 2.20", require: false
