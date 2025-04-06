@@ -33,11 +33,11 @@ class AvailabilitiesController < ApplicationController
   private
 
   def edit_availability_params
-    params.require(:availability).permit(:status)
+    params.expect(availability: [:status])
   end
 
   def new_availability_params
-    params.require(:availability).permit(:player_id, :status)
+    params.expect(availability: [:player_id, :status])
   end
 
   def load_resource

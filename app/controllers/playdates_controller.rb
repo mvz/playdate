@@ -72,6 +72,6 @@ class PlaydatesController < ApplicationController
   end
 
   def playdate_params
-    params.require(:playdate).permit(:day)
+    params.expect(playdate: [:day])
   end
 end
