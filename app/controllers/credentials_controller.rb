@@ -19,6 +19,6 @@ class CredentialsController < ApplicationController
   private
 
   def player_params
-    params.require(:player).permit(:password, :password_confirmation)
+    params.expect(player: [:password, :password_confirmation])
   end
 end
