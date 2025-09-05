@@ -44,7 +44,7 @@ class Player < ApplicationRecord
   end
 
   def availability_for_playdate(playdate)
-    all_availabilities.find { |it| it.playdate_id == playdate.id }
+    all_availabilities.find { _1.playdate_id == playdate.id }
   end
 
   def current_or_default_availability_for_playdate(playdate)
