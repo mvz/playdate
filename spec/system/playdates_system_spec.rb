@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Playdates system", type: :system do
   include ActiveSupport::Testing::TimeHelpers
+
   fixtures :players, :playdates
 
   let(:admin) { players(:admin) }
