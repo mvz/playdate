@@ -20,7 +20,7 @@ class Player < ApplicationRecord
 
   SALT = "change this to your own salt"
 
-  default_scope { order("abbreviation") }
+  default_scope { order(:abbreviation) }
 
   attr_reader :password
 
