@@ -7,7 +7,7 @@ class Playdate < ApplicationRecord
   validates :day, presence: true
   validates :day, uniqueness: true
 
-  default_scope { order("day") }
+  default_scope { order(:day) }
   scope :relevant, -> { where(day: Time.zone.today..) }
   scope :irrelevant, -> { where(day: ...Time.zone.today) }
 
