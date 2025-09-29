@@ -19,7 +19,7 @@ gem "turbo-rails", "~> 2.0.6"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails", "~> 1.3.4"
 
-gem "propshaft", "~> 1.2.0"
+gem "propshaft", "~> 1.3.1"
 gem "responders", "~> 3.0"
 gem "will_paginate", "~> 4.0.0"
 
