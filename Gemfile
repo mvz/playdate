@@ -31,7 +31,7 @@ gem "responders", "~> 3.0"
 gem "will_paginate", "~> 4.0.0"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", "~> 1.18.3", require: false
+gem "bootsnap", "~> 1.19", require: false
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
