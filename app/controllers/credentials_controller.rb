@@ -12,7 +12,7 @@ class CredentialsController < ApplicationController
     if @player.update(player_params)
       redirect_to(controller: "main", action: "index")
     else
-      render "edit", status: :unprocessable_entity
+      render "edit", status: :unprocessable_content
     end
   end
 

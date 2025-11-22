@@ -18,7 +18,7 @@ class SessionController < ApplicationController
       redirect_to(controller: "main", action: "index")
     else
       flash.now[:notice] = t(".failure")
-      render "new", status: :unprocessable_entity
+      render "new", status: :unprocessable_content
     end
   end
 
