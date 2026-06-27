@@ -12,7 +12,7 @@ class PlayersController < ApplicationController
   end
 
   def edit
-    @player = Player.find(params[:id])
+    @player = Player.find(params.expect(:id))
   end
 
   def create
@@ -22,13 +22,13 @@ class PlayersController < ApplicationController
   end
 
   def update
-    @player = Player.find(params[:id])
+    @player = Player.find(params.expect(:id))
     @player.update player_params
     respond_with @player, location: players_path
   end
 
   def destroy
-    @player = Player.find(params[:id])
+    @player = Player.find(params.expect(:id))
 
     if @player == current_user
       flash[:alert] = t(".cannot_delete_self")

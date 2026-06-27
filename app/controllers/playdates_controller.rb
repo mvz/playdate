@@ -13,7 +13,7 @@ class PlaydatesController < ApplicationController
   end
 
   def show
-    @playdate = Playdate.find(params[:id])
+    @playdate = Playdate.find(params.expect(:id))
   end
 
   def new
@@ -35,7 +35,7 @@ class PlaydatesController < ApplicationController
   end
 
   def destroy
-    @playdate = Playdate.find(params[:id])
+    @playdate = Playdate.find(params.expect(:id))
     @playdate.destroy
     respond_with @playdate, location: playdates_path
   end

@@ -43,7 +43,7 @@ RSpec.describe "Playdates system", type: :system do
   it "enables the admin to clean up playdates" do
     click_link "Speeldagen"
 
-    expect(page).to have_content "Speeldagen"
+    expect(page).to have_text "Speeldagen"
 
     accept_confirm do
       click_button "Opruimen"

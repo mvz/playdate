@@ -52,11 +52,11 @@ group :development do
 
   gem "erb_lint", "~> 0.9.0", require: false
   gem "i18n-tasks", ["~> 1.0", ">= 1.0.13"], require: false
-  gem "rubocop", "~> 1.82", require: false
-  gem "rubocop-capybara", "~> 2.22", require: false
+  gem "rubocop", "~> 1.88", require: false
+  gem "rubocop-capybara", "~> 3.0", require: false
   gem "rubocop-performance", "~> 1.26", require: false
-  gem "rubocop-rails", "~> 2.34", require: false
-  gem "rubocop-rspec", "~> 3.9", require: false
+  gem "rubocop-rails", "~> 2.35", require: false
+  gem "rubocop-rspec", "~> 3.10", require: false
   gem "rubocop-rspec_rails", "~> 2.32", require: false
 end
 

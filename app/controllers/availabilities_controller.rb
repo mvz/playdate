@@ -42,10 +42,10 @@ class AvailabilitiesController < ApplicationController
 
   def load_resource
     load_playdate
-    @availability = @playdate.availabilities.find(params[:id])
+    @availability = @playdate.availabilities.find(params.expect(:id))
   end
 
   def load_playdate
-    @playdate = Playdate.find(params[:playdate_id])
+    @playdate = Playdate.find(params.expect(:playdate_id))
   end
 end
