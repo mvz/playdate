@@ -22,10 +22,10 @@ AllCops:
 Rails:
   Enabled: true
 
-Capybara/ClickLinkOrButtonStyle:
-  EnforcedStyle: strict
+Capybara/AmbiguousClick:
+  Enabled: true
 
-Capybara/NegationMatcher:
+Capybara/RSpec/NegationMatcher:
   EnforcedStyle: not_to
 
 Layout/ArgumentAlignment:
