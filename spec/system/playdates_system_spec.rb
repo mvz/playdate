@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "capybara/cuprite"
 
 RSpec.describe "Playdates system", type: :system do
   include ActiveSupport::Testing::TimeHelpers
@@ -10,7 +11,7 @@ RSpec.describe "Playdates system", type: :system do
   let(:admin) { players(:admin) }
 
   before do
-    driven_by :selenium, using: :headless_firefox
+    driven_by :cuprite
     admin.update!(password: "foobar")
 
     visit "/"
