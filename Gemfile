@@ -63,7 +63,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.38", require: false
-  gem "selenium-webdriver", "~> 4.1", require: false
+  gem "cuprite", "~> 0.18.0", require: false
 
   gem "launchy", "~> 3.0"
   gem "rails-controller-testing", "~> 1.0"
