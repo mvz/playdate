@@ -10,9 +10,8 @@ class CreatePlayers < ActiveRecord::Migration
       t.column :password_salt, :string
 
       # NOTE: This offense is fixed in the FixThreeStateIsAdmin migration
-      # rubocop:disable Rails/ThreeStateBooleanColumn
+      # rubocop:disable-next Rails/ThreeStateBooleanColumn
       t.column :is_admin, :boolean
-      # rubocop:enable Rails/ThreeStateBooleanColumn
     end
   end
 
