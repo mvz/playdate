@@ -16,14 +16,15 @@ RSpec.describe MainController, type: :controller do
 
   it "authorization" do
     [:index, :edit, :update].product([:get, :post]) do |(a, m)|
-      method(m).call(a, params: {}, session: {})
-      expect(response).to redirect_to controller: "session", action: "new"
+      method(m).call(a, params: {})
+      expect(response).to redirect_to new_player_session_path
     end
   end
 
   describe "#index" do
     it "index_as_user" do
-      get :index, params: {}, session: playersession
+      sign_in players(:matijs)
+      get :index, params: {}
 
       aggregate_failures do
         expect(response).to be_successful
@@ -39,7 +40,8 @@ RSpec.describe MainController, type: :controller do
     end
 
     it "index_as_admin" do
-      get :index, params: {}, session: adminsession
+      sign_in players(:admin)
+      get :index, params: {}
 
       aggregate_failures do
         expect(response).to be_successful
@@ -51,6 +53,7 @@ RSpec.describe MainController, type: :controller do
     end
 
     it "index_all_dates_present" do
+      sign_in players(:matijs)
       # today and tomorrow are already there
       startdate = Time.zone.today + 2
       enddate = Time.zone.today.next_month.end_of_month
@@ -59,39 +62,43 @@ RSpec.describe MainController, type: :controller do
 
         Playdate.new(day:).save!
       end
-      get :index, params: {}, session: playersession
+      get :index, params: {}
       expect(response.body).not_to have_link href: "/more"
     end
 
     it "index_shows_no_for_bad_day" do
+      sign_in players(:matijs)
       [:matijs, :robert].each do |p|
         players(p).availabilities.create!(playdate: today,
           status: Availability::STATUS_NEE)
       end
 
-      get :index, params: {}, session: playersession
+      get :index, params: {}
 
       expect(response.body).to have_css "tr.summary td:first-of-type", text: "Nee"
     end
 
     it "index_shows_empty_for_neutral_day" do
-      get :index, params: {}, session: playersession
+      sign_in players(:matijs)
+      get :index, params: {}
 
       expect(response.body).to have_css "tr.summary td:first-of-type", text: ""
     end
 
     it "index_shows_best_for_only_good_day" do
+      sign_in players(:matijs)
       [:matijs, :robert].each do |p|
         players(p).availabilities.create!(playdate: today,
           status: Availability::STATUS_JA)
       end
 
-      get :index, params: {}, session: playersession
+      get :index, params: {}
 
       expect(response.body).to have_css "tr.summary td:first-of-type", text: "Beste"
     end
 
     it "index_both_days_good_but_first_is_best" do
+      sign_in players(:matijs)
       [:matijs, :robert].product([today, tomorrow]) do |(p, d)|
         players(p).availabilities.create!(playdate: d,
           status: Availability::STATUS_JA)
@@ -101,7 +108,7 @@ RSpec.describe MainController, type: :controller do
       players(:admin).availabilities.create!(playdate: today,
         status: Availability::STATUS_JA)
 
-      get :index, params: {}, session: playersession
+      get :index, params: {}
 
       aggregate_failures do
         expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Beste"
@@ -110,6 +117,7 @@ RSpec.describe MainController, type: :controller do
     end
 
     it "index_with_house_better_than_without" do
+      sign_in players(:matijs)
       [today, tomorrow].each do |d|
         players(:matijs).availabilities.create!(playdate: d,
           status: Availability::STATUS_JA)
@@ -122,7 +130,7 @@ RSpec.describe MainController, type: :controller do
       players(:robert).availabilities.create!(playdate: tomorrow,
         status: Availability::STATUS_HUIS)
 
-      get :index, params: {}, session: playersession
+      get :index, params: {}
 
       aggregate_failures do
         expect(response.body).to have_css "tr.summary td:nth-of-type(1)", text: "Ja"
@@ -133,7 +141,8 @@ RSpec.describe MainController, type: :controller do
 
   describe "#edit" do
     before do
-      get :edit, params: {}, session: playersession
+      sign_in players(:matijs)
+      get :edit, params: {}
     end
 
     it "renders the edit template" do
@@ -164,6 +173,7 @@ RSpec.describe MainController, type: :controller do
   end
 
   it "update" do
+    sign_in players(:robert)
     post :update,
       params: { availability: { 1 => { status: 2 }, 2 => { status: 3 } } },
       session: { user_id: players(:robert).id }
@@ -177,7 +187,7 @@ RSpec.describe MainController, type: :controller do
 
   describe "#feed" do
     it "renders the feed and feed table" do
-      get :feed, params: { format: "xml" }, session: {}
+      get :feed, params: { format: "xml" }
       aggregate_failures do
         expect(response).to be_successful
         expect(response).to render_template "feed"
@@ -186,7 +196,7 @@ RSpec.describe MainController, type: :controller do
     end
 
     it "assigns needed values" do
-      get :feed, params: { format: "xml" }, session: {}
+      get :feed, params: { format: "xml" }
       aggregate_failures do
         expect(assigns(:playdates)).not_to be_nil
         expect(assigns(:link)).not_to be_nil
@@ -200,22 +210,12 @@ RSpec.describe MainController, type: :controller do
       av = tomorrow.availabilities
         .create!(player_id: players(:robert).id, status: 1)
 
-      get :feed, params: { format: "xml" }, session: {}
+      get :feed, params: { format: "xml" }
 
       aggregate_failures do
         expect(response).to be_successful
         expect(av.updated_at.to_s).to eq assigns(:updated_at).to_s
       end
     end
-  end
-
-  private
-
-  def playersession
-    { user_id: players(:matijs).id }
-  end
-
-  def adminsession
-    { user_id: players(:admin).id }
   end
 end

@@ -5,23 +5,23 @@ require "rails_helper"
 RSpec.describe PlayersController, type: :controller do
   fixtures :players, :playdates, :availabilities
 
-  let(:adminsession) { { user_id: players(:admin).id } }
-
   describe "when not logged in" do
     [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
       it "requires login for #{m} #{a}" do
         send m, a, params: { id: 1 }
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to new_player_session_path
       end
     end
   end
 
   describe "when logged in as a regular player" do
-    let(:playersession) { { user_id: players(:matijs).id } }
+    before do
+      sign_in players(:matijs)
+    end
 
     [:create, :destroy, :update].product([:get, :post]) do |(a, m)|
       it "denies access for #{m} #{a}" do
-        send m, a, params: { id: 1 }, session: playersession
+        send m, a, params: { id: 1 }
         expect(response).to redirect_to root_path
       end
     end
@@ -31,7 +31,8 @@ RSpec.describe PlayersController, type: :controller do
     render_views
 
     before do
-      get :index, params: {}, session: adminsession
+      sign_in players(:admin)
+      get :index, params: {}
     end
 
     it "renders index" do
@@ -47,7 +48,8 @@ RSpec.describe PlayersController, type: :controller do
     render_views
 
     before do
-      get :edit, params: { id: 1 }, session: adminsession
+      sign_in players(:admin)
+      get :edit, params: { id: 1 }
     end
 
     it "renders edit" do
@@ -63,7 +65,8 @@ RSpec.describe PlayersController, type: :controller do
     render_views
 
     before do
-      get :new, params: {}, session: adminsession
+      sign_in players(:admin)
+      get :new, params: {}
     end
 
     it "renders new" do
@@ -80,17 +83,22 @@ RSpec.describe PlayersController, type: :controller do
       { name: "new",
         full_name: "New Name",
         abbreviation: "nn",
+        email: "newname@newdomain.com",
         password: "test123",
         password_confirmation: "test123" }
     end
 
+    before do
+      sign_in players(:admin)
+    end
+
     it "assigns to @player" do
-      post :create, params: { player: player_params }, session: adminsession
+      post :create, params: { player: player_params }
       expect(assigns(:player)).not_to be_nil
     end
 
     it "redirects to the player list with a message" do
-      post :create, params: { player: player_params }, session: adminsession
+      post :create, params: { player: player_params }
       aggregate_failures do
         expect(response).to redirect_to players_path
         expect(request).to set_flash[:notice].to I18n.t("flash.players.create.notice")
@@ -98,7 +106,7 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "increases the number of players" do
-      expect { post :create, params: { player: player_params }, session: adminsession }
+      expect { post :create, params: { player: player_params } }
         .to change(Player, :count).by 1
     end
   end
@@ -106,8 +114,12 @@ RSpec.describe PlayersController, type: :controller do
   describe "#destroy" do
     let(:player) { players(:matijs) }
 
+    before do
+      sign_in players(:admin)
+    end
+
     it "redirects to the player list with a message" do
-      post :destroy, params: { id: player.id }, session: adminsession
+      post :destroy, params: { id: player.id }
       aggregate_failures do
         expect(response).to redirect_to players_path
         expect(request).to set_flash[:notice].to I18n.t("flash.players.destroy.notice")
@@ -115,7 +127,7 @@ RSpec.describe PlayersController, type: :controller do
     end
 
     it "decreases the number of players" do
-      expect { post :destroy, params: { id: player.id }, session: adminsession }
+      expect { post :destroy, params: { id: player.id } }
         .to change(Player, :count).by(-1)
     end
 
@@ -123,7 +135,7 @@ RSpec.describe PlayersController, type: :controller do
       num_player_avs = player.availabilities.count
       aggregate_failures do
         expect(num_player_avs).to be > 0
-        expect { post :destroy, params: { id: player.id }, session: adminsession }
+        expect { post :destroy, params: { id: player.id } }
           .to change(Availability, :count).by(-num_player_avs)
       end
     end
@@ -132,7 +144,7 @@ RSpec.describe PlayersController, type: :controller do
       let(:player) { players(:admin) }
 
       it "does not reduce the number of players" do
-        expect { post :destroy, params: { id: player.id }, session: adminsession }
+        expect { post :destroy, params: { id: player.id } }
           .not_to change(Player, :count)
       end
     end
@@ -150,17 +162,20 @@ RSpec.describe PlayersController, type: :controller do
       ActionController::Parameters.new(player_params).permit!
     end
 
+    before do
+      sign_in players(:admin)
+    end
+
     it "updates all desired attributes" do
-      adminsession
       player = instance_double(Player)
       allow(player).to receive(:update)
       allow(Player).to receive(:find).and_return(player)
-      post :update, params: { id: 1, player: player_params }, session: adminsession
+      post :update, params: { id: 1, player: player_params }
       expect(player).to have_received(:update).with(expected_params)
     end
 
     it "redirects to the player list with a message" do
-      post :update, params: { id: 1, player: player_params }, session: adminsession
+      post :update, params: { id: 1, player: player_params }
       aggregate_failures do
         expect(response).to redirect_to players_path
         expect(request).to set_flash[:notice].to I18n.t("flash.players.update.notice")

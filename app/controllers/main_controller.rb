@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MainController < ApplicationController
-  before_action :authorize, except: :feed
+  before_action :authenticate_player!, except: :feed
 
   MIN_PLAYERS = 4
 
@@ -16,7 +16,7 @@ class MainController < ApplicationController
   def update
     params[:availability].each do |p_id, av_param|
       d = Playdate.find(p_id) or next
-      av = current_user.current_or_default_availability_for_playdate(d)
+      av = current_player.current_or_default_availability_for_playdate(d)
       av.status = av_param[:status]
       av.save!
     end

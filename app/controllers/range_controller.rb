@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RangeController < ApplicationController
-  before_action :authorize
+  before_action :authenticate_player!
 
   def new
     # Show confirmation page

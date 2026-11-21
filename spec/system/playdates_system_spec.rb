@@ -12,12 +12,11 @@ RSpec.describe "Playdates system", type: :system do
 
   before do
     driven_by :cuprite
-    admin.update!(password: "foobar")
 
     visit "/"
-    fill_in "Naam", with: "admin"
-    fill_in "Wachtwoord", with: "foobar"
-    click_button "Inloggen"
+    fill_in "Email", with: "admin@example.com"
+    fill_in "Password", with: "foobar"
+    click_button "Log in"
   end
 
   it "enables the admin to create playdates" do

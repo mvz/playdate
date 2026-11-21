@@ -2,18 +2,21 @@
 admin:
   id: 1
   name: "admin"
+  email: "admin@example.com"
   full_name: "Administrator"
   is_admin: true
-  password_hash: "total_nonsense"
+  encrypted_password: <%= Devise::Encryptor.digest(Player, 'foobar') %>
 matijs:
   id: 2
   abbreviation: "MvZ"
   is_admin: false
   name: "matijs"
-  password_hash: "total_nonsense"
+  email: "matijs@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(Player, 'password2') %>
 robert:
   id: 3
   abbreviation: "RJ"
   is_admin: false
   name: "robert"
-  password_hash: "total_nonsense"
+  email: "robert@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(Player, 'password3') %>

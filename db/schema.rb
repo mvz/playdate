@@ -10,35 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 9) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_105750) do
   create_table "availabilities", force: :cascade do |t|
-    t.datetime "created_at", precision: nil
-    t.integer "playdate_id"
     t.integer "player_id"
+    t.integer "playdate_id"
     t.integer "status"
     t.datetime "updated_at", precision: nil
+    t.datetime "created_at", precision: nil
     t.index ["playdate_id"], name: "index_availabilities_on_playdate_id"
     t.index ["player_id", "playdate_id"], name: "index_availabilities_on_player_id_and_playdate_id", unique: true
     t.index ["player_id"], name: "index_availabilities_on_player_id"
   end
 
   create_table "playdates", force: :cascade do |t|
-    t.datetime "created_at", precision: nil
     t.date "day"
+    t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["day"], name: "index_playdates_on_day", unique: true
   end
 
   create_table "players", force: :cascade do |t|
-    t.string "abbreviation", limit: 255
-    t.datetime "created_at", precision: nil
-    t.integer "default_status"
-    t.string "full_name", limit: 255
-    t.boolean "is_admin", null: false
     t.string "name", limit: 255
+    t.string "full_name", limit: 255
+    t.string "abbreviation", limit: 255
     t.string "password_hash", limit: 255
     t.string "password_salt", limit: 255
+    t.boolean "is_admin", null: false
+    t.integer "default_status"
+    t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.string "email"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_players_on_email", unique: true
     t.index ["name"], name: "index_players_on_name", unique: true
+    t.index ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   end
 end

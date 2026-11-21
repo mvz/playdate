@@ -9,20 +9,19 @@ RSpec.describe "Authentication system", type: :system do
 
   before do
     driven_by(:rack_test)
-    admin.update!(password: "foobar")
   end
 
   it "enables the user to log in and out" do
     visit "/"
-    fill_in "Naam", with: "admin"
-    fill_in "Wachtwoord", with: "foobar"
-    click_button "Inloggen"
+    fill_in "Email", with: "admin@example.com"
+    fill_in "Password", with: "foobar"
+    click_button "Log in"
 
     expect(page).to have_text("Ingelogd als #{admin.full_name}")
 
     click_button "Uitloggen"
 
     expect(page).not_to have_text("Ingelogd als #{admin.full_name}")
-    expect(page).to have_text "Inloggen in Playdate"
+    expect(page).to have_text "You need to sign in or sign up before continuing."
   end
 end

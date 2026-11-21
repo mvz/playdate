@@ -9,12 +9,11 @@ RSpec.describe "Players", type: :system do
 
   before do
     driven_by(:rack_test)
-    admin.update!(password: "foobar")
 
     visit "/"
-    fill_in "Naam", with: "admin"
-    fill_in "Wachtwoord", with: "foobar"
-    click_button "Inloggen"
+    fill_in "Email", with: "admin@example.com"
+    fill_in "Password", with: "foobar"
+    click_button "Log in"
   end
 
   it "enables the admin to create players" do
@@ -22,6 +21,7 @@ RSpec.describe "Players", type: :system do
     click_link "New player"
     fill_in :player_name, with: "newplayer"
     fill_in :player_full_name, with: "Roger N. Player"
+    fill_in :player_email, with: "newplayer@newplace.org"
     fill_in :player_abbreviation, with: "NP"
     fill_in :player_password, with: "foo-bar-321"
     fill_in :player_password_confirmation, with: "foo-bar-321"
