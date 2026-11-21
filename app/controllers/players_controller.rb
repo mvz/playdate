@@ -23,7 +23,9 @@ class PlayersController < ApplicationController
 
   def update
     @player = Player.find(params.expect(:id))
-    @player.update player_params
+    new_attrs = player_params
+    new_attrs.delete(:is_admin) if @player == current_player
+    @player.update new_attrs
     respond_with @player, location: players_path
   end
 

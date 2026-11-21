@@ -18,8 +18,10 @@
   <%= f.password_field :password_confirmation %><br>
 <% end %>
 
-<label for="player[is_admin]">Is Administrator:</label>
-<%= select :player, :is_admin, [["Nee", false], ["Ja", true]] %><br>
+<% unless f.object == current_player %>
+  <label for="player[is_admin]">Is Administrator:</label>
+  <%= select :player, :is_admin, [["Nee", false], ["Ja", true]] %><br>
+<% end %>
 
 <label for="player[default_status]">Standaardstatus:</label>
 <%= select :player, :default_status, availability_options %><br>

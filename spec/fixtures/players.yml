@@ -12,11 +12,11 @@ matijs:
   is_admin: false
   name: "matijs"
   email: "matijs@example.com"
-  encrypted_password: <%= Devise::Encryptor.digest(Player, 'password2') %>
+  encrypted_password: <%= Devise::Encryptor.digest(Player, 'barbaz3') %>
 robert:
   id: 3
   abbreviation: "RJ"
   is_admin: false
   name: "robert"
   email: "robert@example.com"
-  encrypted_password: <%= Devise::Encryptor.digest(Player, 'password3') %>
+  encrypted_password: <%= Devise::Encryptor.digest(Player, 'quxquuz23') %>

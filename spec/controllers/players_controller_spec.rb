@@ -151,27 +151,37 @@ RSpec.describe PlayersController, type: :controller do
   end
 
   describe "#update" do
+    let(:admin) { players(:admin) }
     let(:player_params) do
       { name: "new",
+        email: "new@newnew.net",
         full_name: "New Name",
         abbreviation: "nn",
-        is_admin: "true",
-        default_status: Availability::STATUS_JA.to_s }
+        is_admin: true,
+        default_status: Availability::STATUS_JA }
     end
     let(:expected_params) do
       ActionController::Parameters.new(player_params).permit!
     end
 
     before do
-      sign_in players(:admin)
+      sign_in admin
     end
 
     it "updates all desired attributes" do
-      player = instance_double(Player)
-      allow(player).to receive(:update)
-      allow(Player).to receive(:find).and_return(player)
-      post :update, params: { id: 1, player: player_params }
-      expect(player).to have_received(:update).with(expected_params)
+      player = players(:matijs)
+      post :update, params: { id: player.id, player: player_params }
+      player.reload
+      attributes = player.attributes.symbolize_keys
+
+      expect(attributes.slice(*player_params.keys)).to eq player_params
+    end
+
+    it "does not demote logged-in admin" do
+      expect do
+        post :update, params: { id: admin.id,
+                                player: player_params.merge(is_admin: false) }
+      end.not_to change { admin.reload.is_admin? }
     end
 
     it "redirects to the player list with a message" do
