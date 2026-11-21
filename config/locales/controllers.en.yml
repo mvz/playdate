@@ -3,7 +3,6 @@ en:
   application:
     notice:
       access_denied_no_admin: 'Access denied: You are not an admin.'
-      log_in_first: Log in first to use Playdate.
   main:
     update:
       notice: Changes saved.
@@ -19,6 +18,3 @@ en:
   players:
     destroy:
       cannot_delete_self: Cannot delete yourself
-  session:
-    create:
-      failure: Login failed

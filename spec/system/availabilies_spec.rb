@@ -11,9 +11,9 @@ RSpec.describe "Availibilities", type: :system do
     driven_by(:rack_test)
 
     visit "/"
-    fill_in "Email", with: "admin@example.com"
-    fill_in "Password", with: "foobar"
-    click_button "Log in"
+    fill_in Player.human_attribute_name(:email), with: "admin@example.com"
+    fill_in Player.human_attribute_name(:password), with: "foobar"
+    click_button "Inloggen"
   end
 
   it "enables the admin to create availabilities" do

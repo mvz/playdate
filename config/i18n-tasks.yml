@@ -9,6 +9,7 @@ data:
     - config/locales/*.%{locale}.yml
 
 ignore_unused:
+  - 'activerecord.attributes.*'
   - 'activerecord.errors.messages.*'
   - 'date.*'
   - 'datetime.*'

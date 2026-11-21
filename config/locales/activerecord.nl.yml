@@ -1,0 +1,7 @@
+---
+nl:
+  activerecord:
+    attributes:
+      player:
+        email: E-mailadres
+        password: Wachtwoord

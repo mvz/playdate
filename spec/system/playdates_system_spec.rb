@@ -14,16 +14,16 @@ RSpec.describe "Playdates system", type: :system do
     driven_by :cuprite
 
     visit "/"
-    fill_in "Email", with: "admin@example.com"
-    fill_in "Password", with: "foobar"
-    click_button "Log in"
+    fill_in Player.human_attribute_name(:email), with: "admin@example.com"
+    fill_in Player.human_attribute_name(:password), with: "foobar"
+    click_button "Inloggen"
   end
 
   it "enables the admin to create playdates" do
     click_link "Speeldagen"
     click_link "Nieuwe speeldag"
     click_button "Opslaan"
-    expect(page).to have_text "The new playdate was added"
+    expect(page).to have_text I18n.t("flash.playdates.create.notice")
   end
 
   it "enables the admin to create a range of playdates" do
