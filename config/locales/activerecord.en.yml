@@ -1,0 +1,7 @@
+---
+en:
+  activerecord:
+    attributes:
+      player:
+        email: Email
+        password: Password

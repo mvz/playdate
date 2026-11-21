@@ -13,8 +13,8 @@ module MainHelper
     STATUS_TEXTS[status[:code]]
   end
 
-  def class_if_current_user(player)
-    player == current_user ? "current" : ""
+  def class_if_current_player(player)
+    player == current_player ? "current" : ""
   end
 
   def nice_date_display(date)

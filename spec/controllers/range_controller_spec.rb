@@ -8,18 +8,19 @@ RSpec.describe RangeController, type: :controller do
   render_views
 
   it "authorization for new" do
-    get :new, params: {}, session: {}
-    expect(response).to redirect_to controller: "session", action: "new"
+    get :new, params: {}
+    expect(response).to redirect_to new_player_session_path
   end
 
   it "authorization for create" do
-    post :create, params: {}, session: {}
-    expect(response).to redirect_to controller: "session", action: "new"
+    post :create, params: {}
+    expect(response).to redirect_to new_player_session_path
   end
 
   it "new" do
+    sign_in players(:matijs)
     oldcount = Playdate.count
-    get :new, params: {}, session: playersession
+    get :new, params: {}
     aggregate_failures do
       expect(response).to be_successful
       expect(response).to render_template "new"
@@ -30,8 +31,12 @@ RSpec.describe RangeController, type: :controller do
   end
 
   describe "#create" do
+    before do
+      sign_in players(:matijs)
+    end
+
     it "redirects to the main controller" do
-      post :create, params: {}, session: playersession
+      post :create, params: {}
       expect(response).to redirect_to controller: "main", action: "index"
     end
 
@@ -41,7 +46,7 @@ RSpec.describe RangeController, type: :controller do
         enddate = startdate.end_of_month
 
         aggregate_failures do
-          expect { post :create, params: {}, session: playersession }
+          expect { post :create, params: {} }
             .to change(Playdate, :count).by 4
           startdate.upto(enddate) do |day|
             if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
@@ -62,7 +67,7 @@ RSpec.describe RangeController, type: :controller do
         enddate = startdate.next_month.end_of_month
 
         aggregate_failures do
-          expect { post :create, params: {}, session: playersession }
+          expect { post :create, params: {} }
             .to change(Playdate, :count).by 10
           startdate.upto(enddate) do |day|
             if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
@@ -81,7 +86,7 @@ RSpec.describe RangeController, type: :controller do
         enddate = startdate.next_month.end_of_month
 
         aggregate_failures do
-          expect { post :create, params: {}, session: playersession }
+          expect { post :create, params: {} }
             .to change(Playdate, :count).by 10
           startdate.upto(enddate) do |day|
             if MainHelper::CANDIDATE_WEEKDAYS.include?(day.wday)
@@ -93,11 +98,5 @@ RSpec.describe RangeController, type: :controller do
         end
       end
     end
-  end
-
-  private
-
-  def playersession
-    { user_id: players(:matijs).id }
   end
 end

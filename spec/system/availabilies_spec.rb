@@ -9,11 +9,10 @@ RSpec.describe "Availibilities", type: :system do
 
   before do
     driven_by(:rack_test)
-    admin.update!(password: "foobar")
 
     visit "/"
-    fill_in "Naam", with: "admin"
-    fill_in "Wachtwoord", with: "foobar"
+    fill_in Player.human_attribute_name(:email), with: "admin@example.com"
+    fill_in Player.human_attribute_name(:password), with: "foobar"
     click_button "Inloggen"
   end
 

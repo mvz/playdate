@@ -30,7 +30,7 @@ class PlayersController < ApplicationController
   def destroy
     @player = Player.find(params.expect(:id))
 
-    if @player == current_user
+    if @player == current_player
       flash[:alert] = t(".cannot_delete_self")
       redirect_to(players_url)
     else
@@ -46,6 +46,7 @@ class PlayersController < ApplicationController
       .expect(
         player: [:name,
           :full_name,
+          :email,
           :abbreviation,
           :is_admin,
           :default_status,

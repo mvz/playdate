@@ -10,27 +10,33 @@ RSpec.describe PlaydatesController, type: :controller do
     [:destroy, :index, :new, :show, :prune].product([:get, :post]) do |(a, m)|
       it "requires login for #{m} #{a}" do
         send m, a, params: { id: 1 }
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to new_player_session_path
       end
     end
   end
 
   describe "when logged in as a regular player" do
-    let(:playersession) { { user_id: players(:matijs).id } }
+    before do
+      sign_in players(:matijs)
+    end
 
     [:destroy, :index, :new, :show, :prune].product([:get, :post]) do |(a, m)|
       it "denies access for #{m} #{a}" do
-        send m, a, params: { id: 1 }, session: playersession
+        send m, a, params: { id: 1 }
         expect(response).to redirect_to root_path
       end
     end
   end
 
   describe "#destroy" do
+    before do
+      sign_in players(:admin)
+    end
+
     it "destroys the given playdate" do
       pd = Playdate.find(1)
 
-      delete "destroy", params: { id: 1 }, session: adminsession
+      delete "destroy", params: { id: 1 }
 
       aggregate_failures do
         expect { pd.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -42,12 +48,12 @@ RSpec.describe PlaydatesController, type: :controller do
       pd = Playdate.find(1)
       num_pd_avs = pd.availabilities.count
 
-      expect { delete "destroy", params: { id: 1 }, session: adminsession }
+      expect { delete "destroy", params: { id: 1 } }
         .to change(Availability, :count).by(-num_pd_avs)
     end
 
     it "redirects to index with a message" do
-      delete "destroy", params: { id: 1 }, session: adminsession
+      delete "destroy", params: { id: 1 }
       aggregate_failures do
         expect(response).to redirect_to controller: "playdates", action: "index"
         expect(request).to set_flash[:notice].to I18n.t("flash.playdates.destroy.notice")
@@ -56,7 +62,8 @@ RSpec.describe PlaydatesController, type: :controller do
   end
 
   it "index" do
-    get "index", params: {}, session: adminsession
+    sign_in players(:admin)
+    get "index", params: {}
 
     aggregate_failures do
       expect(response).to be_successful
@@ -71,7 +78,8 @@ RSpec.describe PlaydatesController, type: :controller do
   end
 
   it "new" do
-    get "new", params: {}, session: adminsession
+    sign_in players(:admin)
+    get "new", params: {}
 
     aggregate_failures do
       expect(response).to be_successful
@@ -85,10 +93,14 @@ RSpec.describe PlaydatesController, type: :controller do
   end
 
   describe "#create" do
+    before do
+      sign_in players(:admin)
+    end
+
     it "can succesfully create a single date" do
       num_playdates = Playdate.count
 
-      post "create", params: { playdate: { day: "2006-03-11" } }, session: adminsession
+      post "create", params: { playdate: { day: "2006-03-11" } }
 
       aggregate_failures do
         expect(response).to redirect_to controller: "playdates", action: "index"
@@ -100,7 +112,7 @@ RSpec.describe PlaydatesController, type: :controller do
 
     it "renders new when date could not be created" do
       Playdate.create! day: "2006-03-11"
-      post "create", params: { playdate: { day: "2006-03-11" } }, session: adminsession
+      post "create", params: { playdate: { day: "2006-03-11" } }
 
       aggregate_failures do
         expect(response).to be_unprocessable
@@ -111,7 +123,7 @@ RSpec.describe PlaydatesController, type: :controller do
     it "create_with_range" do
       num_playdates = Playdate.count
 
-      post "create", params: { period: 2, daytype: 6 }, session: adminsession
+      post "create", params: { period: 2, daytype: 6 }
 
       aggregate_failures do
         expect(response).to redirect_to controller: "playdates", action: "index"
@@ -122,7 +134,7 @@ RSpec.describe PlaydatesController, type: :controller do
     end
 
     it "create_with_range_invalid_period" do
-      post "create", params: { period: 3, daytype: 6 }, session: adminsession
+      post "create", params: { period: 3, daytype: 6 }
 
       aggregate_failures do
         expect(response).to render_template :new
@@ -131,7 +143,7 @@ RSpec.describe PlaydatesController, type: :controller do
     end
 
     it "create_with_range_invalid_day_type" do
-      post "create", params: { period: 2, daytype: 7 }, session: adminsession
+      post "create", params: { period: 2, daytype: 7 }
 
       aggregate_failures do
         expect(response).to render_template :new
@@ -140,8 +152,8 @@ RSpec.describe PlaydatesController, type: :controller do
     end
 
     it "renders new with a message if no dates were created" do
-      post "create", params: { period: 2, daytype: 6 }, session: adminsession
-      post "create", params: { period: 2, daytype: 6 }, session: adminsession
+      post "create", params: { period: 2, daytype: 6 }
+      post "create", params: { period: 2, daytype: 6 }
 
       aggregate_failures do
         expect(response).to render_template :new
@@ -152,7 +164,8 @@ RSpec.describe PlaydatesController, type: :controller do
   end
 
   it "show" do
-    get "show", params: { id: 1 }, session: adminsession
+    sign_in players(:admin)
+    get "show", params: { id: 1 }
 
     aggregate_failures do
       expect(response).to be_successful
@@ -170,11 +183,12 @@ RSpec.describe PlaydatesController, type: :controller do
   end
 
   it "prune_using_post" do
+    sign_in players(:admin)
     today = Playdate.create!(day: Time.zone.today)
     tomorrow = Playdate.create!(day: Time.zone.tomorrow)
     old_count = Playdate.count
 
-    post "prune", params: {}, session: adminsession
+    post "prune", params: {}
 
     aggregate_failures do
       expect(response).to redirect_to controller: "playdates", action: "index"
@@ -182,11 +196,5 @@ RSpec.describe PlaydatesController, type: :controller do
       expect(Playdate.count).to eq 2
       expect(Playdate.all).to contain_exactly today, tomorrow
     end
-  end
-
-  private
-
-  def adminsession
-    { user_id: players(:admin).id }
   end
 end

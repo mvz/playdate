@@ -9,13 +9,12 @@ RSpec.describe "Authentication system", type: :system do
 
   before do
     driven_by(:rack_test)
-    admin.update!(password: "foobar")
   end
 
   it "enables the user to log in and out" do
     visit "/"
-    fill_in "Naam", with: "admin"
-    fill_in "Wachtwoord", with: "foobar"
+    fill_in Player.human_attribute_name(:email), with: "admin@example.com"
+    fill_in Player.human_attribute_name(:password), with: "foobar"
     click_button "Inloggen"
 
     expect(page).to have_text("Ingelogd als #{admin.full_name}")
@@ -23,6 +22,7 @@ RSpec.describe "Authentication system", type: :system do
     click_button "Uitloggen"
 
     expect(page).not_to have_text("Ingelogd als #{admin.full_name}")
-    expect(page).to have_text "Inloggen in Playdate"
+    expect(page)
+      .to have_text "Je dient je aan te melden of in te schrijven om door te gaan."
   end
 end

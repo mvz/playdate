@@ -3,7 +3,7 @@
   <head>
     <title>Playdate! The Application - <%= controller_name %>: <%= action_name %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link href="<%= url_for controller: "main", action: "feed", format: "xml" %>" rel="alternate" title="Atom" type="application/atom+xml">
+    <link href="<%= feed_url(format: "xml") %>" rel="alternate" title="Atom" type="application/atom+xml">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -13,10 +13,10 @@
 
   <body>
     <div id="box" class="wrapper">
-      <% if current_user %>
+      <% if current_player %>
         <div class="logout">
-          <p>Ingelogd als <%= h current_user.full_name %>.</p>
-          <%= button_to "Uitloggen", logout_path %>
+          <p>Ingelogd als <%= h current_player.full_name %>.</p>
+          <%= button_to "Uitloggen", destroy_player_session_path, method: :delete %>
         </div>
       <% end %>
 
@@ -25,7 +25,7 @@
       <div class="content">
         <%= render partial: "shared/showflash" %>
         <%= yield %>
-        <% if current_user && current_user.is_admin? %>
+        <% if current_player && current_player.is_admin? %>
           <p>
           <%= link_to "Speeldagen", controller: "playdates", action: "index" %>
           <%= link_to "Spelers", controller: "players", action: "index" %>
@@ -33,7 +33,7 @@
           </p>
         <% end %>
       </div>
-      <% if current_user %>
+      <% if current_player %>
         <p class="logout"><%= link_to "Wachtwoord wijzigen", edit_credentials_path %></p>
       <% end %>
     </div>

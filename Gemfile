@@ -33,6 +33,10 @@ gem "will_paginate", "~> 4.0.0"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", "~> 1.19", require: false
 
+# Battle-tested authentication
+gem "devise", "~> 5.0"
+gem "devise-i18n", "~> 1.16"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

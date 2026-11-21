@@ -24,7 +24,7 @@
         <%= link_to "Bewerken", edit_player_path(player) %>
       </td>
       <td class="action">
-        <% unless player == current_user %>
+        <% unless player == current_player %>
           <%= button_to "Destroy", player, form: { data: { turbo_confirm: "Are you sure?" } } %>
         <% end %>
       </td>
